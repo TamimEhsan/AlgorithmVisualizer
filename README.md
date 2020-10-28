@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+# Pathfinder 2.0
+
+A better visualization of pathfinding algorithms made with React. This is made to be the second version of my previous pathfinding project made with C++ igraphics.
+Limk to site: https://tamimehsan.github.io/Pathfinder-2.0/
+
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
