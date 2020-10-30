@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import Window from "./components/window";
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Pathfinder from "./pathfinderComponents/pathfinder";
+import Home from "./homeComponents/home";
 
 class App extends Component {
     constructor() {
@@ -11,9 +13,12 @@ class App extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <Window/>
-            </React.Fragment>
+            <Router>
+                <Switch>
+                    <Route path='/Pathfinder-2.0/' exact component={Home}/>
+                    <Route path='/Pathfinder-2.0/pathfinder'  component={Pathfinder}/>
+                </Switch>
+            </Router>
         );
     }
 }

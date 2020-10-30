@@ -4,7 +4,7 @@ import Navbar from "./navbar";
 import Menu from "./menu";
 import {dijkstra,getNodesInShortestPathOrder} from "../algorithms/dijkstra";
 
-class Window extends Component {
+class Pathfinder extends Component {
     constructor() {
         super();
         this.state = {
@@ -184,4 +184,4 @@ const createNode = (row,col)=>{
     };
 }
 
-export default Window;
+export default Pathfinder;
