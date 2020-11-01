@@ -13,6 +13,12 @@ class Cards extends Component {
             },
             {
                 id:2,
+                title:"Prime Numbers",
+                description:"Visulaize how Seive is better than brute force",
+                route:"/Pathfinder-2.0/prime"
+            },
+            {
+                id:3,
                 title:"Sorting Algorithm",
                 description:"Coming soon...",
                 route:"/Pathfinder-2.0/"
@@ -24,13 +30,7 @@ class Cards extends Component {
                 route:"/Pathfinder-2.0/"
             },
             {
-                id:3,
-                title:"Prime Numbers",
-                description:"Coming soon...",
-                route:"/Pathfinder-2.0/"
-            },
-            {
-                id:3,
+                id:4,
                 title:"Backtracking",
                 description:"Coming soon...",
                 route:"/Pathfinder-2.0/"

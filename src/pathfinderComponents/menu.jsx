@@ -10,7 +10,7 @@ class Menu extends Component {
                 />
                 <button
                     onClick={this.props.onVisualize}
-                    className="btn btn-warning ">Visualize</button>
+                    className="btn btn-warning m-2">Visualize</button>
 
             </nav>
         );
