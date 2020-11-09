@@ -1,50 +1,70 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from 'clsx';
+import Collapse from '@material-ui/core/Collapse';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import "./style.css";
-import "./graph.png";
-import logo from "../logo.svg";
-import graph from "./graph.png"
+import "./images/graph.png";
+import {ExpandMore} from "@material-ui/icons";
+
 const useStyles = makeStyles({
-    root: {
-        maxWidth: 345,
+    card: {
+        minWidth: 350,
+        maxWidth:350,
         minHeight:250,
-        minWidth:350,
-        margin:15
+        borderRadius: 5,
+        '&:hover': {
+            boxShadow: `0 6px 12px 0 #000000
+                .rotate(-12)
+                .darken(0.2)
+                .fade(0.5)}`
+                ,
+        },
     },
     media: {
         height: 140
-    }
+    },
+    actionArea: {
+        padding:15,
+        transition: '0.2s',
+        '&:hover': {
+            transform: 'scale(1.1)',
+
+        },
+    },
 });
 
 export default function ImgMediaCard(props) {
     const classes = useStyles();
+
     return (
-        <Card
-            className={classes.root}
-            m={20}
-        >
-            <CardActionArea>
+        <CardActionArea className={classes.actionArea} m={20}>
+            <Card
+                className={classes.card}
+                >
                 <CardMedia
                     component="img"
                     alt="Contemplative Reptile"
                     height="140"
-                    src={graph}
-                    title="Contemplative Reptile"
+                    src={props.card.img}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {props.title}
+                    <Typography gutterBottom variant="h5" component="h2"  >
+                        {props.card.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {props.description}
+                        {props.card.description}
                     </Typography>
+                    <ExpandMore/>
                 </CardContent>
-            </CardActionArea>
-        </Card>
+            </Card>
+        </CardActionArea>
     );
 }

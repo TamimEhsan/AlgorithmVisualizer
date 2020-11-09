@@ -11,12 +11,12 @@ class Menu extends Component {
                 <DiscreteSlider
                     onChange={this.props.onChangeSpeed}
                     title="speed"
-                    marks={true}
+                    marks={false}
                     default={10}
-                    step={10}
+                    step={1}
                     min={10}
                     max={50}
-                    isDisabled={this.props.isDisabled}
+                    isDisabled={false}
                 />
                 <DiscreteSlider
                     onChange={this.props.onChangeValues}

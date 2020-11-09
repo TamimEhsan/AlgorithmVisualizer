@@ -19,14 +19,17 @@ const useStyles = makeStyles((theme) => ({
 const SimpleSelect = (props) => {
     const classes = useStyles();
     const [age, setAge] = React.useState('0');
-
+    const [state, setState] = React.useState({
+        pos: props.pos,
+    });
     const handleChange = (event) => {
+        console.log(state.pos);
         setAge(event.target.value);
-        props.onAlgoChanged(event.target.value);
+        props.onAlgoChanged(state.pos,event.target.value);
     };
 
     return (
-        <div>
+        <div className="ml-2 mr-2">
             <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Algorithm</InputLabel>
                 <Select
@@ -35,13 +38,9 @@ const SimpleSelect = (props) => {
                     value={age}
                     onChange={handleChange}
                 >
-                    {props.items.map( (item,itemidx)=>{
-                        return(
-                            <MenuItem
-                                key={itemidx}
-                                value={itemidx}>{item}</MenuItem>
-                        );
-                    } )}
+                    <MenuItem value={0} style={{selected:true}} >Bubble Sort</MenuItem>
+                    <MenuItem value={1}>Selection Sort</MenuItem>
+                    <MenuItem value={2}>Insertion Sort</MenuItem>
                 </Select>
             </FormControl>
         </div>

@@ -1,0 +1,22 @@
+.boardCell{
+    width:100px;
+    height:100px;
+    background-color: whitesmoke;
+    outline:2px solid #607d8b;
+    display: inline-flex;
+}
+.checked{
+    background-image: radial-gradient(circle, #b3e5fc,#29b6f6);
+}
+.attacked{
+    background-image: radial-gradient(circle, #ef9a9a ,darkred);
+}
+.current{
+    background-image: radial-gradient(circle, #fff176 ,#f57f17);
+}
+.present{
+    background-image: radial-gradient(circle, #dce775 ,#43a047);
+}
+.booard{
+    font-size: 0;
+}

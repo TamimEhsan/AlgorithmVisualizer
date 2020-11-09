@@ -3,6 +3,7 @@ import Grid from "./grid";
 import Navbar from "./navbar";
 import Menu from "./menu";
 import {dijkstra,getNodesInShortestPathOrder} from "../algorithms/dijkstra";
+import {getMaze} from "../algorithms/recursiveMaze";
 
 class Pathfinder extends Component {
     constructor() {
@@ -10,7 +11,14 @@ class Pathfinder extends Component {
         this.state = {
             grid:[],
             mouseIsPressed:false,
-            algo:1
+            algorithms:[
+                "Djsktra","BFS","DFS"
+            ],
+            algo:0,
+            mazes:[
+                "Recursive division","Recursive Horizontal bias","Recursive Vertical bias","Random"
+            ],
+            maze:0
         }
     }
     componentDidMount() {
@@ -19,8 +27,8 @@ class Pathfinder extends Component {
         const row = Math.max(Math.floor(height/25)-7,10);
         const col = Math.floor(width/25);
         const startNode = {
-            row:5,
-            col:5
+            row:4,
+            col:4
         };
         const endNode = {
             row: row-5,
@@ -28,7 +36,7 @@ class Pathfinder extends Component {
         }
         console.log( endNode.row );
         const grid = getInitialGrid(row,col);
-        grid[5][5].isStartNode = true;
+        grid[startNode.row][startNode.col].isStartNode = true;
         grid[row-5][col-5].isEndNode = true;
         this.setState({grid,row,col,startNode,endNode});
     }
@@ -41,15 +49,22 @@ class Pathfinder extends Component {
                 <Menu
                     onAlgoChanged = {this.handleAlgoChanged}
                     onVisualize = {this.handleClick}
+                    algorithms={this.state.algorithms}
+                    mazes={this.state.mazes}
+                    onMazeChanged={this.handleMazeChanged}
+                    onCreateMaze={this.handleCreateMaze}
+                    onClearBoard={this.handleClearBoard}
+                    onClearPath={this.handleClearPath}
                 />
                 <span style={{margin: 2}}/>
-                <Grid
-
-                    grid={this.state.grid}
-                    onMouseDown={this.handleMouseDown}
-                    onMouseEnter={this.handleMouseEnter}
-                    onMouseUp={this.handleMouseUp}
-                />
+                <div style={{textAlign:"center"}} >
+                    <Grid
+                        grid={this.state.grid}
+                        onMouseDown={this.handleMouseDown}
+                        onMouseEnter={this.handleMouseEnter}
+                        onMouseUp={this.handleMouseUp}
+                    />
+                </div>
             </Fragment>
         );
     }
@@ -71,15 +86,43 @@ class Pathfinder extends Component {
     }
 
     handleMouseUp = (row,col) => {
-        console.log("up mouse on",row,col);
         this.setState({mouseIsPressed: false});
     }
 
     handleAlgoChanged = (val) =>{
-        console.log("Algo Selected ",val);
         this.setState({algo:val});
     }
 
+    handleMazeChanged = (val)=>{
+        this.setState({maze:val});
+    }
+
+    handleCreateMaze = () =>{
+        const pairs = getMaze(this.state.grid,this.state.row,this.state.col);
+        const {startNode,endNode} = this.state;
+        for( let i = 0;i<pairs.length;i++ ){
+            setTimeout(()=>{
+                if( i === pairs.length-1 ){
+                   // this.setState({grid:this.state.grid});
+                    const grid = this.state.grid;
+                    grid[ startNode.row ][startNode.col]={...grid[ startNode.row ][startNode.col],isWall: false};
+                    grid[endNode.row][endNode.col]={...grid[endNode.row][endNode.col],isWall: false};
+                    this.setState({grid});
+                }
+                if((pairs[i].xx!==startNode.row || pairs[i].yy!==startNode.col) && (pairs[i].xx!==endNode.row || pairs[i].yy!==endNode.col) ){
+                    document.getElementById(`node-${pairs[i].xx}-${pairs[i].yy}`).className = "node node-wall";
+                }
+            },i*20);
+        }
+    }
+    handleClearBoard = ()=>{
+        const {grid,row,col} = this.state;
+        this.setState({grid:clearBoard(grid,row,col)});
+    }
+    handleClearPath = () =>{
+        const {grid,row,col} = this.state;
+        this.setState({grid:clearPath(grid,row,col)});
+    }
     handleClick = () =>{
       /*  for(let i = 0;i<20;i++){
             for(let j = 0; j<50;j++){
@@ -112,7 +155,7 @@ class Pathfinder extends Component {
             if (i === visitedNodesInOrder.length) {
                 setTimeout(() => {
                     this.animateShortestPath(nodesInShortestPathOrder);
-                }, 10 * i);
+                }, 10 * (i+10));
                 return;
             }
             setTimeout(() => {
@@ -126,15 +169,63 @@ class Pathfinder extends Component {
     }
 
     animateShortestPath(nodesInShortestPathOrder) {
+        const grid = this.state.grid;
+        const newGrid = grid.slice();
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
             setTimeout(() => {
+
                 const node = nodesInShortestPathOrder[i];
+                const newNode = {...newGrid[node.row][node.col],ispathNode:true};
+                newGrid[node.row][node.col] = newNode;
+                if( i === nodesInShortestPathOrder.length-1 ){
+                    this.setState({grid:newGrid});
+                }
                 document.getElementById(`node-${node.row}-${node.col}`).className =
                     'node node-shortest-path';
             }, 50 * i);
         }
     }
 
+}
+
+const clearPath = (grid,row,col)=>{
+    const newGrid = grid.slice();
+    for(let i = 0;i < row ; i++){
+        for( let j = 0;j < col; j++){
+            const node = newGrid[i][j];
+            const newNode = {
+                ...node,
+                distance:Infinity,
+                visitedNode: false,
+                isVisited:false,
+                ispathNode:false,
+                previousNode:null
+
+            };
+            newGrid[i][j] = newNode;
+        }
+    }
+    return newGrid;
+}
+const clearBoard = (grid,row,col)=>{
+    const newGrid = grid.slice();
+    for(let i = 0;i < row ; i++){
+        for( let j = 0;j < col; j++){
+            const node = newGrid[i][j];
+            const newNode = {
+                ...node,
+                isWall: false,
+                distance:Infinity,
+                visitedNode: false,
+                isVisited:false,
+                ispathNode:false,
+                previousNode:null
+
+            };
+            newGrid[i][j] = newNode;
+        }
+    }
+    return newGrid;
 }
 
 const toggleVisit = (grid,row,col) =>{

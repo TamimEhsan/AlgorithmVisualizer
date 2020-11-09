@@ -52,7 +52,7 @@ class Seive extends Component {
     handleRefresh = () => {
         this.setState({cells:getCells(this.state.number),isRunning:false});
     }
-    startSeive = () => {
+    startSeive = async () => {
         const speed = this.state.speed;
         this.setState({isRunning:true});
         const prime = [];
@@ -65,13 +65,14 @@ class Seive extends Component {
         let counter = 0;
         for( let i = 2; i<=this.state.number;i++){
             if( prime[i] === 1 ){
-                setTimeout(()=>{
+             //   setTimeout(()=>{
                     changedCells = getNewCellPrimeToggled(changedCells,i-1);
                     this.setState({cells:changedCells});
-                },counter*speed);
+                //},counter*speed);
+                await sleep(this.state.speed);
                 counter++;
                 for(let j = i*i;j<=this.state.number;j+=i){
-                    setTimeout(()=>{
+                    //setTimeout(()=>{
                         if( prevCheck!=-1 ){
                             changedCells = getNewCellVisitingToggled(changedCells,prevCheck);
                         }
@@ -79,16 +80,17 @@ class Seive extends Component {
                         changedCells = getNewCellCheckToggled(changedCells,j-1);
                         changedCells = getNewCellVisitingToggled(changedCells,prevCheck);
                         this.setState({cells:changedCells});
-                    },counter*speed);
+                  //  },counter*speed);
+                    await sleep(this.state.speed);
                     counter++;
                     prime[j] = 0;
                 }
             }
         }
-        setTimeout(()=>{
+      //  setTimeout(()=>{
             changedCells = getNewCellVisitingToggled(changedCells,prevCheck);
             this.setState({cells:changedCells,isRunning:false});
-        },counter*speed);
+       // },counter*speed);
     }
 }
 
@@ -140,5 +142,7 @@ const createCell = (val)=>{
         isPrime:false
     };
 }
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 export default Seive;

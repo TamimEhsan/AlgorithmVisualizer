@@ -18,13 +18,15 @@ class Node extends Component {
         );
     }
     getClassName(){
-        if(this.props.isWall === true){
+        if(this.props.node.isWall === true){
             return "node node-wall";
         } else if( this.props.node.isStartNode === true ){
             return "node  node-start";
         } else if( this.props.node.isEndNode === true ){
             return "node  node-end";
-        } else if( this.props.visitedNode === true ){
+        } else if(this.props.node.ispathNode){
+            return 'node node-shortest-path';
+        }else if( this.props.node.isVisited === true ){
             return "node  node-visited";
         } else{
             return "node";
