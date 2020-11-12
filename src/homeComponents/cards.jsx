@@ -24,12 +24,12 @@ class Cards extends Component {
             <div className="d-flex flex-wrap justify-content-center Cards p-lg-5" >
                 {
                     this.state.cards.map(card=>(
-                       <div>
-                           <ImgMediaCard2
-                               className="d-flex flex-wrap"
-                               key={card.id}
-                               card={card}/>
-                       </div>
+                        <div>
+                            <ImgMediaCard2
+                                className="d-flex flex-wrap"
+                                key={card.id}
+                                card={card}/>
+                        </div>
                     ))
                 }
 
@@ -39,3 +39,11 @@ class Cards extends Component {
 }
 
 export default Cards;
+/*
+<div>
+   <ImgMediaCard2
+       className="d-flex flex-wrap"
+       key={card.id}
+       card={card}/>
+</div>
+ */

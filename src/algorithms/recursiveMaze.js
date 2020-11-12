@@ -30,13 +30,13 @@ export function getMaze(board,row,col){
         });
     }
     decideMaze(pairs,newBoard,1,row-2,1,col-2);
-    console.log("here");
+    //console.log("here");
     return pairs;
 }
 let val = 0;
 
 function decideMaze(pairs,board,startRow,endRow,startCol,endCol) {
-    console.log("count");
+    //console.log("count");
     val++;
 
     if( ((endRow-startRow) <=1) && ((endCol - startCol) <=1) ){
@@ -52,7 +52,7 @@ function decideMaze(pairs,board,startRow,endRow,startCol,endCol) {
 function recursiveMazeVertical(pairs,board,startRow,endRow,startCol,endCol){
     let mid = Math.floor((endCol+startCol)/2);
     let random = Math.floor(Math.random() * (endRow-startRow+1)) + startRow;
-    console.log( "row ",random," ",startRow," ",endRow );
+    //console.log( "row ",random," ",startRow," ",endRow );
     let start = startRow;
     if( !board[startRow-1][mid].isWall ){
         random = start;

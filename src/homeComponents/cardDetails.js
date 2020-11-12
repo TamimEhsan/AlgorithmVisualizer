@@ -3,64 +3,66 @@ import primes from "./images/primes.jpg";
 import sort from "./sort.png";
 import queen from "./images/queen.PNG";
 import binSearch from "./images/binaryTree.png";
-import convex from './images/convexHull.png'
-import puzzle from './images/15puzzle.PNG'
+import convex from './images/convexHull.png';
+import puzzle from './images/15puzzle.PNG';
+import sudoku from './images/sudoku.png';
 export function getDetails(){
    return [
        {
            id:1,
            title:"Pathfinder",
            description:"Visualize graph algorithms like dijkstra, BFS, DFS",
-           route:"/Pathfinder-2.0/pathfinder",
+           route:"/pathfinder",
            img:graph
        },
        {
            id:2,
            title:"Prime Numbers",
            description:"Visualize how Seive is better than brute force",
-           route:"/Pathfinder-2.0/prime",
+           route:"/prime",
            img:primes
        },
        {
            id:3,
            title:"Sorting Algorithm",
            description:"Compare different sorting algorithms",
-           route:"/Pathfinder-2.0/sort",
+           route:"/sort",
            img:sort
        },
        {
-           id:3,
+           id:4,
            title:"N Queen",
            description:"The N queens puzzle is the problem of placing N chess queens on an N*N chessboard so that no two queens threaten each other",
-           route:"/Pathfinder-2.0/nqueen",
+           route:"/nqueen",
            img:queen
-       },
-       {
-           id:4,
-           title:"Backtracking",
-           description:"Coming soon...",
-           route:"/Pathfinder-2.0/",
-           img:graph
-       },
-       {
-           id:5,
-           title:"Binary Search",
-           description:"Coming soon...",
-           route:"/Pathfinder-2.0/",
-           img:binSearch
        },
        {
            id:5,
            title:"Convex Hull",
-           description:"Coming soon...",
-           route:"/Pathfinder-2.0/",
+           description:"The convex hull of a set of points is the smallest convex polygon that contains all the points of it",
+           route:"/convexhull",
            img:convex
        },
        {
-           id:5,
+           id:7,
+           title:"Binary Search",
+           description:"Binary search is an efficient algorithm for finding an item from a sorted list of item",
+           route:"/binarysearch",
+           img:binSearch
+       },
+       {
+           id:6,
+           title:"Sudoku",
+           description:"Coming soon...",
+           route:"/",
+           img:sudoku
+       },
+
+       {
+           id:8,
            title:"15 Puzzle",
            description:"Coming soon...",
-           route:"/Pathfinder-2.0/",
+           route:"/",
            img:puzzle
        }
    ]

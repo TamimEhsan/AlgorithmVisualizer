@@ -13,11 +13,11 @@ class Navbar extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent" >
-                        <Link to={"/Pathfinder-2.0/"}>
-                            <span style={{color:"white"}}>
-                                Home
-                            </span>
-                        </Link>
+                    <Link to={"/"}>
+                        <span style={{color:"white"}}>
+                            Home
+                        </span>
+                    </Link>
                 </div>
 
             </nav>

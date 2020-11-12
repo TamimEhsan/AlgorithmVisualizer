@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {HashRouter as Router, Switch, Route} from 'react-router-dom';
 import Pathfinder from "./pathfinderComponents/pathfinder";
 import Home from "./homeComponents/home";
 import Seive from "./primeComponents/seive";
 import Sort from "./sortComponents/sort";
 import Queen from "./queenComponents/queen";
+import ConvexHull from "./convexHullComponents/convexHull";
+import BinarySearch from "./binarySearchComponent/binarySearch";
 
 class App extends Component {
     constructor() {
@@ -16,13 +18,15 @@ class App extends Component {
 
     render() {
         return (
-            <Router>
+            <Router basename='/'>
                 <Switch>
-                    <Route path='/Pathfinder-2.0/pathfinder'  component={Pathfinder}/>
-                    <Route path='/Pathfinder-2.0/prime' component={Seive}/>
-                    <Route path='/Pathfinder-2.0/sort' component={Sort}/>
-                    <Route path='/Pathfinder-2.0/nqueen' component={Queen}/>
-                    <Route path='/Pathfinder-2.0/' component={Home}/>
+                    <Route path='/pathfinder'  component={Pathfinder}/>
+                    <Route path='/prime' component={Seive}/>
+                    <Route path='/sort' component={Sort}/>
+                    <Route path='/nqueen' component={Queen}/>
+                    <Route path='/convexhull' component={ConvexHull}/>
+                    <Route path='/binarysearch' component={BinarySearch}/>
+                    <Route path='/' component={Home}/>
                 </Switch>
             </Router>
         );

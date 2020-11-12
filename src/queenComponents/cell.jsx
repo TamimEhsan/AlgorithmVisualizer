@@ -4,7 +4,7 @@ import queen from './queen.png';
 class Cell extends Component {
     render() {
         return (
-            <div className={this.getClassName()}>
+            <div className={this.getClassName()} style={this.getStyled()}>
                 { this.props.cell.isPresent && <img src={queen} height='100px' style={{padding:"25px"}}/> }
             </div>
         );
@@ -20,6 +20,17 @@ class Cell extends Component {
             return "boardCell checked";
         } else{
             return "boardCell";
+        }
+    }
+    getStyled = () =>{
+        if( (this.props.cell.row+this.props.cell.col)%2 === 0 ){
+            return {
+                backgroundColor:"white"
+            }
+        }else{
+            return {
+                backgroundColor:"grey"
+            }
         }
     }
 }

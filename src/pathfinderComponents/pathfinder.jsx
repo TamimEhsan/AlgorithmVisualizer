@@ -4,6 +4,8 @@ import Navbar from "./navbar";
 import Menu from "./menu";
 import {dijkstra,getNodesInShortestPathOrder} from "../algorithms/dijkstra";
 import {getMaze} from "../algorithms/recursiveMaze";
+import {bfsdfs} from "../algorithms/bfs";
+import {randomMaze} from "../algorithms/randomMaze";
 
 class Pathfinder extends Component {
     constructor() {
@@ -12,11 +14,11 @@ class Pathfinder extends Component {
             grid:[],
             mouseIsPressed:false,
             algorithms:[
-                "Djsktra","BFS","DFS"
+                "Dijsktra","BFS","DFS"
             ],
             algo:0,
             mazes:[
-                "Recursive division","Recursive Horizontal bias","Recursive Vertical bias","Random"
+                "Recursive division","Random","Recursive Horizontal bias(NA)","Recursive Vertical bias(NA)"
             ],
             maze:0
         }
@@ -98,7 +100,14 @@ class Pathfinder extends Component {
     }
 
     handleCreateMaze = () =>{
-        const pairs = getMaze(this.state.grid,this.state.row,this.state.col);
+        let pairs;
+        switch (this.state.maze){
+            case 1:
+                pairs= randomMaze(this.state.grid,this.state.row,this.state.col);
+                break;
+            default:
+                pairs= getMaze(this.state.grid,this.state.row,this.state.col);
+        }
         const {startNode,endNode} = this.state;
         for( let i = 0;i<pairs.length;i++ ){
             setTimeout(()=>{
@@ -145,34 +154,47 @@ class Pathfinder extends Component {
         const {grid} = this.state;
         const startNode = grid[this.state.startNode.row][this.state.startNode.col];
         const finishNode = grid[this.state.endNode.row][this.state.endNode.col];
-        const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+        let visitedNodesInOrder;
+        switch (this.state.algo){
+            case 0:
+                visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+                break;
+            case 1:
+                visitedNodesInOrder = bfsdfs(grid, startNode, finishNode,"bfs");
+                break;
+            default:
+                visitedNodesInOrder = bfsdfs(grid, startNode, finishNode,"dfs");
+        }
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
         this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
     }
-    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
+    async animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
         for (let i = 0; i <= visitedNodesInOrder.length; i++) {
 
             if (i === visitedNodesInOrder.length) {
-                setTimeout(() => {
-                    this.animateShortestPath(nodesInShortestPathOrder);
-                }, 10 * (i+10));
+              //  setTimeout(() => {
+                    await sleep(100);
+                    await this.animateShortestPath(nodesInShortestPathOrder);
+
+              //  }, 10 * (i+10));
                 return;
             }
-            setTimeout(() => {
+           // setTimeout(() => {
                 const node = visitedNodesInOrder[i];
                 const newGrid = toggleVisit(this.state.grid,node.row,node.col);
                 //this.setState({grid:newGrid});
                 document.getElementById(`node-${node.row}-${node.col}`).className =
                     'node node-visited';
-            }, 10 * i);
+                await sleep(10);
+           // }, 10 * i);
         }
     }
 
-    animateShortestPath(nodesInShortestPathOrder) {
+    async animateShortestPath(nodesInShortestPathOrder) {
         const grid = this.state.grid;
         const newGrid = grid.slice();
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
-            setTimeout(() => {
+         //   setTimeout(() => {
 
                 const node = nodesInShortestPathOrder[i];
                 const newNode = {...newGrid[node.row][node.col],ispathNode:true};
@@ -182,7 +204,8 @@ class Pathfinder extends Component {
                 }
                 document.getElementById(`node-${node.row}-${node.col}`).className =
                     'node node-shortest-path';
-            }, 50 * i);
+                await sleep(50);
+            //}, 50 * i);
         }
     }
 
@@ -273,6 +296,9 @@ const createNode = (row,col)=>{
         ispathNode:false,
         previousNode:null
     };
+}
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default Pathfinder;

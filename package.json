@@ -1,9 +1,10 @@
 {
   "name": "algo-visualizer",
   "version": "0.1.0",
-  "homepage": "http://tamimehsan.github.io/Pathfinder-2.0",
+  "homepage": "http://tamimehsan.github.io/AlgorithmVisualizer",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
@@ -12,8 +13,10 @@
     "fontsource-roboto": "^3.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-github-btn": "^1.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "react-spring": "^8.0.27",
     "typewriter-effect": "^2.13.1",
     "web-vitals": "^0.2.4"
   },
