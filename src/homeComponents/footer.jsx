@@ -11,7 +11,10 @@ class Footer extends Component {
                     <GitHubButton href="https://github.com/TamimEhsan/Pathfinder-2.0" data-icon="octicon-star" data-show-count="true" aria-label="Star TamimEhsan/Pathfinder-2.0 on GitHub">Star</GitHubButton>
                     &nbsp
                     <GitHubButton href="https://github.com/TamimEhsan/Pathfinder-2.0/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork TamimEhsan/Pathfinder-2.0 on GitHub">Fork</GitHubButton>
+                    &nbsp
+                    <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits"/>
                 </div>
+
                 <div class="footer-copyright text-center py-3">© 2020 Copyright:
                     <a href="https://github.com/tamimehsan" style={{color: "#65b6f0"}}> Tamim Ehsan</a>
                 </div>
