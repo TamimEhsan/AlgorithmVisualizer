@@ -106,7 +106,7 @@ class Sort extends Component {
               steps1 = bubbleSort(this.state.rects);
               break;
       }
-      this.handleFirst(steps1);
+
       if( this.state.doubles ){
           let steps2;
           switch (this.state.algo2){
@@ -123,6 +123,7 @@ class Sort extends Component {
                   steps2 = bubbleSort(this.state.rects2);
                   break;
           }
+          this.handleFirst(steps1);
           this.handleSecond(steps2);
       }
   }
@@ -168,12 +169,12 @@ class Sort extends Component {
          // },i*speed);
       }
   }
-    handleSecond = (steps) =>{
+    handleSecond = async (steps) =>{
         const {speed} = this.state;
         this.setState({isRunning2:true});
         const prevRect = this.state.rects2;
         for(let i = 0;i<steps.length;i++){
-            setTimeout(()=>{
+         //   setTimeout(()=>{
                 if( i!==0 ){
                     prevRect[steps[i-1].xx] = { ...prevRect[steps[i-1].xx],isSorting:false };
                     prevRect[steps[i-1].yy] = { ...prevRect[steps[i-1].yy],isSorting:false };
@@ -204,7 +205,8 @@ class Sort extends Component {
                     }
                 }*/
                 this.setState({rects2:prevRect});
-            },i*speed);
+                await sleep(this.state.speed);
+           // },i*speed);
         }
     }
 
