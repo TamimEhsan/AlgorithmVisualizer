@@ -106,9 +106,9 @@ class Sort extends Component {
               steps1 = bubbleSort(this.state.rects);
               break;
       }
-
+      let steps2;
       if( this.state.doubles ){
-          let steps2;
+
           switch (this.state.algo2){
               case 0:
                   steps2 = bubbleSort(this.state.rects2);
@@ -123,11 +123,13 @@ class Sort extends Component {
                   steps2 = bubbleSort(this.state.rects2);
                   break;
           }
-          this.handleFirst(steps1);
-          this.handleSecond(steps2);
+
       }
+      this.handleFirst(steps1);
+      if( this.state.doubles ) this.handleSecond(steps2);
   }
   handleFirst = async (steps) =>{
+     // console.log("fsdfsdfsdfasdf");
       this.setState({isRunning1:true});
       const {speed} = this.state;
      // const steps = bubbleSort(this.state.rects);

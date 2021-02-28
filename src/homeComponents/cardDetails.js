@@ -30,6 +30,13 @@ export function getDetails(){
            img:sort
        },
        {
+           id:9,
+           title:"Recursive Sorting",
+           description:"Compare different recursive sorting algorithms",
+           route:"/recursivesort",
+           img:sort
+       },
+       {
            id:4,
            title:"N Queen",
            description:"The N queens puzzle is the problem of placing N chess queens on an N*N chessboard so that no two queens threaten each other",
@@ -65,5 +72,6 @@ export function getDetails(){
            route:"/",
            img:puzzle
        }
+
    ]
 }
