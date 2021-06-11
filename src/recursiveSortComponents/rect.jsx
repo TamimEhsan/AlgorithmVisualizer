@@ -7,8 +7,11 @@ class Rect extends Component {
             <div
                 className='rect'
                 style={{height:this.props.rect.width,
+                    border: this.checkBorder(),
                     background:this.checkColor(),
                     margin:this.props.marg
+
+
                 }}
             >
                 
@@ -26,6 +29,13 @@ class Rect extends Component {
             return "purple";
         }else{
             return "#ADD8E6";
+        }
+    }
+    checkBorder = () =>{
+        if( this.props.rect.isRange ){
+            return "0px solid black";
+        } else{
+            return "0px"
         }
     }
 }

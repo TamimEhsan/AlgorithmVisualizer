@@ -22,6 +22,7 @@ ALgorithms implemented yet so far are
 - Insertion sort
 - Heap sort
 - Merge sort
+- Quick sort
 - Sieve of Eratosthenes
 - N Queen Backtracking
 - Graham Scan for Convex Hull

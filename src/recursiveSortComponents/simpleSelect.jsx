@@ -40,6 +40,7 @@ const SimpleSelect = (props) => {
                 >
                     <MenuItem value={0} style={{selected:true}} >Merge Sort</MenuItem>
                     <MenuItem value={1} style={{selected:true}} >Heap Sort</MenuItem>
+                    <MenuItem value={2} style={{selected:true}} >Quick Sort</MenuItem>
                 </Select>
             </FormControl>
         </div>
