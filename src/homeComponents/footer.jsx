@@ -12,7 +12,7 @@ class Footer extends Component {
                     &nbsp
                     <GitHubButton href="https://github.com/TamimEhsan/Pathfinder-2.0/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork TamimEhsan/Pathfinder-2.0 on GitHub">Fork</GitHubButton>
                     &nbsp
-                    <img src="https://hitcounter.pythonanywhere.com/count/tag.svg" alt="Hits"/>
+                    <img src="https://visitor-badge.laobi.icu/badge?page_id=TamimEhsan.AlgorithmVisualizer" alt="Hits"/>
                 </div>
 
                 <div class="footer-copyright text-center py-3">© 2020 Copyright:

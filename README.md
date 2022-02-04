@@ -39,3 +39,4 @@ I have implemented a total of `14 algorithms` so far. And will try to add more l
 
 I am not sure if anyone would like to contribute to this project or not. But any kind of contributions are welcomes. Also if you like this please star this repo. It keeps me motivated.
 
+Note to self:
