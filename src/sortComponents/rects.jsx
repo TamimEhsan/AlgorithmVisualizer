@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Rect from "./rect";
+import FlipMove from 'react-flip-move';
 
 class Rects extends Component {
     render() {
@@ -8,16 +9,22 @@ class Rects extends Component {
             margin=1;
         }
         return (
-            <div className="d-flex justify-content-center align-items-end">
+            <div>
+                <FlipMove
+                    className="d-flex justify-content-center align-items-end"
+                    duration={this.props.speed}
+                    // easing="cubic-bezier(.12,.36,.14,1.2)"
+                >
                 {this.props.rects.map( (rect,rectidx)=>{
                     return (
                         <Rect
                             marg={margin}
-                            key={rectidx}
+                            key={rect.kk}
                             rect={rect}
                         />
                     );
                 } )}
+                </FlipMove>
             </div>
         );
     }

@@ -8,7 +8,9 @@ class Rect extends Component {
                 className='rect'
                 style={{height:this.props.rect.width,
                     background:this.checkColor(),
-                    margin:this.props.marg
+                    margin:this.props.marg,
+                    // float:'left',
+                    'vertical-align': 'middle'
                 }}
             >
                 

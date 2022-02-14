@@ -45,6 +45,7 @@ class Sort extends Component {
             <div className=' justify-content-center'>
 
                 <Rects
+                    speed={this.state.speed*10}
                     rects={this.state.rects}
                 />
                 { this.state.doubles && <hr style={{width:"90%"}}/>}
@@ -223,20 +224,21 @@ class Sort extends Component {
 
 }
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms*10));
 }
 const getInitialRects = (tot) => {
     const rects = [];
     for(let i = 0;i<tot;i++){
-        rects.push(getRect());
+        rects.push(getRect(i));
     }
     return rects;
 }
-const getRect = () => {
+const getRect = (kk) => {
   return {
       width: Math.floor(Math.random() * 200)+50,
       isSorted:false,
-      isSorting:false
+      isSorting:false,
+      kk:kk
   }
 }
 export default Sort;
