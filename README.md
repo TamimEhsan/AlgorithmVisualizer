@@ -17,6 +17,7 @@ So far there are 6 segments
 - N Queen
 - Convex Hull
 - Binary Search Game
+- Turing Machine
 
 I have implemented a total of `14 algorithms` so far. And will try to add more later.  
 
@@ -36,6 +37,7 @@ I have implemented a total of `14 algorithms` so far. And will try to add more l
 - N Queen Backtracking
 - Graham Scan for Convex Hull
 - Binary Search
+- Turing Machine
 
 
 
@@ -54,4 +56,11 @@ To deploy recent changes to page
 npm run build
 npm run deploy
 ```
+
+
+
+### Inspiration for next sections
+
+- [University of San Francisco Site](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) 
+- ​    [algorithm-visualizer](https://github.com/algorithm-visualizer)    /      [algorithm-visualizer](https://github.com/algorithm-visualizer/algorithm-visualizer)     
 

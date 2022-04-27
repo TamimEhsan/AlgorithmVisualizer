@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import './TrialPathFinder/firebaseConfig';
+
 import {HashRouter as Router, Switch, Route} from 'react-router-dom';
 import Pathfinder from "./pathfinderComponents/pathfinder";
 import Home from "./homeComponents/home";
@@ -8,12 +10,20 @@ import Queen from "./queenComponents/queen";
 import ConvexHull from "./convexHullComponents/convexHull";
 import BinarySearch from "./binarySearchComponent/binarySearch";
 import RecursiveSort from "./recursiveSortComponents/recursiveSort";
+import Puzzle from "./15puzzleComponents/puzzle";
+import TrialPath from "./TrialPathFinder/pathfinder";
+import TrialPathEdit from "./TrialPathFinderEdit/pathfinder";
+import TuringMachine from "./Turing Machine/turingMachine";
+
+
+
 class App extends Component {
+
     constructor() {
         super();
     }
     componentDidMount() {
-        console.log(window.innerHeight,"  ",window.innerWidth);
+        // console.log(window.innerHeight,"  ",window.innerWidth);
     }
 
     render() {
@@ -27,7 +37,12 @@ class App extends Component {
                     <Route path='/convexhull' component={ConvexHull}/>
                     <Route path='/binarysearch' component={BinarySearch}/>
                     <Route path='/recursivesort' component={RecursiveSort}/>
+                    <Route path='/turing' component={TuringMachine}/>
+                    <Route path='/15puzzle' component={Puzzle}/>
+                    {/*<Route path='/trial' component={TrialPath}/>*/}
+                    {/*<Route path='/trialedit' component={TrialPathEdit}/>*/}
                     <Route path='/' component={Home}/>
+
                 </Switch>
             </Router>
         );

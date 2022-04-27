@@ -1,0 +1,23 @@
+.square{
+    height: 100px;
+    width: 100px;
+    margin: 5px;
+    float: left;
+    border-radius: 10px;
+    font-size: 60px;
+    font-weight: 700;
+    color: white;
+    font-family: "Pacifico", cursive;
+}
+
+.painted{
+    background-color: rgb(106, 198, 184)
+}
+
+.correct{
+    background-color: #e88a45;
+}
+
+.full-height {
+    height: calc(100vh);
+}

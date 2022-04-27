@@ -36,7 +36,7 @@ class Pathfinder extends Component {
             row: row-5,
             col: col-5
         }
-        console.log( endNode.row );
+        // console.log( endNode.row );
         const grid = getInitialGrid(row,col);
         grid[startNode.row][startNode.col].isStartNode = true;
         grid[row-5][col-5].isEndNode = true;

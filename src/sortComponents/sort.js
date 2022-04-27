@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Rect from "./rect";
+
 import Rects from "./rects";
 import {bubbleSort,selectionSort,insertionSort} from "../algorithms/sortingAlgorithms";
 import {quickSort} from "../algorithms/quickSort";
@@ -19,9 +19,7 @@ class Sort extends Component {
       algo1:0,
       algo2:0
   }
-  constructor() {
-      super();
-  }
+
   componentDidMount() {
       const rect = getInitialRects(this.state.count);
       const rect2 = rect.slice();
@@ -45,7 +43,7 @@ class Sort extends Component {
             <div className=' justify-content-center'>
 
                 <Rects
-                    speed={this.state.speed*10}
+                    speed={this.state.speed}
                     rects={this.state.rects}
                 />
                 { this.state.doubles && <hr style={{width:"90%"}}/>}
@@ -87,7 +85,7 @@ class Sort extends Component {
       }
   }
   handleSpeedChanged = (val) =>{
-    const speed = (110-val);
+    const speed = (760-val*7.5);
     this.setState({speed});
   }
   handleSort = () =>{
@@ -140,7 +138,7 @@ class Sort extends Component {
   handleFirst = async (steps) =>{
      // console.log("fsdfsdfsdfasdf");
       this.setState({isRunning1:true});
-      const {speed} = this.state;
+
      // const steps = bubbleSort(this.state.rects);
     //  console.log(steps.length);
       const prevRect = this.state.rects;
@@ -181,7 +179,6 @@ class Sort extends Component {
       }
   }
     handleSecond = async (steps) =>{
-        const {speed} = this.state;
         this.setState({isRunning2:true});
         const prevRect = this.state.rects2;
         for(let i = 0;i<steps.length;i++){
@@ -224,7 +221,7 @@ class Sort extends Component {
 
 }
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms*10));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 const getInitialRects = (tot) => {
     const rects = [];

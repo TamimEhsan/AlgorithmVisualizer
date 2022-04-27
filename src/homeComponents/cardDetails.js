@@ -5,7 +5,7 @@ import queen from "./images/queen.PNG";
 import binSearch from "./images/binaryTree.png";
 import convex from './images/convexHull.png';
 import puzzle from './images/15puzzle.PNG';
-import sudoku from './images/sudoku.png';
+import turing from './images/turing.jpg';
 export function getDetails(){
    return [
        {
@@ -59,17 +59,17 @@ export function getDetails(){
        },
        {
            id:6,
-           title:"Sudoku",
-           description:"Coming soon...",
-           route:"/",
-           img:sudoku
+           title:"Turing Machine",
+           description:"A Turing machine is a mathematical model of computation that defines an abstract machine that manipulates symbols on a strip of tape according to a table of rules",
+           route:"/turing",
+           img:turing
        },
 
        {
            id:8,
            title:"15 Puzzle",
-           description:"Coming soon...",
-           route:"/",
+           description:"The 15 puzzle is a sliding puzzle having 15 square tiles numbered 1–15 in a frame that is 4 tiles high and 4 tiles wide, leaving one unoccupied tile position",
+           route:"/15puzzle",
            img:puzzle
        }
 
