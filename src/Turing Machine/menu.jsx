@@ -9,19 +9,36 @@ class Menu extends Component {
             <nav className="nav alert-dark">
 
 
-                <DiscreteSlider
-                    default={50}
-                    min={10}
-                    max={100}
-                    step={1}
-                    title="Speed"
-                    onCountChange={this.props.onSpeedChange}
-                    disable={false}
-                />
+                {/*<DiscreteSlider*/}
+                {/*    default={50}*/}
+                {/*    min={10}*/}
+                {/*    max={100}*/}
+                {/*    step={1}*/}
+                {/*    title="Speed"*/}
+                {/*    onCountChange={this.props.onSpeedChange}*/}
+                {/*    disable={false}*/}
+                {/*/>*/}
                 <SimpleSelect
                     pos={0}
                     onAlgoChanged={this.props.onAlgoChanged}
                 />
+
+
+                    <div className="input-group mt-2 col-3">
+                        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1"
+                               onChange={this.props.setInput1}
+                        />
+                    </div>
+                    <div className="input-group mt-2 col-3">
+                        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary 2"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1"
+                               onChange={this.props.setInput2}
+                        />
+                    </div>
+
 
                 <button
                     className='btn btn-warning btn-lg m-2'

@@ -13,7 +13,7 @@ class Cell extends Component {
     getClass = () =>{
         const { val, isVisiting,isChecking,isPrime} = this.props.cell;
         if(isPrime){
-            return "cell cell-prime m-2";
+            return "cell cell-prime bg-success text-light m-2";
         }else if( isVisiting ){
             return "cell cell-visiting m-2";
         } else if( isChecking ){

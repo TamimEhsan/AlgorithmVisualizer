@@ -74,7 +74,7 @@ class TuringMachine extends Component {
         let cellStart, cellEnd;
         cellStart = 50 + (1 - cellCount) / 2;
         cellEnd = 50 + (cellCount - 1) / 2;
-        this.setState({cellStart, cellEnd});
+        this.setState({cellStart, cellEnd,state:-1});
     }
 
     handleStart = () => {
@@ -136,53 +136,58 @@ class TuringMachine extends Component {
                     visualize={this.handleStart}
                     onAlgoChanged={this.setAlgo}
                     onReset={this.handleReset}
+                    setInput1={this.setInput1}
+                    setInput2={this.setInput2}
                 />
 
-                <div className='row'>
-                    <div className="input-group mt-2 col-3">
-                        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary"
-                               aria-label="Username"
-                               aria-describedby="basic-addon1"
-                               onChange={this.setInput1}
-                        />
-                    </div>
-                    <div className="input-group mt-2 col-3">
-                        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary 2"
-                               aria-label="Username"
-                               aria-describedby="basic-addon1"/>
-                    </div>
-                </div>
+                {/*<div className='row'>*/}
+                {/*    <div className="input-group mt-2 col-3">*/}
+                {/*        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary"*/}
+                {/*               aria-label="Username"*/}
+                {/*               aria-describedby="basic-addon1"*/}
+                {/*               onChange={this.setInput1}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*    <div className="input-group mt-2 col-3">*/}
+                {/*        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary 2"*/}
+                {/*               aria-label="Username"*/}
+                {/*               aria-describedby="basic-addon1"/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
                 <center>
-                    <h3>Turing Machine</h3>
-                    <Ribbon
-                        strip={this.state.strip}
-                        midCell={this.state.midCell}
-                        cellCount={this.state.cellCount}
-                        cellStart={this.state.cellStart}
-                        cellEnd={this.state.cellEnd}
-                    ></Ribbon>
-                    <button
-                        className='btn btn-warning m-3'
-                        onClick={this.handleLeftShift}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-caret-left-square-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12z"/>
-                        </svg>
-                    </button>
-                    <button
-                        className='btn btn-warning m-3'
-                        onClick={this.handleRightShift}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             className="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4v8z"/>
-                        </svg>
+                    <br/>
+                    <div className='bg-info'>
+                        {/*<h3>Turing Machine</h3>*/}
+                        <Ribbon
+                            strip={this.state.strip}
+                            midCell={this.state.midCell}
+                            cellCount={this.state.cellCount}
+                            cellStart={this.state.cellStart}
+                            cellEnd={this.state.cellEnd}
+                        ></Ribbon>
+                        <button
+                            className='btn btn-warning m-3'
+                            onClick={this.handleLeftShift}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 className="bi bi-caret-left-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12z"/>
+                            </svg>
+                        </button>
+                        <button
+                            className='btn btn-warning m-3'
+                            onClick={this.handleRightShift}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 className="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4v8z"/>
+                            </svg>
 
-                    </button>
+                        </button>
+                    </div>
                     <br/>
 
                     <div className='row'>
@@ -193,14 +198,14 @@ class TuringMachine extends Component {
                             />
                         </div>
                         <div className='col-4'>
-                            <span className='badge badge-light text-lg-center' id='stepsText'>
+                            <span className='bg-light p-2 font-weight-bold text-lg-center rounded-3' id='stepsText'>
                                  Details goes here
                             </span>
                         </div>
                         <div className='col-4'>
-                            <textarea disabled className="form-control" id="Textarea1" rows="3">
+                            {/*<textarea disabled className="form-control" id="Textarea1" rows="3">*/}
 
-                            </textarea>
+                            {/*</textarea>*/}
                         </div>
                     </div>
                 </center>

@@ -31,11 +31,12 @@ class Puzzle extends Component {
     render() {
         let classNames;
         return (
-            <div style={{backgroundColor: "#57407c", height: '100'}}
+
+            <div style={{backgroundColor: "#57407c"}}
                  className={'full-height'}
             >
                 <Navbar/>
-                <center className={'justify-content-around '}
+                <div className={'justify-content-around '}
                      style={{textAlign: "Center"}}>
                     <div style={{textAlign: "center", height: "440px", width: "440px", margin: 'auto'}}
                          className={"m-5"}>
@@ -77,9 +78,10 @@ class Puzzle extends Component {
                     {/*/!*              y1={(this.state.squares[0].value + 1) * 50}></line>*!/*/}
                     {/*/!*    </svg>*!/*/}
                     {/*/!*</SvgLines>*!/*/}
-                </center>
+                </div>
 
             </div>
+
         );
     }
 }
