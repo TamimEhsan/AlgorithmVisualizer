@@ -19,7 +19,7 @@ So far there are 6 segments
 - Binary Search Game
 - Turing Machine
 
-I have implemented a total of `14 algorithms` so far. And will try to add more later.  
+I have implemented a total of `17 algorithms` so far. And will try to add more later.  
 
 ## Algorithms implemented 
 
@@ -38,6 +38,10 @@ I have implemented a total of `14 algorithms` so far. And will try to add more l
 - Graham Scan for Convex Hull
 - Binary Search
 - Turing Machine
+  - Bitwise NOT
+  - Increment one
+  - 2's Compliment
+
 
 
 

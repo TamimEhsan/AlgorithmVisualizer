@@ -71,7 +71,7 @@ class RecursiveSort extends Component {
     }
     handleAlgoChanged = (pos, val) => {
         if (pos === 0) {
-            console.log("sup 0");
+            // console.log("sup 0");
             this.setState({algo: val});
         }
     }

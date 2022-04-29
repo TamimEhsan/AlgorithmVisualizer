@@ -25,7 +25,7 @@ class Menu extends Component {
 
                 <button
                     className='btn btn-warning btn-lg m-2'
-                    // onClick={this.props.onViusalize}
+                    onClick={this.props.onReset}
                     disabled={this.props.disable}
                 >Reset</button>
 

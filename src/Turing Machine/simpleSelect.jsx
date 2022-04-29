@@ -36,13 +36,13 @@ const SimpleSelect = (props) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={age}
-                    // onChange={handleChange}
+                    onChange={handleChange}
                 >
                     <MenuItem value={0} style={{selected:true}} >Bitwise NOT</MenuItem>
                     <MenuItem value={1} style={{selected:true}} >Add One</MenuItem>
                     <MenuItem value={2} style={{selected:true}} >2's Compliment</MenuItem>
-                    <MenuItem value={3} style={{selected:true}} >Bitwise AND</MenuItem>
-                    <MenuItem value={4} style={{selected:true}} >Bitwise OR</MenuItem>
+                    {/*<MenuItem value={3} style={{selected:true}} >Bitwise AND</MenuItem>*/}
+                    {/*<MenuItem value={4} style={{selected:true}} >Bitwise OR</MenuItem>*/}
                 </Select>
             </FormControl>
         </div>
