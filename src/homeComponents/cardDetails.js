@@ -6,6 +6,7 @@ import binSearch from "./images/binaryTree.png";
 import convex from './images/convexHull.png';
 import puzzle from './images/15puzzle.PNG';
 import turing from './images/turing.jpg';
+import Recursion from './images/Recursion.jpg';
 export function getDetails(){
    return [
        {
@@ -64,9 +65,15 @@ export function getDetails(){
            route:"/turing",
            img:turing
        },
-
        {
            id:8,
+           title:"Recursion",
+           description:"Work in progress",
+           route:"/graph",
+           img:Recursion
+       },
+       {
+           id:9,
            title:"15 Puzzle",
            description:"The 15 puzzle is a sliding puzzle having 15 square tiles numbered 1–15 in a frame that is 4 tiles high and 4 tiles wide, leaving one unoccupied tile position",
            route:"/15puzzle",

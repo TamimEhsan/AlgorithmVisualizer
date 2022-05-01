@@ -17,6 +17,7 @@ So far there are 6 segments
 - N Queen
 - Convex Hull
 - Binary Search Game
+- Recursion Tree
 - Turing Machine
 
 I have implemented a total of `17 algorithms` so far. And will try to add more later.  
@@ -37,6 +38,9 @@ I have implemented a total of `17 algorithms` so far. And will try to add more l
 - N Queen Backtracking
 - Graham Scan for Convex Hull
 - Binary Search
+- Recursion
+  - Fibonacci
+
 - Turing Machine
   - Bitwise NOT
   - Increment one
@@ -50,6 +54,7 @@ I am not sure if anyone would like to contribute to this project or not. But any
 ### Special Features addition timeline
 
 - Commit 16: Added Flip Move animation to inplace sorting components
+- Commit 20: Added Tree Structure
 
 
 ### Note to self:
