@@ -2,9 +2,10 @@
 
 
 export class Tree{
-    constructor(node=0,children=[]) {
+    constructor(node=0,children=[],label="") {
         this.id = 0;
         this.node = node;
+        this.label = label;
         this.width = node.length;
         this.children = children;
     }

@@ -20,7 +20,7 @@ So far there are 6 segments
 - Recursion Tree
 - Turing Machine
 
-I have implemented a total of `17 algorithms` so far. And will try to add more later.  
+I have implemented a total of `22 algorithms` so far. And will try to add more later.  
 
 ## Algorithms implemented 
 
@@ -39,7 +39,11 @@ I have implemented a total of `17 algorithms` so far. And will try to add more l
 - Graham Scan for Convex Hull
 - Binary Search
 - Recursion
-  - Fibonacci
+  - Fibonacci Number
+  - Binomial Coeficient
+  - Derangement
+  - Fast Exponentiation
+  - Stirling Number of Second Kind
 
 - Turing Machine
   - Bitwise NOT

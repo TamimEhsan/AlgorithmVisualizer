@@ -20,14 +20,20 @@ class Menu extends Component {
                 <SimpleSelect
                     pos={0}
                     label={'Task'}
-                    items={['Fibonacci','Sibonacci']}
+                    items={['Fibonacci','Binomial Coefficient',"Derangement","Bigmod","Stirling2"]}
                     onValueChanged={this.props.setAlgo}
                 />
                 <SimpleSelect
                     pos={0}
                     label={'N'}
-                    items={[1,2,3,4,5,6,7]}
+                    items={[0,1,2,3,4,5,6]}
                     onValueChanged={this.props.setN}
+                />
+                <SimpleSelect
+                    pos={0}
+                    label={'R'}
+                    items={[0,1,2,3,4,5,6]}
+                    onValueChanged={this.props.setR}
                 />
                 <button
                     className='btn btn-warning btn-lg m-2'

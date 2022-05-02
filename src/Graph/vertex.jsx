@@ -6,7 +6,13 @@ class Vertex extends Component {
         super();
 
     }
-
+    componentDidMount() {
+        if( this.props.id === 0 ) return;
+        // document.getElementById('ranim'+this.props.id).beginElement();
+        document.getElementById('cxanim'+this.props.id).beginElement();
+        document.getElementById('cyanim'+this.props.id).beginElement();
+        document.getElementById('tanim'+this.props.id).beginElement();
+    }
     render() {
 
         return (
@@ -14,13 +20,29 @@ class Vertex extends Component {
                 <circle
                     cx={this.props.pos.x}
                     cy={this.props.pos.y}
-                    r={3}
+                    r={6}
+                    // ry={3}
                     stroke="black" stroke-width="0.5" fill={this.props.current?'cyan':'white'}
                 >
+                    <animate
+                        id={'cxanim'+this.props.id}
+                        attributeName='cx'
+                        values={this.props.pos.px+";"+this.props.pos.x}
+                        dur='0.5s'
+                        repeatCount="1"
+                    />
+                    <animate
+                        id={'cyanim'+this.props.id}
+                        attributeName='cy'
+                        values={this.props.pos.py+";"+this.props.pos.y}
+                        dur='0.5s'
+                        repeatCount="1"
+                    />
                     {/*<animate*/}
-                    {/*    attributeName='r'*/}
-                    {/*    values='0;25;5;10'*/}
-                    {/*    dur='1s'*/}
+                    {/*    id={'ranim'+this.props.id}*/}
+                    {/*    attributeName='rx'*/}
+                    {/*    values='0;3'*/}
+                    {/*    dur='0.5s'*/}
                     {/*    repeatCount="1"*/}
                     {/*/>*/}
                     {/*<animate*/}
@@ -34,9 +56,19 @@ class Vertex extends Component {
                 <text
                     style={{font:'3px sans-serif'}}
                     x={this.props.pos.x}
-                    y={this.props.pos.y}
+                    y={this.props.pos.y-4}
+                    textAnchor={'middle'}
+                    // alignmentBaseline={'top'}
                 >
-                    {this.props.label}
+                    <animate
+                        id={'tanim'+this.props.id}
+                        attributeName='opacity'
+                        values='0;0;1'
+                        dur='1s'
+                        repeatCount="1"
+                    />
+                    <tspan x={this.props.pos.x} dy='1.2em' >N:{this.props.label}</tspan>
+                    <tspan  x={this.props.pos.x} dy='1.2em'>R:{this.props.ret}</tspan>
                 </text>
 
             </g>

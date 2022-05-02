@@ -13,7 +13,9 @@ class Graph extends Component {
             edges:[],
             current:-1,
             n:0,
-            algo:0
+            r:2,
+            algo:0,
+            offset:0
         }
     }
     // setNumber = (event)=>{
@@ -35,10 +37,16 @@ class Graph extends Component {
             this.setState({n: val});
         }
     }
+    setR = (pos, val) => {
+        if (pos === 0) {
+            // console.log("sup 0");
+            this.setState({r: val});
+        }
+    }
     addNumber = ()=>{
         // console.log(getFibTree(3));
-        let tree = getTree(this.state.n,this.state.algo);
-        this.setState({edges:[],vertices:[]});
+        let tree = getTree(this.state.n,this.state.algo,this.state.r);
+        this.setState({edges:[],vertices:[],offset:tree.x});
         this.state.vertices = [];
         // this.setState({});
         this.recur(tree,undefined);
@@ -49,12 +57,16 @@ class Graph extends Component {
         let vertices = this.state.vertices;
         let current = this.state.vertices.length;
 
-        if( node.children.length )
-            vertices.push({val:0,x:node.x,y:node.y});
-        else
-            vertices.push({val:node.tree.node,x:node.x,y:node.y});
-        this.setState({vertices,current});
+
         if( parent!==undefined ){
+            if( node.children.length )
+                vertices.push({label:node.tree.label,val:0,x:node.x,y:node.y,px:parent.x,py:parent.y});
+            else
+                vertices.push({label:node.tree.label,val:node.tree.node,x:node.x,y:node.y,px:parent.x,py:parent.y});
+            this.setState({vertices,current});
+
+
+
             let edges = this.state.edges;
             edges.push({
                 x1:parent.x,
@@ -63,17 +75,26 @@ class Graph extends Component {
                 y2:node.y
             });
             this.setState({edges});
+        }else{
+            if( node.children.length )
+                vertices.push({label:node.tree.label,val:0,x:node.x,y:node.y,px:node.x,py:node.y});
+            else
+                vertices.push({label:node.tree.label,val:node.tree.node,x:node.x,y:node.y,px:node.x,py:node.y});
+            this.setState({vertices,current});
         }
         await sleep(500);
 
 
         for(let i=0;i<node.children.length;i++){
             await this.recur( node.children[i],node );
-            let verticess = [...this.state.vertices];
-            verticess[current].val+=node.children[i].tree.node;
-            this.setState({current,vertices:verticess});
+            // let verticess = [...this.state.vertices];
+            // verticess[current].val+=node.children[i].tree.node;
+            this.setState({current});
             await sleep(500);
         }
+        let verticess = [...this.state.vertices];
+        verticess[current].val=node.tree.node;
+        this.setState({vertices:verticess});
     }
     render() {
         return (
@@ -81,6 +102,7 @@ class Graph extends Component {
                 <Navbar/>
                 <Menu
                     setN={this.setN}
+                    setR={this.setR}
                     setAlgo={this.setAlgo}
                     onStart={this.addNumber}
                 />
@@ -88,6 +110,7 @@ class Graph extends Component {
                     vertices={this.state.vertices}
                     edges={this.state.edges}
                     current={this.state.current}
+                    offset={this.state.offset}
                 />
             </div>
         );

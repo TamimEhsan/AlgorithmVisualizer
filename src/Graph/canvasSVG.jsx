@@ -22,18 +22,19 @@ class CanvasSvg extends Component {
 
     render() {
         console.log(this.props.vertices.length);
+        let off = this.props.offset;
         return (
             <div>
-                <svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
                     {
                         this.props.edges.map((edge, cellidx) => {
                             return (
                                 <Edge
                                     // key={vertex.id}
-                                    // id={cell.id+50}
+                                    id={cellidx}
 
-                                    pos={ {x1:edge.x1*10+50,y1:edge.y1*10+10,
-                                        x2:edge.x2*10+50,y2:edge.y2*10+10} }
+                                    pos={ {x1:(edge.x1-off)*15+120,y1:edge.y1*15+10,
+                                        x2:(edge.x2-off)*15+120,y2:edge.y2*15+10} }
                                 />
                             );
                         })}
@@ -43,10 +44,12 @@ class CanvasSvg extends Component {
                             return (
                                 <Vertex
                                     // key={vertex.id}
-                                    // id={cell.id+50}
+                                    id={cellidx}
                                     current={this.props.current === cellidx}
-                                    label={vertex.val}
-                                    pos={ {x:vertex.x*10+50,y:vertex.y*10+10} }
+                                    label={vertex.label}
+                                    ret={vertex.val}
+                                    pos={ {x:(vertex.x-off)*15+120,y:vertex.y*15+10,
+                                        px:(vertex.px-off)*15+120,py:vertex.py*15+10} }
                                 />
                             );
                         })}
