@@ -25,7 +25,7 @@ class CanvasSvg extends Component {
         let off = this.props.offset;
         return (
             <div>
-                <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
                     {
                         this.props.edges.map((edge, cellidx) => {
                             return (

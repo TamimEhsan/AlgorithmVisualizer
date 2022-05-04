@@ -18,10 +18,10 @@ export function getDetails(){
        },
        {
            id:2,
-           title:"Prime Numbers",
-           description:"Visualize how Seive is better than brute force",
-           route:"/prime",
-           img:primes
+           title:"Recursion Tree",
+           description:"The process in which a function calls itself directly or indirectly is called recursion. Work in progress",
+           route:"/graph",
+           img:Recursion
        },
        {
            id:3,
@@ -31,32 +31,18 @@ export function getDetails(){
            img:sort
        },
        {
-           id:9,
+           id:4,
            title:"Recursive Sorting",
            description:"Compare different recursive sorting algorithms",
            route:"/recursivesort",
            img:sort
        },
        {
-           id:4,
+           id:5,
            title:"N Queen",
            description:"The N queens puzzle is the problem of placing N chess queens on an N*N chessboard so that no two queens threaten each other",
            route:"/nqueen",
            img:queen
-       },
-       {
-           id:5,
-           title:"Convex Hull",
-           description:"The convex hull of a set of points is the smallest convex polygon that contains all the points of it",
-           route:"/convexhull",
-           img:convex
-       },
-       {
-           id:7,
-           title:"Binary Search",
-           description:"Binary search is an efficient algorithm for finding an item from a sorted list of item",
-           route:"/binarysearch",
-           img:binSearch
        },
        {
            id:6,
@@ -66,14 +52,28 @@ export function getDetails(){
            img:turing
        },
        {
+           id:7,
+           title:"Prime Numbers",
+           description:"Visualize how Seive is better than brute force",
+           route:"/prime",
+           img:primes
+       },
+       {
            id:8,
-           title:"Recursion",
-           description:"Work in progress",
-           route:"/graph",
-           img:Recursion
+           title:"Convex Hull",
+           description:"The convex hull of a set of points is the smallest convex polygon that contains all the points of it",
+           route:"/convexhull",
+           img:convex
        },
        {
            id:9,
+           title:"Binary Search",
+           description:"Binary search is an efficient algorithm for finding an item from a sorted list of item",
+           route:"/binarysearch",
+           img:binSearch
+       },
+       {
+           id:10,
            title:"15 Puzzle",
            description:"The 15 puzzle is a sliding puzzle having 15 square tiles numbered 1–15 in a frame that is 4 tiles high and 4 tiles wide, leaving one unoccupied tile position",
            route:"/15puzzle",

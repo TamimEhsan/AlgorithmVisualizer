@@ -35,12 +35,13 @@ I have implemented a total of `22 algorithms` so far. And will try to add more l
 - Merge sort
 - Quick sort
 - Sieve of Eratosthenes
+- Archimedes Spiral
 - N Queen Backtracking
 - Graham Scan for Convex Hull
 - Binary Search
 - Recursion
   - Fibonacci Number
-  - Binomial Coeficient
+  - Binomial Coefficient
   - Derangement
   - Fast Exponentiation
   - Stirling Number of Second Kind

@@ -3,6 +3,7 @@ import CanvasSvg from "./canvasSVG";
 import {getFibTree, getTree} from "./fib";
 import Menu from "./menu";
 import Navbar from "./navbar";
+import Details from "./details";
 
 class Graph extends Component {
     constructor() {
@@ -105,6 +106,9 @@ class Graph extends Component {
                     setR={this.setR}
                     setAlgo={this.setAlgo}
                     onStart={this.addNumber}
+                />
+                <Details
+                    algo={this.state.algo}
                 />
                 <CanvasSvg
                     vertices={this.state.vertices}

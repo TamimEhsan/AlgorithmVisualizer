@@ -7,7 +7,10 @@ class Menu extends Component {
         return (
             <nav className="nav alert-dark">
                 <button className="btn btn-primary btn-lg m-2" onClick={this.props.onRefresh} disabled={this.props.isDisabled} style={this.isClickable()}>Refresh</button>
-                <SimpleSelect/>
+                <SimpleSelect
+                    pos={0}
+                    onAlgoChanged={this.props.setAlgo}
+                />
                 <DiscreteSlider
                     onChange={this.props.onChangeSpeed}
                     title="speed"

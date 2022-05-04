@@ -3,13 +3,18 @@ import Cells from "./cells";
 import Navbar from "./navbar";
 import DiscreteSlider from "./slider";
 import Menu from "./menu";
+import {seive} from "../algorithms/prime";
+import Spiral from "./spiral";
 
 class Seive extends Component {
     state = {
         number: 100,
         cells:[],
         isRunning:false,
-        speed:500
+        speed:500,
+        primes:[],
+        maxPrime:0,
+        algo:0
     }
 
     constructor(props) {
@@ -19,6 +24,13 @@ class Seive extends Component {
         const cells = getCells(this.state.number);
         this.setState({cells});
     }
+    setAlgo = (pos, val) => {
+        if (pos === 0) {
+
+            this.setState({algo: val});
+            // console.log(this.state.algo);
+        }
+    }
 
     render() {
         return (
@@ -27,14 +39,24 @@ class Seive extends Component {
                 <Menu
                     onChangeSpeed={this.changeSpeed}
                     onChangeValues={this.handleValueIncease}
-                    onVisualize = {this.startSeive}
+                    onVisualize = {this.startAlgo}
                     onRefresh = {this.handleRefresh}
                     isDisabled = {this.state.isRunning}
+                    setAlgo={this.setAlgo}
                 />
-                <Cells
-                    num={this.state.number}
-                    cells={this.state.cells}
-                />
+                {this.state.algo === 0 &&
+                    <Cells
+                        num={this.state.number}
+                        cells={this.state.cells}
+                    />
+                }
+                {this.state.algo === 1 &&
+                    <Spiral
+                        num={this.state.number}
+                        primes={this.state.primes}
+                        maxPrime={this.state.maxPrime}
+                    />
+                }
 
             </div>
         );
@@ -46,11 +68,38 @@ class Seive extends Component {
     }
     handleValueIncease = (value) => {
         this.setState({number:value});
-        this.setState({cells:getCells(value),isRunning:false});
-        console.log(value);
+        if( this.state.algo === 0 ){
+            this.setState({cells:getCells(value),isRunning:false});
+
+        }
+        // console.log(value);
     }
     handleRefresh = () => {
         this.setState({cells:getCells(this.state.number),isRunning:false});
+    }
+
+    startAlgo = () =>{
+        console.log(this.state.algo);
+        if( this.state.algo === 0 ){
+            this.startSeive();
+        }else if( this.state.algo === 1 ){
+            this.startSpiral();
+        }
+    }
+    startSpiral = async () =>{
+        let pprimes = seive(this.state.number*100);
+        let primes = [];
+        this.setState({primes:[],maxPrime:pprimes[pprimes.length-1]});
+        let mod = Math.ceil(this.state.number/10);
+        for(let i=0;i<pprimes.length;i++){
+            primes.push(pprimes[i]);
+
+            if( i%mod === 0 ){
+                this.setState({primes});
+                await sleep(10);
+            }
+        }
+        console.log('done');
     }
     startSeive = async () => {
         const speed = this.state.speed;
