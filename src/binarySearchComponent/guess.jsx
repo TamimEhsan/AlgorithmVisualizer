@@ -26,7 +26,7 @@ class Guess extends Component {
                 </div>
 
                <h1>
-                    Is you number greater than {this.getMid()}?
+                    Is your number greater than {this.getMid()}?
                 </h1> <br />
                 <button
                     className='btn btn-lg btn-success m-2'
