@@ -20,13 +20,14 @@ So far there are 6 segments
 - Recursion Tree
 - Turing Machine
 
-I have implemented a total of `23 algorithms` so far. And will try to add more later.  
+I have implemented a total of `24 algorithms` so far. And will try to add more later.  
 
 ## Algorithms implemented 
 
 - DFS
 - BFS
 - Dijkstra
+- A star
 - Recursive Maze Creation
 - Bubble sort
 - Selection sort

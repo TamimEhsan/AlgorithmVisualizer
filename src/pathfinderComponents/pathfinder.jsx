@@ -6,6 +6,7 @@ import {dijkstra,getNodesInShortestPathOrder} from "../algorithms/dijkstra";
 import {getMaze} from "../algorithms/recursiveMaze";
 import {bfsdfs} from "../algorithms/bfs";
 import {randomMaze} from "../algorithms/randomMaze";
+import {aStar} from "../algorithms/Astar";
 
 class Pathfinder extends Component {
     constructor() {
@@ -14,7 +15,7 @@ class Pathfinder extends Component {
             grid:[],
             mouseIsPressed:false,
             algorithms:[
-                "Dijsktra","BFS","DFS"
+                "Dijsktra","A star","BFS","DFS"
             ],
             algo:0,
             mazes:[
@@ -160,6 +161,9 @@ class Pathfinder extends Component {
                 visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
                 break;
             case 1:
+                visitedNodesInOrder = aStar(grid, startNode, finishNode);
+                break;
+            case 2:
                 visitedNodesInOrder = bfsdfs(grid, startNode, finishNode,"bfs");
                 break;
             default:
