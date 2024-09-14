@@ -24,17 +24,19 @@ I have implemented a total of `24 algorithms` so far. And will try to add more l
 
 ## Algorithms implemented 
 
-- DFS
-- BFS
-- Dijkstra
-- A star
-- Recursive Maze Creation
-- Bubble sort
-- Selection sort
-- Insertion sort
-- Heap sort
-- Merge sort
-- Quick sort
+- Graph Search
+  - DFS
+  - BFS
+  - Dijkstra
+  - A star
+  - Recursive Maze Creation
+- Sorting
+  - Bubble sort
+  - Selection sort
+  - Insertion sort
+  - Heap sort
+  - Merge sort
+  - Quick sort
 - Sieve of Eratosthenes
 - Archimedes Spiral
 - N Queen Backtracking
@@ -69,6 +71,15 @@ I took inspirations from the following sources for some of the segments.
 - `Archimedes Spiral for Primes`: [Why do prime numbers make these spirals? ](https://youtu.be/EK32jo7i5LQ)
 - `Recursion tree visualizer`: [Recursion Tree Visualizer](https://github.com/brpapa/recursion-tree-visualizer)
 - `Turing Machine`: [Tursi](https://github.com/schaetzc/tursi)
+
+### Run locally
+
+Make sure you have node installed in your system. Then run
+```bash
+npm i
+npm run start
+```
+This will start the app in `http://localhost:3000/AlgorithmVisualizer#/`
 
 ### Note to self:
 
