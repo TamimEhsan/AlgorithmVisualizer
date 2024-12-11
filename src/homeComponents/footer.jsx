@@ -6,12 +6,10 @@ class Footer extends Component {
         return (
             <footer class="page-footer font-small special-color-dark pt-4 ">
 
-                <div className='flex-wrap' style={{textAlign:"center"}}>
+                <div className='flex-wrap row-gap-3' style={{textAlign:"center"}}>
                     <div className='m-2'><GitHubButton href="https://github.com/TamimEhsan" data-show-count="true" aria-label="Follow @TamimEhsan on GitHub">Follow @TamimEhsan</GitHubButton></div>
                     <GitHubButton href="https://github.com/TamimEhsan/Pathfinder-2.0" data-icon="octicon-star" data-show-count="true" aria-label="Star TamimEhsan/Pathfinder-2.0 on GitHub">Star</GitHubButton>
-                    &nbsp
                     <GitHubButton href="https://github.com/TamimEhsan/Pathfinder-2.0/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork TamimEhsan/Pathfinder-2.0 on GitHub">Fork</GitHubButton>
-                    &nbsp
                     <img src="https://visitor-badge.laobi.icu/badge?page_id=TamimEhsan.AlgorithmVisualizer" alt="Hits"/>
                 </div>
 

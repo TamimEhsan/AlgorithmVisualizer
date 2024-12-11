@@ -11,7 +11,8 @@ class Home extends Component {
             <React.Fragment>
                 <Navbar/>
                 <Greet/>
-                <TypeWriterC/>
+                <hr/>
+                {/* <TypeWriterC/> */}
                 <Cards/>
                 <Footer/>
             </React.Fragment>

@@ -8,7 +8,7 @@
 }
 
 .Cards{
-    background-color: grey;
+    /* background-color: #f2f0ef ; */
     align-items: center;
     align-self: center;
     align-content: center;
@@ -16,15 +16,16 @@
     child-align: middle;
 }
 .page-footer{
-    background-color: #282c34;
+    /* background-color: #282c34; */
+    background-color: rgb(248,249,250);
 }
 .footer-copyright{
-    color:white;
-    background-color: black;
+    color:black;
+    background-color: rgb(248,249,250);
 }
 .greet{
     text-align: center;
-    background-color: #434445;
-    color: white;
+    /* background-color: #c9c8c7; */
+    color: black;
     padding: 10px;
 }

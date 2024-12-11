@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
         maxWidth:350,
         minHeight:200,
         borderRadius: 5,
-        '&:hover': {
-            boxShadow: `0 6px 12px 0 #000000
-                .rotate(-12)
-                .darken(0.2)
-                .fade(0.5)}`
-                ,
-        },
+        boxShadow: '0 6px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)',
+        // '&:hover': {
+        //     boxShadow: `0 6px 12px 0 #000000
+        //         .rotate(-12)
+        //         .darken(0.2)
+        //         .fade(0.5)}`
+        //         ,
+        // },
     },
     media: {
         height: 100
@@ -48,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
         transition: '0.2s',
         '&:hover': {
             transform: 'scale(1.1)',
-
         },
     },
 }));
@@ -76,7 +76,7 @@ export default function ImgMediaCard2(props) {
                </Link>
                 <CardHeader
                     title={props.card.title}
-                    style={{backgroundColor:"whitesmoke"}}
+                    // style={{backgroundColor:"whitesmoke"}}
                     action={
                         <IconButton
                             className={clsx(classes.expand, {
@@ -92,7 +92,7 @@ export default function ImgMediaCard2(props) {
                 />
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent
-                        style={{backgroundColor:"whitesmoke"}}
+                        // style={{backgroundColor:"whitesmoke"}}
                     >
                         <Typography>
                             {props.card.description}

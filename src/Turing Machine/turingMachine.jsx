@@ -5,7 +5,7 @@ import Ribbon from "./ribbon";
 
 import {getNextStep, getTable} from '../algorithms/turing';
 import Menu from "./menu";
-import Navbar from "./navbar";
+import Navbar from '../components/navbar';
 import Table from "./table";
 
 class TuringMachine extends Component {
@@ -131,7 +131,7 @@ class TuringMachine extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar title="Turing Machine"/>
                 <Menu
                     visualize={this.handleStart}
                     onAlgoChanged={this.setAlgo}

@@ -1,12 +1,12 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
+import { aStar } from "../algorithms/Astar";
+import { bfsdfs } from "../algorithms/bfs";
+import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
+import { randomMaze } from "../algorithms/randomMaze";
+import { getMaze } from "../algorithms/recursiveMaze";
 import Grid from "./grid";
-import Navbar from "./navbar";
 import Menu from "./menu";
-import {dijkstra,getNodesInShortestPathOrder} from "../algorithms/dijkstra";
-import {getMaze} from "../algorithms/recursiveMaze";
-import {bfsdfs} from "../algorithms/bfs";
-import {randomMaze} from "../algorithms/randomMaze";
-import {aStar} from "../algorithms/Astar";
+import Navbar from '../components/navbar';
 
 class Pathfinder extends Component {
     constructor() {
@@ -47,7 +47,7 @@ class Pathfinder extends Component {
     render() {
         return (
             <Fragment>
-                <Navbar/>
+                <Navbar title="Pathfinder"/>
 
                 <Menu
                     onAlgoChanged = {this.handleAlgoChanged}

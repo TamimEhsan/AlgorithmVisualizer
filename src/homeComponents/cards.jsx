@@ -27,13 +27,13 @@ class Cards extends Component {
     render() {
         return (
            <React.Fragment>
-               <div className="d-flex justify-content-end Cards">
+               {/* <div className="d-flex justify-content-end Cards">
                    <TextField
                        id="standard-basic" label="Search"
                        color="secondary"
                        onChange={this.getData}
                    />
-               </div>
+               </div> */}
                <div className="d-flex flex-wrap justify-content-center Cards p-lg-5" >
                    {
                        this.state.cards.filter((card) => card.title.toLowerCase().includes(this.state.filter.toLowerCase())||card.description.toLowerCase().includes(this.state.filter.toLowerCase())).map(card=>(

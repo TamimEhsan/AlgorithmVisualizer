@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import EntryPoint from "./entryPoint";
 import Search from "./search";
-import Navbar from "./navbar";
+import Navbar from '../components/navbar';
 
 class BinarySearch extends Component {
     state={
@@ -13,7 +13,7 @@ class BinarySearch extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar title={"Binary Search"}/>
                 <br />
                 <br />
                 <br />

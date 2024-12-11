@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Rects from "./rects";
 import {bubbleSort,selectionSort,insertionSort} from "../algorithms/sortingAlgorithms";
 import {quickSort} from "../algorithms/quickSort";
-import Navbar from "./navbar";
+import Navbar from '../components/navbar';
 import Menu from "./menu";
 
 class Sort extends Component {
@@ -29,7 +29,7 @@ class Sort extends Component {
     render() {
     return (
         <React.Fragment>
-            <Navbar/>
+            <Navbar title="Sorting Visualizer"/>
             <Menu
                 disable={this.state.isRunning}
                 onDoubleChange={this.handleDouble}

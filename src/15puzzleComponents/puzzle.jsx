@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import Navbar from "./navbar";
+import { times } from 'lodash';
+import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import SvgLines from 'react-mt-svg-lines';
 import '../helpers/array_helpers';
 import './style.css';
-import {times} from 'lodash';
+import Navbar from '../components/navbar';
 
 const FLIP_DURATION = 750;
 
@@ -35,7 +34,7 @@ class Puzzle extends Component {
             <div style={{backgroundColor: "#57407c"}}
                  className={'full-height'}
             >
-                <Navbar/>
+                <Navbar title={"15 Puzzle"}/>
                 <div className={'justify-content-around '}
                      style={{textAlign: "Center"}}>
                     <div style={{textAlign: "center", height: "440px", width: "440px", margin: 'auto'}}
