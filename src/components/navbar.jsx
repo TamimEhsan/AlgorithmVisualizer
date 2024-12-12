@@ -1,24 +1,26 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import Link from 'next/link'
+import { Button } from "@/components/ui/button"
+import { Github, Home } from 'lucide-react'
 
-export default function Navbar(props){
-    
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-light">
-            <div>
-            <span className="navbar-brand text-black px-3">{props.title}</span>
-            <Link to={"/"} className="text-decoration-none text-black"> Home </Link>
-            </div>
-            {/* <button className="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent" >
-                <Link to={"/"} className="text-decoration-none text-black"> Home </Link>
-            </div> */}
-
-        </nav>
-    );
-    
+export default function Navbar(props) {
+  return (
+    <nav className="bg-background shadow-sm py-1 px-6 flex justify-between items-center">
+      <Link href="/" className="text-xl font-bold">{props.title}</Link>
+      <div className="flex items-center space-x-4">
+        <Button variant="ghost" size="lg" asChild>
+          <Link href="/">
+            <Home className="h-4 w-4" />
+            Home
+          </Link>
+        </Button>
+        <Button variant="ghost" size="lg" asChild>
+          <Link href="/about">About</Link>
+        </Button>
+        <Button size="icon" variant="ghost">
+          <Github className="h-5 w-5" />
+        </Button>
+      </div>
+    </nav>
+  )
 }
+

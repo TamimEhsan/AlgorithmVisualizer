@@ -1,0 +1,8 @@
+.rect{
+    background-color: steelblue;
+    outline: 1px black;
+    height: 20px;
+    width: 20px;
+    border-radius: 5px;
+    margin: 5px;
+}
