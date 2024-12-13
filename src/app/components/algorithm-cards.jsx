@@ -14,7 +14,7 @@ const algorithms = [
   {
     id: 'recursion-tree',
     title: 'Recursion Tree',
-    description: "The process in which a function calls itself directly or indirectly is called recursion. Work in progress",
+    description: "The process in which a function calls itself directly or indirectly is called recursion",
     image: '/images/recursion.jpg?height=200&width=300'
   },
   {
