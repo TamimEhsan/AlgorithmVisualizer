@@ -1,8 +1,7 @@
-import { Component } from 'react';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomSlider } from '@/components/custom-slider';
-import { CustomToggle } from '@/components/custom-toggle';
 import { Button } from '@/components/ui/button';
+import { Component } from 'react';
 
 
 class Menu extends Component {
