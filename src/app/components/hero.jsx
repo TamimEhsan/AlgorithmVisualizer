@@ -14,7 +14,7 @@ export default function Hero() {
             </div>
             <div className="md:w-1/4">
                 <Image
-                    src="/images/algorithm.png?height=400&width=600"
+                    src="/AlgorithmVisualizer/images/algorithm.png?height=400&width=600"
                     alt="Hero image"
                     width={300}
                     height={200}

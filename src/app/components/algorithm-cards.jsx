@@ -9,61 +9,61 @@ const algorithms = [
     id: 'pathfinder',
     title: "Pathfinder",
     description: "Visualize graph algorithms like dijkstra, BFS, DFS",
-    image: '/images/graph.png?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/graph.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
     title: 'Recursion Tree',
     description: "The process in which a function calls itself directly or indirectly is called recursion",
-    image: '/images/recursion.jpg?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/recursion.jpg?height=200&width=300'
   },
   {
     id: 'sorting',
     title: 'Sorting Algorithm',
     description: "Compare different sorting algorithms",
-    image: '/images/sort.png?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/sort.png?height=200&width=300'
   },
   {
     id: 'recursive-sorting',
     title: 'Recursive Sorting',
     description: "Compare different recursive sorting algorithms",
-    image: '/images/sort.png?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/sort.png?height=200&width=300'
   },
   {
     id: 'n-queen',
     title: 'N Queen',
     description: "The N queens puzzle is the problem of placing N chess queens on an N*N chessboard so that no two queens threaten each other",
-    image: '/images/queen.PNG?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/queen.PNG?height=200&width=300'
   },
   {
     id: 'turing-machine',
     title: 'Turing Machine',
     description: "A Turing machine is a mathematical model of computation that defines an abstract machine that manipulates symbols on a strip of tape according to a table of rules",
-    image: '/images/turing.jpg?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/turing.jpg?height=200&width=300'
   },
   {
     id: 'prime-numbers',
     title: 'Prime Numbers',
     description: "Visualize how Seive is better than brute force",
-    image: '/images/primes.jpg?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/primes.jpg?height=200&width=300'
   },
   {
     id: 'convex-hull',
     title: 'Convex Hull',
     description: "The convex hull of a set of points is the smallest convex polygon that contains all the points of it",
-    image: '/images/convex-hull.png?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/convex-hull.png?height=200&width=300'
   },
   {
     id: 'binary-search',
     title: 'Binary Search',
     description: "Binary search is an efficient algorithm for finding an item from a sorted list of item",
-    image: '/images/binary-search.png?height=200&width=300'
+    image: '/AlgorithmVisualizer/images/binary-search.png?height=200&width=300'
   },
   // {
   //   id: '15-puzzle',
   //   title: '15 Puzzle',
   //   description: "The 15-puzzle is a sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing",
-  //   image: '/images/15puzzle.PNG?height=200&width=300'
+  //   image: '/AlgorithmVisualizer/images/15puzzle.PNG?height=200&width=300'
   // }
 ]
 
