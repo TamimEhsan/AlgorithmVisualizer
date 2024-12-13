@@ -17,7 +17,9 @@ export default function Navbar(props) {
           <Link href="/about">About</Link>
         </Button>
         <Button size="icon" variant="ghost">
-          <Github className="h-5 w-5" />
+          <Link href="https://github.com/TamimEhsan/AlgorithmVisualizer">
+            <Github className="h-5 w-5" />
+          </Link>
         </Button>
       </div>
     </nav>

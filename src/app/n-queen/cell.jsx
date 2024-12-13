@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
-import './style.css'
-import queen from './queen.png';
+import { Component } from 'react';
+import './style.css';
 class Cell extends Component {
     render() {
         return (
             <div className={this.getClassName()} style={this.getStyled()}>
-                { this.props.cell.isPresent && <img src={queen} height='100px' style={{padding:"25px"}}/> }
+                { this.props.cell.isPresent && <img src={"/images/queen-cell.png"} height='100px' style={{padding:"25px"}}/> }
             </div>
         );
     }

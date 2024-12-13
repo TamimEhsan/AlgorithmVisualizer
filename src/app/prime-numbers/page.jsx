@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+"use client";
+
+import Navbar from '@/components/navbar';
+import { seive } from "@/lib/algorithms/prime";
+import { Component } from 'react';
 import Cells from "./cells";
-import Navbar from '../components/navbar';
-import DiscreteSlider from "./slider";
 import Menu from "./menu";
-import {seive} from "../lib/algorithms/prime";
 import Spiral from "./spiral";
 
 class Seive extends Component {
@@ -79,7 +80,6 @@ class Seive extends Component {
     }
 
     startAlgo = () =>{
-        console.log(this.state.algo);
         if( this.state.algo === 0 ){
             this.startSeive();
         }else if( this.state.algo === 1 ){

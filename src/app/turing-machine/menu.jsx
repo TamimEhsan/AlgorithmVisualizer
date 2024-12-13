@@ -1,69 +1,57 @@
-import React, {Component} from 'react';
-import DiscreteSlider from "./slider";
-import SimpleSelect from "./simpleSelect";
+import React, { Component } from 'react';
+
+import { CustomSelect } from '@/components/custom-select';
+import { Button } from '@/components/ui/button';
 
 
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav alert-dark">
-
-
-                {/*<DiscreteSlider*/}
-                {/*    default={50}*/}
-                {/*    min={10}*/}
-                {/*    max={100}*/}
-                {/*    step={1}*/}
-                {/*    title="Speed"*/}
-                {/*    onCountChange={this.props.onSpeedChange}*/}
-                {/*    disable={false}*/}
-                {/*/>*/}
-                <SimpleSelect
-                    pos={0}
-                    onAlgoChanged={this.props.onAlgoChanged}
+            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
+                <CustomSelect
+                    title="Select Algorithm"
+                    options={["Bitwise NOT","Add one","2's Complement"]}
+                    onChange={this.props.onAlgoChanged}
                 />
 
 
-                    <div className="input-group mt-2 col-3">
-                        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary"
-                               aria-label="Username"
-                               aria-describedby="basic-addon1"
-                               onChange={this.props.setInput1}
-                        />
-                    </div>
-                    <div className="input-group mt-2 col-3">
-                        <input type="text" id='inputText1' className="form-control" placeholder="Input Binary 2"
-                               aria-label="Username"
-                               aria-describedby="basic-addon1"
-                               onChange={this.props.setInput2}
-                        />
-                    </div>
+                <div className="input-group mt-2 col-3">
+                    <input type="text" id='inputText1' className="form-control" placeholder="Input Binary"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        onChange={this.props.setInput1}
+                    />
+                </div>
+                <div className="input-group mt-2 col-3">
+                    <input type="text" id='inputText1' className="form-control" placeholder="Input Binary 2"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        onChange={this.props.setInput2}
+                    />
+                </div>
 
 
-                <button
-                    className='btn btn-warning btn-lg m-2'
+                <Button
                     onClick={this.props.onReset}
                     disabled={this.props.disable}
-                >Reset</button>
+                >Reset</Button>
 
-                <button
-                    className='btn btn-warning btn-lg '
+                <Button
                     onClick={this.props.visualize}
                     disabled={this.props.disable}
-                >Visualize</button>
+                >Visualize</Button>
 
-            </nav>
-    );
+            </div>
+        );
     }
-    isClickable = () =>
-        {
-            if (this.props.disable) {
-                return {cursor: "not-allowed"};
-            } else {
-                return {};
-            }
+    isClickable = () => {
+        if (this.props.disable) {
+            return { cursor: "not-allowed" };
+        } else {
+            return {};
         }
     }
+}
 
 
-    export default Menu;
+export default Menu;

@@ -9,7 +9,12 @@ import { Input } from "@/components/ui/input"
 //   placeholder?: string
 // }
 
-export function CustomInput({ title, value, onChange, type = "text", placeholder }) {
+export function CustomInput({ title, defaultValue = "", onChange, type = "text", placeholder }) {
+  const [value, setInputValue] = React.useState(defaultValue)
+  const onInputChange = (value) => {
+    setInputValue(value)
+    onChange(value)
+  }
   return (
     <div className="flex items-center space-x-2">
       <label
@@ -22,7 +27,7 @@ export function CustomInput({ title, value, onChange, type = "text", placeholder
         id={title}
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onInputChange(e.target.value)}
         placeholder={placeholder}
         className="w-[180px]"
       />

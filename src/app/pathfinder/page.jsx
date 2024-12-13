@@ -50,7 +50,8 @@ class Pathfinder extends Component {
             <Fragment>
                 <Navbar title="Pathfinder"/>
 
-                <div className="flex flex-1 overflow-hidden">
+                {/* <div className="flex flex-1 overflow-hidden"> */}
+                <div>
                 <Menu
                     onAlgoChanged = {this.handleAlgoChanged}
                     onVisualize = {this.handleClick}

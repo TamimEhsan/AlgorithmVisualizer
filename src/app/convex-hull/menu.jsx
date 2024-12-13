@@ -1,7 +1,5 @@
-import { CustomSelect } from '@/components/custom-select';
 import { CustomSlider } from '@/components/custom-slider';
 import { Button } from '@/components/ui/button';
-
 import { Component } from 'react';
 
 class Menu extends Component {
@@ -15,38 +13,30 @@ class Menu extends Component {
                 >
                     Refresh
                 </Button>
-                <CustomSelect
-                    title="Select Algorithm"
-                    options={["Sieve", "Spiral"]}
-                    onChange={this.props.setAlgo}
-                />
                 <CustomSlider
-                    onChange={this.props.onChangeSpeed}
                     title="speed"
-                    marks={false}
                     defaultValue={10}
-                    step={1}
                     min={10}
                     max={50}
-                    isDisabled={false}
+                    step={1}
+                    onChange={this.props.onChangeSpeed}
                 />
                 <CustomSlider
-                    onChange={this.props.onChangeValues}
                     title="Total Number"
-                    marks={false}
-                    defaultValue={100}
-                    step={1}
+                    defaultValue={50}
                     min={10}
-                    max={500}
+                    max={200}
+                    step={1}
+                    onChange={this.props.onChangeValues}
                     isDisabled={this.props.isDisabled}
                 />
                 <Button
                     onClick={this.props.onVisualize}
                     disabled={this.props.isDisabled}
-                    style={this.isClickable()}>
-                    Visualize
+                    style={this.isClickable()}
+                >
+                    Visualize Graham Scan
                 </Button>
-
 
             </div>
         );

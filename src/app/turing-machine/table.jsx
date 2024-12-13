@@ -1,50 +1,31 @@
-import React, {Component} from 'react';
-import Rect from "../recursiveSortComponents/rect";
+import { Component } from 'react';
 
 class Table extends Component {
     render() {
-        console.log(this.props.data)
         return (
             <div>
-                <table className="table table-bordered">
+                <table className="table-auto border border-slate-800 border-collapse">
                     <thead>
                     <tr>
-                        <th scope="col">State</th>
-                        <th scope="col">Input</th>
-                        <th scope="col">Next</th>
-                        <th scope="col">Output</th>
-                        <th scope="col">Direction</th>
+                        <th className="border border-slate-500 px-4 py-2" scope="col">State</th>
+                        <th className="border border-slate-500 px-4 py-2" scope="col">Input</th>
+                        <th className="border border-slate-500 px-4 py-2" scope="col">Next</th>
+                        <th className="border border-slate-500 px-4 py-2" scope="col">Output</th>
+                        <th className="border border-slate-500 px-4 py-2" scope="col">Direction</th>
                     </tr>
                     </thead>
                     <tbody>
                     {this.props.data.map( (row,rowidx)=>{
                         return (
-                            <tr  className={ rowidx===this.props.state && 'table-primary' }>
-                                <th scope="row">{row[0]}</th>
-                                <th>{row[1]}</th>
-                                <td>{row[2]}</td>
-                                <td>{row[3]}</td>
-                                <td>{row[4]}</td>
+                            <tr key={rowidx}  className={ rowidx === this.props.state ? 'bg-blue-100' : '' }>
+                                <th className="border border-slate-500 px-4 py-2" scope="row">{row[0]}</th>
+                                <th className="border border-slate-500 px-4 py-2">{row[1]}</th>
+                                <td className="border border-slate-500 px-4 py-2">{row[2]}</td>
+                                <td className="border border-slate-500 px-4 py-2">{row[3]}</td>
+                                <td className="border border-slate-500 px-4 py-2">{row[4]}</td>
                             </tr>
                         );
                     } )}
-                    {/*<tr>*/}
-                    {/*    <th scope="row">1</th>*/}
-                    {/*    <td>Mark</td>*/}
-                    {/*    <td>Otto</td>*/}
-                    {/*    <td>@mdo</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*    <th scope="row">2</th>*/}
-                    {/*    <td>Jacob</td>*/}
-                    {/*    <td>Thornton</td>*/}
-                    {/*    <td>@fat</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*    <th scope="row">3</th>*/}
-                    {/*    <td colSpan="2">Larry the Bird</td>*/}
-                    {/*    <td>@twitter</td>*/}
-                    {/*</tr>*/}
                     </tbody>
                 </table>
             </div>

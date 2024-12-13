@@ -1,49 +1,46 @@
-import React, {Component} from 'react';
-import DiscreteSlider from "./slider";
-
-
+import { CustomSlider } from '@/components/custom-slider';
+import { Button } from '@/components/ui/button';
+import React, { Component } from 'react';
 
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav alert-dark">
-                <button
-                    className='btn btn-secondary m-2'
-                    onClick={this.props.onClear}
-                    disabled={this.props.disable}
-                    style={this.isClickable()}
-                >
-                    Clear Board
-                </button>
+            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
+            <Button
+                onClick={this.props.onClear}
+                disabled={this.props.disable}
+                style={this.isClickable()}
+            >
+                Clear Board
+            </Button>
 
-                <DiscreteSlider
-                    default={4}
-                    min={1}
-                    max={8}
-                    step={1}
-                    title="Grid size"
-                    onCountChange={this.props.onCountChange}
-                    disable={this.props.disable}
-                />
-                <DiscreteSlider
-                    default={50}
-                    min={1}
-                    max={100}
-                    step={1}
-                    title="Speed"
-                    onCountChange={this.props.onSpeedChange}
-                />
+            <CustomSlider
+                title="Grid size"
+                defaultValue={4}
+                min={1}
+                max={8}
+                step={1}
+                onChange={this.props.onCountChange}
+                disable={this.props.disable}
+            />
+            <CustomSlider
+                title="Speed"
+                defaultValue={50}
+                min={1}
+                max={100}
+                step={1}
+                onChange={this.props.onSpeedChange}
+            />
 
-                <button
-                    className='btn btn-warning btn-lg '
-                    onClick={this.props.onViusalize}
-                    disabled={this.props.disable}
-                    style={this.isClickable()}
-                >
-                    Visualize
-                </button>
+            <Button
+                onClick={this.props.onViusalize}
+                disabled={this.props.disable}
+                style={this.isClickable()}
+            >
+                Visualize
+            </Button>
 
-            </nav>
+        </div>
         );
     }
     isClickable = () =>{

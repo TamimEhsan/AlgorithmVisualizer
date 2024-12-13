@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
 import './style.css';
-// class Rect extends Component {
+
 const Rect = ({ marg, rect }) => {
 
     const checkColor = () => {

@@ -1,10 +1,12 @@
 "use client";
+import Navbar from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import '@/lib/helpers/array_helpers';
 import { times } from 'lodash';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import '../helpers/array_helpers';
 import './style.css';
-import Navbar from '../components/navbar';
+
 
 const FLIP_DURATION = 750;
 
@@ -32,28 +34,32 @@ class Puzzle extends Component {
         let classNames;
         return (
 
-            <div style={{backgroundColor: "#57407c"}}
-                 className={'full-height'}
+            <div style={{ backgroundColor: "#57407c" }}
+                className={'full-height'}
             >
-                <Navbar title={"15 Puzzle"}/>
+                <Navbar title={"15 Puzzle"} />
                 <div className={'justify-content-around '}
-                     style={{textAlign: "Center"}}>
-                    <div style={{textAlign: "center", height: "440px", width: "440px", margin: 'auto'}}
-                         className={"m-5"}>
+                    style={{ textAlign: "Center" }}>
+                    <div style={{ textAlign: "center", height: "440px", width: "440px", margin: 'auto' }}
+                        className={"m-5"}>
                         <FlipMove
                             duration={FLIP_DURATION}
                             easing="cubic-bezier(.12,.36,.14,1.2)"
                         >
                             {this.state.squares.map((stt) =>
                                 <div key={stt.value}
-                                     className={stt.value === 0 ? "square " : stt.value % 2 === 0 ? 'square shadow correct pt-1' : 'square shadow painted pt-1'}
+                                    className={stt.value === 0 ? "square " : stt.value % 2 === 0 ? 'square shadow correct pt-1' : 'square shadow painted pt-1'}
                                 >
                                     {stt.value === 0 ? "" : stt.value}
                                 </div>
                             )}
-                            <br/>
+                            <br />
                         </FlipMove>
-                        <button className={"btn btn-secondary"} onClick={this.balsal}>Animate</button>
+                        <Button
+                            onClick={this.balsal}
+                        >
+                            Animate
+                        </Button>
                     </div>
 
                     {/*<FlipMove*/}

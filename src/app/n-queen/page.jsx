@@ -1,6 +1,8 @@
+"use client";
+
 import React, {Component} from 'react';
 import Cells from "./cells";
-import Navbar from '../components/navbar';
+import Navbar from '@/components/navbar';
 import Menu from "./menu";
 
 class Queen extends Component {

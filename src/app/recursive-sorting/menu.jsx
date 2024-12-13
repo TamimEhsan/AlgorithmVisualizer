@@ -1,59 +1,57 @@
-import React, {Component} from 'react';
-import DiscreteSlider from "./slider";
-import SimpleSelect from "./simpleSelect";
-import CustomizedSlider from "./airBnbSlider";
-import RangeSlider from "./doubleSlider";
-import SwitchLabels from "./formControlLabel";
+import { Component } from 'react';
+import { CustomSelect } from '@/components/custom-select';
+import { CustomSlider } from '@/components/custom-slider';
+import { CustomToggle } from '@/components/custom-toggle';
+import { Button } from '@/components/ui/button';
 
 
 class Menu extends Component {
     render() {
         return (
-            <nav className="nav alert-dark">
-                <button
-                    className='btn btn-secondary m-2'
+            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
+                <Button
                     onClick={this.props.onRandomize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
                     Randomize
-                </button>
+                </Button>
 
-                <RangeSlider
+                {/* <RangeSlider
                     disable={this.props.disable}
-                />
-                <DiscreteSlider
-                    default={20}
+                /> */}
+                <CustomSlider
+                    title="Numbers"
+                    defaultValue={20}
                     min={10}
                     max={100}
                     step={10}
-                    title="Numbers"
-                    onCountChange={this.props.onCountChange}
+                    onChange={this.props.onCountChange}
                     disable={this.props.disable}
                 />
-                <DiscreteSlider
-                    default={50}
+                <CustomSlider
+                    title="Speed"
+                    defaultValue={50}
                     min={10}
                     max={100}
                     step={1}
-                    title="Speed"
-                    onCountChange={this.props.onSpeedChange}
+                    onChange={this.props.onSpeedChange}
                     disable={false}
                 />
-                <SimpleSelect
-                    pos={0}
-                    onAlgoChanged={this.props.onAlgoChanged}
+                <CustomSelect
+                    title="Select Algorithm"
+                    options={["Merge Sort", "Heap Sort", "Quick Sort"]}
+                    onChange={this.props.onAlgoChanged}
                 />
-                <button
-                    className='btn btn-warning btn-lg '
+                <Button
                     onClick={this.props.onViusalize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
                     Visualize
-                </button>
+                </Button>
 
-            </nav>
+            </div>
         );
     }
     isClickable = () =>{

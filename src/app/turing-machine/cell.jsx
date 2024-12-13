@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
 import './cell.css';
-class Cell extends Component {
-    render() {
-        return (
-            <div className={'turing-cell'}>
-                {this.props.val}
-            </div>
-        );
-    }
+const Cell = ({val}) => {
+    
+    return (
+        <div className={'turing-cell'}>
+            {val}
+        </div>
+    );
+    
 }
 
 export default Cell;

@@ -1,46 +1,44 @@
-import React, {Component} from 'react';
-import RangeSlider from "./doubleSlider";
-
+import { Button } from '@/components/ui/button';
+import { Component } from 'react';
+import DualHandleSlider from "./custom-dual-slider";
 class Guess extends Component {
     render() {
         return (
             <div >
-
-                <p>
-
-                    <button className="btn btn-secondary btn-lg" type="button" data-toggle="collapse"
-                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                {/* <p>
+                    <Button className="btn btn-secondary btn-lg" type="button" data-toggle="collapse"
+                        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         Toggle Range
-                    </button>
-                </p>
-                <div className="collapse" id="collapseExample">
+                    </Button>
+                </p> */}
+                {/* <div className="collapse" id="collapseExample"> */}
                     <div className="card card-body">
-                        <center style={{justifyContent:"center"}}>
-                            <RangeSlider
+                        <center style={{ justifyContent: "center" }}>
+                            <DualHandleSlider
                                 upper={this.props.upper}
                                 lower={this.props.lower}
                                 max={this.props.max}
                             />
                         </center>
                     </div>
-                </div>
+                {/* </div> */}
 
-               <h1>
+                <h1 className="text-3xl">
                     Is you number greater than {this.getMid()}?
                 </h1> <br />
-                <button
-                    className='btn btn-lg btn-success m-2'
+                <Button
                     onClick={this.props.yesButton}
-                >Yes</button>
-                <button
-                    className='btn btn-lg btn-danger m-2'
+                    className="mx-2"
+                >Yes</Button>
+                <Button
                     onClick={this.props.noButton}
-                >No</button> <br/>
+                    className="mx-2"
+                >No</Button> <br />
             </div>
         );
     }
     getMid = () => {
-        const mid = Math.floor( (this.props.upper+this.props.lower)/2);
+        const mid = Math.floor((this.props.upper + this.props.lower) / 2);
         return mid;
     }
 }

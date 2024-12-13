@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Rect from "./rect";
+import React from 'react';
 import FlipMove from 'react-flip-move';
+import Rect from "./rect";
 
 const Rects = ({ rects, speed }) => {
 
