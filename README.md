@@ -1,5 +1,5 @@
-![](https://raw.githubusercontent.com/TamimEhsan/AlgorithmVisualizer/master/Assets/homepage.JPG)
 
+![banner](Assets/banner.png)
 # Algorithm Visualizer
 
 A better visualization of different algorithms made with React. 
@@ -8,7 +8,7 @@ Visit : https://tamimehsan.github.io/AlgorithmVisualizer/
 
 ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=TamimEhsan.AlgorithmVisualizer)
 
-This is made to be the second version of my previous pathfinding project made with C++ igraphics. But then added some more visualizations too.  
+Explore more than 24 algorithms with step by step visualization simplifying the learning process and making it more engaging for a better understanding. 
 
 So far there are 6 segments  
 - Pathfinder
@@ -56,13 +56,14 @@ I have implemented a total of `24 algorithms` so far. And will try to add more l
 
 
 
-
+### Contribution
 I am not sure if anyone would like to contribute to this project or not. But any kind of contributions are welcomes. Also if you like this please star this repo. It keeps me motivated.
 
 ### Special Features addition timeline
 
 - Commit 16: Added Flip Move animation to inplace sorting components
 - Commit 20: Added Tree Structure
+- 13 Dec 2024: Release v2.0.0: Migrate the project from legacy project to next js with shadcn ui [#3](https://github.com/TamimEhsan/AlgorithmVisualizer/pull/3)
 
 ### Acknowledgement
 
@@ -79,21 +80,11 @@ Make sure you have node installed in your system. Then run
 npm i
 npm run start
 ```
-This will start the app in `http://localhost:3000/AlgorithmVisualizer#/`
-
-### Note to self:
-
-To deploy recent changes to page
-
-```
-npm run build
-npm run deploy
-```
-
-
+This will start the app in `http://localhost:3000/AlgorithmVisualizer`
 
 ### Inspiration for next sections
 
 - [University of San Francisco Site](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) 
-- ​    [algorithm-visualizer](https://github.com/algorithm-visualizer)    /      [algorithm-visualizer](https://github.com/algorithm-visualizer/algorithm-visualizer)     
+- ​[algorithm-visualizer](https://github.com/algorithm-visualizer)
+- [National University of Singapore Site](https://visualgo.net/en)
 
