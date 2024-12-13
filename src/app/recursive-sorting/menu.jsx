@@ -7,18 +7,9 @@ import { Component } from 'react';
 class Menu extends Component {
     render() {
         return (
-            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
-                <Button
-                    onClick={this.props.onRandomize}
-                    disabled={this.props.disable}
-                    style={this.isClickable()}
-                >
-                    Randomize
-                </Button>
+            <div className="w-64 bg-gray-100 p-4 space-y-6">
+                <h2 className="text-lg font-semibold">Settings</h2>
 
-                {/* <RangeSlider
-                    disable={this.props.disable}
-                /> */}
                 <CustomSlider
                     title="Numbers"
                     defaultValue={20}
@@ -43,6 +34,15 @@ class Menu extends Component {
                     onChange={this.props.onAlgoChanged}
                 />
                 <Button
+                    className="w-full"
+                    onClick={this.props.onRandomize}
+                    disabled={this.props.disable}
+                    style={this.isClickable()}
+                >
+                    Randomize
+                </Button>
+                <Button
+                    className="w-full"
                     onClick={this.props.onViusalize}
                     disabled={this.props.disable}
                     style={this.isClickable()}

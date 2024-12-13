@@ -30,11 +30,10 @@ class Sort extends Component {
 
     render() {
         return (
-            // <div className="flex flex-col h-screen">
-            <div>
+            <div className="flex flex-col h-screen">
                 <Navbar title="Sorting Visualizer" />
-                {/* <div className="flex flex-1 overflow-hidden"> */}
-                <div>
+
+                <div className="flex flex-1 overflow-hidden">
                     <Menu
                         disable={this.state.isRunning}
                         onDoubleChange={this.handleDouble}
@@ -46,8 +45,7 @@ class Sort extends Component {
                         onAlgoChanged2={this.handleAlgoChanged2}
                         onSpeedChange={this.handleSpeedChanged}
                     />
-                    <div>
-
+                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
                         <Rects
                             speed={this.state.speed}
                             rects={this.state.rects}

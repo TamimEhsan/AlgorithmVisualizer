@@ -7,14 +7,8 @@ import { Component } from 'react';
 class Menu extends Component {
     render() {
         return (
-            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
-                <Button
-                    onClick={this.props.onRefresh}
-                    disabled={this.props.isDisabled}
-                    style={this.isClickable()}
-                >
-                    Refresh
-                </Button>
+            <div className="w-64 bg-gray-100 p-4 space-y-6">
+                <h2 className="text-lg font-semibold">Settings</h2>
                 <CustomSelect
                     title="Select Algorithm"
                     options={["Sieve", "Spiral"]}
@@ -41,6 +35,15 @@ class Menu extends Component {
                     isDisabled={this.props.isDisabled}
                 />
                 <Button
+                    className="w-full"
+                    onClick={this.props.onRefresh}
+                    disabled={this.props.isDisabled}
+                    style={this.isClickable()}
+                >
+                    Refresh
+                </Button>
+                <Button
+                    className="w-full"
                     onClick={this.props.onVisualize}
                     disabled={this.props.isDisabled}
                     style={this.isClickable()}>

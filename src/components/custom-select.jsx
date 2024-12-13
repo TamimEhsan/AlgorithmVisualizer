@@ -16,12 +16,12 @@ export function CustomSelect({ title, options, onChange }) {
     onChange(value)
   }
   return (
-    // <div className="space-y-2">
-      <div className="flex items-center space-x-2"> 
+    <div className="space-y-2">
+      {/* <div className="flex items-center space-x-2">  */}
       <label className="text-sm font-medium whitespace-nowrap">{title}</label>
       <Select value={value} onValueChange={onChangeCover}>
-        {/* <SelectTrigger className="w-full"> */}
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-full">
+        {/* <SelectTrigger className="w-[180px]"> */}
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

@@ -21,6 +21,7 @@ class CanvasSvg extends Component {
 
     render() {
         let off = this.props.offset;
+        console.log(this.props.edges.length);
         return (
             <div>
                 <svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">

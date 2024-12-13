@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button';
 class Menu extends Component {
     render() {
         return (
-            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
+            <div className="w-64 bg-gray-100 p-4 space-y-6">
+                <h2 className="text-lg font-semibold">Settings</h2>
                 <CustomSelect
                     title="Select Algorithm"
-                    options={["Bitwise NOT","Add one","2's Complement"]}
+                    options={["Bitwise NOT", "Add one", "2's Complement"]}
                     onChange={this.props.onAlgoChanged}
                 />
 
@@ -32,11 +33,13 @@ class Menu extends Component {
 
 
                 <Button
+                    className="w-full"
                     onClick={this.props.onReset}
                     disabled={this.props.disable}
                 >Reset</Button>
 
                 <Button
+                    className="w-full"
                     onClick={this.props.visualize}
                     disabled={this.props.disable}
                 >Visualize</Button>

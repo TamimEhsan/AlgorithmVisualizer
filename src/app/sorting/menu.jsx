@@ -11,15 +11,12 @@ class Menu extends Component {
             return {};
         }
     }
-    render () {
+    render() {
         return (
-            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
-                {/* <div className="w-64 bg-gray-100 p-4 space-y-6"> */}
-                {/* <h2 className="text-lg font-semibold">Settings</h2> */}
-    
-                {/* <RangeSlider
-                        disable={this.props.disable}
-                    /> */}
+            // <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
+            <div className="w-64 bg-gray-100 p-4 space-y-6">
+                <h2 className="text-lg font-semibold">Settings</h2>
+                
                 <CustomSlider
                     title="Numbers"
                     defaultValue={20}
@@ -38,7 +35,7 @@ class Menu extends Component {
                     step={1}
                     disable={this.props.disable}
                 />
-    
+
                 <CustomSelect
                     title="Select Algorithm 1"
                     options={["Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"]}
@@ -58,23 +55,23 @@ class Menu extends Component {
                     onChange={this.props.onAlgoChanged2}
                 />
                 <Button
-                    className="m-2"
+                    className="w-full"
                     onClick={this.props.onRandomize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
                     Randomize
                 </Button>
-    
+
                 <Button
-                    className="m-2"
+                    className="w-full"
                     onClick={this.props.onViusalize}
                     disabled={this.props.disable}
                     style={this.isClickable()}
                 >
                     Visualize
                 </Button>
-    
+
             </div>
         );
     }

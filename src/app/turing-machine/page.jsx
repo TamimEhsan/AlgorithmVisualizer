@@ -123,8 +123,10 @@ class TuringMachine extends Component {
 
     render() {
         return (
-            <div>
+            <div className="flex flex-col h-screen">
                 <Navbar title="Turing Machine" />
+                <div className="flex flex-1 overflow-hidden">
+
                 <Menu
                     visualize={this.handleStart}
                     onAlgoChanged={this.setAlgo}
@@ -186,6 +188,7 @@ class TuringMachine extends Component {
                         </div>
                     </div>
                 </center>
+                </div>
             </div>
         );
     }

@@ -5,8 +5,9 @@ import { Component } from 'react';
 class Menu extends Component {
     render() {
         return (
-            <div className="bg-gray-100 p-4 flex flex-wrap items-center gap-4">
-            {/* <div className="w-64 bg-gray-100 p-4 space-y-6"> */}
+            <div className="w-64 bg-gray-100 p-4 space-y-6">
+            <h2 className="text-lg font-semibold">Settings</h2>
+            
                 <CustomSelect
                     title="Select Algorithm"
                     options={this.props.algorithms}
@@ -17,10 +18,10 @@ class Menu extends Component {
                     options={this.props.mazes}
                     onChange={this.props.onMazeChanged}
                 />
-                <Button onClick={this.props.onCreateMaze}>Create Maze</Button>
-                <Button onClick={this.props.onVisualize}>Visualize</Button>
-                <Button onClick={this.props.onClearPath}>Clear Path</Button>
-                <Button onClick={this.props.onClearBoard}>Clear Board</Button>
+                <Button className="m-1" onClick={this.props.onClearPath}>Clear Path</Button>
+                <Button className="m-1" onClick={this.props.onClearBoard}>Clear Board</Button>
+                <Button className="w-full" onClick={this.props.onCreateMaze}>Create Maze</Button>
+                <Button className="w-full" onClick={this.props.onVisualize}>Visualize</Button>
             </div>
         );
     }

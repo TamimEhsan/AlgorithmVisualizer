@@ -16,7 +16,8 @@ export function CustomInput({ title, defaultValue = "", onChange, type = "text",
     onChange(value)
   }
   return (
-    <div className="flex items-center space-x-2">
+    <div className="space-y-2">
+    {/* <div className="flex items-center space-x-2"> */}
       <label
         htmlFor={title}
         className="text-sm font-medium whitespace-nowrap"
@@ -29,7 +30,8 @@ export function CustomInput({ title, defaultValue = "", onChange, type = "text",
         value={value}
         onChange={(e) => onInputChange(e.target.value)}
         placeholder={placeholder}
-        className="w-[180px]"
+        className="w-full"
+        // className="w-[180px]"
       />
     </div>
   )
