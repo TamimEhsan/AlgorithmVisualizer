@@ -78,7 +78,7 @@ I took inspirations from the following sources for some of the segments.
 Make sure you have node installed in your system. Then run
 ```bash
 npm i
-npm run start
+npm run dev
 ```
 This will start the app in `http://localhost:3000/AlgorithmVisualizer`
 
