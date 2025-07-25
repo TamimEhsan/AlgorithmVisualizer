@@ -1,11 +1,11 @@
 "use client";
 
 import Navbar from '@/components/navbar';
-import { seive } from "@/lib/algorithms/prime";
+import { seive } from "./algorithms/prime";
 import { Component } from 'react';
-import Cells from "./cells";
-import Menu from "./menu";
-import Spiral from "./spiral";
+import Cells from "./components/Cells";
+import Menu from "./components/Menu";
+import Spiral from "./components/Spiral";
 
 class Seive extends Component {
     state = {

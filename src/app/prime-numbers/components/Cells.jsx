@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Cell from "./cell";
-import './cells.css'
+import Cell from "./Cell";
+import '../styles/cells.css'
 class Cells extends Component {
 
     render() {

@@ -1,0 +1,59 @@
+.cell{
+    height:50px;
+    width:50px;
+    background-color: white;
+    outline:1px solid rgb(175, 216, 248);
+    display: inline-block;
+    font-size: 25px;
+    text-align: center;
+    color: black;
+    border-radius: 5px 5px;
+}
+
+.cell-prime{
+    background-color: #00f51d;
+    animation-name: isPrime;
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+
+}
+@keyframes isPrime {
+    0% {
+        transform: rotate(90deg);
+        background-color: rgba(0, 0, 66, 0.75);
+        border-radius: 100%;
+    }
+
+    50% {
+        background-color: rgba(17, 104, 217, 0.75);
+        transform: scale(1.5);
+
+    }
+
+    75% {
+        background-color: rgba(0, 217, 159, 0.75);
+        transform: rotate(270deg);
+
+    }
+
+    100% {
+
+        background-color: rgba(0, 190, 218, 0.75);
+        transform: rotate(360deg);
+    }
+}
+.cell-check{
+    background-color: grey;
+}
+.cell-visiting{
+    outline:3px solid rgb(175, 216, 248);
+    animation-name: isVisiting;
+    animation-duration: 1s;
+}
+@keyframes isVisiting {
+    50%{
+        transform: scale(1.5);
+    }
+}

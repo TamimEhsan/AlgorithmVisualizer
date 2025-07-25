@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Cell from "./cell";
 
 class Spiral extends Component {
 

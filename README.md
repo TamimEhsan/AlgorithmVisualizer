@@ -19,8 +19,9 @@ So far there are 6 segments
 - Binary Search Game
 - Recursion Tree
 - Turing Machine
+- Game of Life
 
-I have implemented a total of `24 algorithms` so far. And will try to add more later.  
+I have implemented a total of `25 algorithms` so far. And will try to add more later.  
 
 ## Algorithms implemented 
 
@@ -48,7 +49,7 @@ I have implemented a total of `24 algorithms` so far. And will try to add more l
   - Derangement
   - Fast Exponentiation
   - Stirling Number of Second Kind
-
+- Game of Life
 - Turing Machine
   - Bitwise NOT
   - Increment one
