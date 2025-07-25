@@ -58,6 +58,11 @@ const algorithms = [
     title: 'Binary Search',
     description: "Binary search is an efficient algorithm for finding an item from a sorted list of item",
     image: '/AlgorithmVisualizer/images/binary-search.png?height=200&width=300'
+  },{
+    id: 'game-of-life',
+    title: 'Game of Life',
+    description: "Visualize the Game of Life cellular automaton",
+    image: '/AlgorithmVisualizer/images/game-of-life.png?height=200&width=300'
   },
   // {
   //   id: '15-puzzle',
