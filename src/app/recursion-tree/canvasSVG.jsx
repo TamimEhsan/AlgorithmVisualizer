@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import TreeEdge from "../common/tree/edge";
-import TreeVertex from "../common/tree/vertex";
+import TreeEdge from "../common/tree/TreeEdge";
+import TreeVertex from "../common/tree/TreeVertex";
 
 class CanvasSvg extends Component {
     constructor() {
