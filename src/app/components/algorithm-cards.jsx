@@ -30,6 +30,12 @@ const algorithms = [
     image: '/AlgorithmVisualizer/images/sort.png?height=200&width=300'
   },
   {
+    id: 'heap',
+    title: 'Heap Visualization',
+    description: "Visualize heap data structure operations like insert and delete with max/min heap support",
+    image: '/AlgorithmVisualizer/images/heap.png?height=200&width=300'
+  },
+  {
     id: 'n-queen',
     title: 'N Queen',
     description: "The N queens puzzle is the problem of placing N chess queens on an N*N chessboard so that no two queens threaten each other",
