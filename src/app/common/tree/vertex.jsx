@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Vertex extends Component {
+class TreeVertex extends Component {
 
     constructor() {
         super();
@@ -80,4 +80,4 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export default Vertex;
+export default TreeVertex;

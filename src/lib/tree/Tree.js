@@ -1,7 +1,7 @@
 // draw tree class functions start :/
 
 
-export class Tree{
+export class TreeNode {
     constructor(node=0,children=[],label="") {
         this.id = 0;
         this.node = node;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Edge extends Component {
+class TreeEdge extends Component {
     constructor() {
         super();
         this.state={
@@ -91,4 +91,4 @@ class Edge extends Component {
     }
 }
 
-export default Edge;
+export default TreeEdge;

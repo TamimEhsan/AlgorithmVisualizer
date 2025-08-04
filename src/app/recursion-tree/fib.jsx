@@ -1,4 +1,5 @@
-import {Tree,buchheim} from './Tree';
+import {TreeNode,buchheim} from '@/lib/tree/Tree';
+
 export function getTree(n,algo=0,r=0){
     if(algo === 0)
         return buchheim( fib(n) );
@@ -13,7 +14,7 @@ export function getTree(n,algo=0,r=0){
 }
 
 function fib(n){
-    let tree = new Tree(n,[],n+"");
+    let tree = new TreeNode(n,[],n+"");
     if( n <2 ) return tree;
     tree.children.push( fib(n-1) );
     tree.children.push( fib(n-2) );
@@ -22,7 +23,7 @@ function fib(n){
 }
 
 function sib(n){
-    let tree = new Tree(n,[]);
+    let tree = new TreeNode(n,[]);
     if( n <3 ) return tree;
     tree.children.push( sib(n-2) );
     tree.children.push( sib(n-3) );
@@ -32,16 +33,16 @@ function sib(n){
 
 function NcR(n,r){
     if (r > n)
-        return new Tree(-1,[],"("+n+","+r+")");
+        return new TreeNode(-1,[],"("+n+","+r+")");
 
     if (n === r)
-        return new Tree(1,[],"("+n+","+r+")");
+        return new TreeNode(1,[],"("+n+","+r+")");
 
     if (r === 0)
-        return new Tree(1,[],"("+n+","+r+")");;
+        return new TreeNode(1,[],"("+n+","+r+")");;
 
     // nCr(n, r) = nCr(n - 1, r - 1) + nCr(n - 1, r)
-    let tree = new Tree(0,[],"("+n+","+r+")");
+    let tree = new TreeNode(0,[],"("+n+","+r+")");
     tree.children.push( NcR(n-1,r-1) );
     tree.children.push( NcR(n-1,r) );
     tree.node = tree.children[0].node+tree.children[1].node;
@@ -49,9 +50,9 @@ function NcR(n,r){
 }
 
 function derangement(n){
-    if( n == 0 ) return new Tree(1,[],n+"");
-    if( n == 1 ) return new Tree(0,[],n+"");
-    let tree = new Tree(0,[],n+"");
+    if( n == 0 ) return new TreeNode(1,[],n+"");
+    if( n == 1 ) return new TreeNode(0,[],n+"");
+    let tree = new TreeNode(0,[],n+"");
     tree.children.push( derangement(n-1) );
     tree.children.push( derangement(n-2) );
     tree.node = (n-1)*(tree.children[0].node+tree.children[1].node);
@@ -59,9 +60,9 @@ function derangement(n){
 }
 
 function bigmod(n,r){
-    if( r === 0 ) return new Tree(1,[],"("+n+","+r+")");
-    if( r === 1 ) return new Tree(n,[],"("+n+","+r+")");
-    let tree = new Tree(1,[],"("+n+","+r+")");
+    if( r === 0 ) return new TreeNode(1,[],"("+n+","+r+")");
+    if( r === 1 ) return new TreeNode(n,[],"("+n+","+r+")");
+    let tree = new TreeNode(1,[],"("+n+","+r+")");
     if( r%2 === 1 ){
         tree.children.push( bigmod(n,(r-1)/2 ) );
         tree.children.push( bigmod(n,(r-1)/2) );
@@ -77,10 +78,10 @@ function bigmod(n,r){
 }
 
 function stirling2(n,r){
-    if( n === r ) return new Tree(1,[],"("+n+","+r+")");
-    if( r === 0 ) return new Tree(0,[],"("+n+","+r+")");
+    if( n === r ) return new TreeNode(1,[],"("+n+","+r+")");
+    if( r === 0 ) return new TreeNode(0,[],"("+n+","+r+")");
 
-    let tree = new Tree(0,[],"("+n+","+r+")");
+    let tree = new TreeNode(0,[],"("+n+","+r+")");
     tree.children.push( stirling2(n-1,r) );
     tree.children.push( stirling2(n-1,r-1) );
     tree.node = tree.children[0].node*r+tree.children[1].node;

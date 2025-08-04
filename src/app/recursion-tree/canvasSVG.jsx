@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import Edge from "./edge";
-import Vertex from "./vertex";
+import TreeEdge from "../common/tree/edge";
+import TreeVertex from "../common/tree/vertex";
 
 class CanvasSvg extends Component {
     constructor() {
@@ -28,7 +28,7 @@ class CanvasSvg extends Component {
                     {
                         this.props.edges.map((edge, cellidx) => {
                             return (
-                                <Edge
+                                <TreeEdge
                                     key={cellidx}
                                     id={cellidx}
                                     pos={{
@@ -42,7 +42,7 @@ class CanvasSvg extends Component {
                     {
                         this.props.vertices.map((vertex, cellidx) => {
                             return (
-                                <Vertex
+                                <TreeVertex
                                     key={cellidx}
                                     id={cellidx}
                                     current={this.props.current === cellidx}
