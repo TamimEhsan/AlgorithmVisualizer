@@ -6,6 +6,15 @@ export default function CanvasSvg({ vertices, edges, current, offset }) {
     return (
         <div>
             <svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="nodeShadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0.3" dy="0.3" stdDeviation="0.5" floodOpacity="0.25" />
+                    </filter>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
+                        markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+                    </marker>
+                </defs>
                 {edges.map((edge, cellidx) => (
                     <Edge
                         key={cellidx}
@@ -21,6 +30,7 @@ export default function CanvasSvg({ vertices, edges, current, offset }) {
                         key={cellidx}
                         id={cellidx}
                         current={current === cellidx}
+                        completed={vertex.completed}
                         label={vertex.label}
                         ret={vertex.val}
                         pos={{

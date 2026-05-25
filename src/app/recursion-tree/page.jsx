@@ -43,8 +43,8 @@ export default function Graph() {
         let newVertex;
         if (parent !== undefined) {
             newVertex = node.children.length
-                ? { label: node.tree.label, val: 0, x: node.x, y: node.y, px: parent.x, py: parent.y }
-                : { label: node.tree.label, val: node.tree.node, x: node.x, y: node.y, px: parent.x, py: parent.y };
+                ? { label: node.tree.label, val: 0, x: node.x, y: node.y, px: parent.x, py: parent.y, completed: false }
+                : { label: node.tree.label, val: node.tree.node, x: node.x, y: node.y, px: parent.x, py: parent.y, completed: false };
 
             verts = [...verts, newVertex];
             verticesRef.current = verts;
@@ -56,8 +56,8 @@ export default function Graph() {
             setEdges([...edgesRef.current]);
         } else {
             newVertex = node.children.length
-                ? { label: node.tree.label, val: 0, x: node.x, y: node.y, px: node.x, py: node.y }
-                : { label: node.tree.label, val: node.tree.node, x: node.x, y: node.y, px: node.x, py: node.y };
+                ? { label: node.tree.label, val: 0, x: node.x, y: node.y, px: node.x, py: node.y, completed: false }
+                : { label: node.tree.label, val: node.tree.node, x: node.x, y: node.y, px: node.x, py: node.y, completed: false };
 
             verts = [...verts, newVertex];
             verticesRef.current = verts;
@@ -73,7 +73,7 @@ export default function Graph() {
         }
 
         let updatedVerts = [...verticesRef.current];
-        updatedVerts[currentIdx] = { ...updatedVerts[currentIdx], val: node.tree.node };
+        updatedVerts[currentIdx] = { ...updatedVerts[currentIdx], val: node.tree.node, completed: true };
         verticesRef.current = updatedVerts;
         setVertices([...updatedVerts]);
     };

@@ -32,15 +32,9 @@ export default function Edge({ id, pos }) {
 
     return (
         <g>
-            <defs>
-                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
-                    markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" />
-                </marker>
-            </defs>
             <line
                 x2={getEndX()} y2={getEndY()} x1={pos.x1} y1={pos.y1}
-                style={{ stroke: 'black', strokeWidth: '0.5' }}
+                style={{ stroke: '#64748b', strokeWidth: '0.4' }}
                 markerEnd="url(#arrow)"
             >
                 <animate
