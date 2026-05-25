@@ -1,120 +1,103 @@
 "use client";
 
-import React, { Component } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Cells from "./cells";
 import Navbar from '@/components/navbar';
 import Menu from "./menu";
 
-class Queen extends Component {
-    state = {
-        board: [],
-        number: 4,
-        speed: 490,
-        isRunning: false
-    }
+export default function Queen() {
+    const [board, setBoard] = useState([]);
+    const [number, setNumber] = useState(4);
+    const [speed, setSpeed] = useState(490);
+    const [isRunning, setIsRunning] = useState(false);
 
-    constructor(props) {
-        super(props);
-    }
-    componentDidMount() {
-        const board = getBoard(this.state.number);
-        // board[3][3].isPresent = true;
-        this.setState({ board });
-    }
+    const numberRef = useRef(number);
+    const speedRef = useRef(speed);
 
-    render() {
-        return (
-            <div className="flex flex-col h-screen">
-                <Navbar title="8 Queen" />
-                <div className="flex flex-1 overflow-hidden">
+    useEffect(() => { numberRef.current = number; }, [number]);
+    useEffect(() => { speedRef.current = speed; }, [speed]);
 
-                    <Menu
-                        onSpeedChange={this.handleSpeedChange}
-                        onCountChange={this.handleQueenChange}
-                        onViusalize={this.startAlgo}
-                        disable={this.state.isRunning}
-                        onClear={this.handleClear}
-                        onStop={this.handleStop}
-                    />
-                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
-                        <Cells
-                            board={this.state.board}
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    useEffect(() => {
+        setBoard(getBoard(4));
+    }, []);
 
-    handleStop = () => {
-        this.setState({ isRunning: false });
-    }
+    const handleSpeedChange = (val) => {
+        setSpeed((100 - val) * 10);
+    };
 
-    handleSpeedChange = (val) => {
-        const speed = (100 - val) * 10;
-        this.setState({ speed });
-    }
-    handleQueenChange = (number) => {
-        const board = getBoard(number);
-        this.setState({ number, board });
-    }
-    handleClear = () => {
-        const board = getBoard(this.state.number);
-        this.setState({ board });
-    }
-    handleTurnOff = () => {
-        const newBoard = turnOffAttack(this.state.board, this.state.number);
-        this.setState({ board: newBoard });
-    }
-    startAlgo = async () => {
-        this.setState({ isRunning: true });
-        const newBoard = this.state.board.slice();
-        await this.queensAlgo(newBoard, 0);
-        const newBoard2 = turnOffAttack(this.state.board, this.state.number);
-        this.setState({ board: newBoard2, isRunning: false });
-    }
-    queensAlgo = async (board, col) => {
+    const handleQueenChange = (num) => {
+        setNumber(num);
+        setBoard(getBoard(num));
+    };
 
-        if (col >= this.state.number) {
+    const handleClear = () => {
+        setBoard(getBoard(numberRef.current));
+    };
+
+    const startAlgo = async () => {
+        setIsRunning(true);
+        const newBoard = board.slice();
+        await queensAlgo(newBoard, 0);
+        const newBoard2 = turnOffAttack(newBoard, numberRef.current);
+        setBoard(newBoard2);
+        setIsRunning(false);
+    };
+
+    const queensAlgo = async (board, col) => {
+        if (col >= numberRef.current) {
             return true;
         }
 
         let newBoard = board.slice();
-        for (let i = 0; i < this.state.number; i++) {
-
-
-            newBoard = turnOffAttack(newBoard, this.state.number);
-            const result = getChecked(newBoard, i, col, this.state.number);
+        for (let i = 0; i < numberRef.current; i++) {
+            newBoard = turnOffAttack(newBoard, numberRef.current);
+            const result = getChecked(newBoard, i, col, numberRef.current);
             newBoard = result[0];
 
-            this.setState({ board: newBoard });
-            await sleep(this.state.speed);
+            setBoard([...newBoard]);
+            await sleep(speedRef.current);
             if (result[1]) {
-                const res = await this.queensAlgo(newBoard, col + 1)
+                const res = await queensAlgo(newBoard, col + 1);
                 if (res === true) {
                     return true;
                 }
                 newBoard[i][col] = { ...newBoard[i][col], isPresent: true, isCurrent: true };
-                this.setState({ board: newBoard });
-                await sleep(this.state.speed);
+                setBoard([...newBoard]);
+                await sleep(speedRef.current);
                 newBoard[i][col] = { ...newBoard[i][col], isPresent: false, isCurrent: false };
-                this.setState({ board: newBoard });
-
+                setBoard([...newBoard]);
             }
             newBoard[i][col] = { ...newBoard[i][col], isPresent: false, isCurrent: false };
-            newBoard = turnOffAttack(newBoard, this.state.number);
-            this.setState({ board: newBoard });
-            await sleep(this.state.speed);
+            newBoard = turnOffAttack(newBoard, numberRef.current);
+            setBoard([...newBoard]);
+            await sleep(speedRef.current);
         }
         return false;
-    }
+    };
 
+    return (
+        <div className="flex flex-col h-screen">
+            <Navbar />
+            <div className="flex flex-1 overflow-hidden">
+                <Menu
+                    onSpeedChange={handleSpeedChange}
+                    onCountChange={handleQueenChange}
+                    onViusalize={startAlgo}
+                    disabled={isRunning}
+                    onClear={handleClear}
+                />
+                <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
+                    <Cells board={board} />
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default Queen;
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 const turnOffAttack = (board, N) => {
     const newBoard = board.slice();
     for (let i = 0; i < N; i++) {
@@ -123,12 +106,11 @@ const turnOffAttack = (board, N) => {
         }
     }
     return newBoard;
-}
+};
 
 const getChecked = (board, row, col, N) => {
     const newBoard = board.slice();
     let pos = true;
-    // same col
     for (let i = 0; i < N; i++) {
         if (newBoard[row][i].isPresent) {
             newBoard[row][i] = { ...newBoard[row][i], isAttacked: true };
@@ -137,7 +119,6 @@ const getChecked = (board, row, col, N) => {
             newBoard[row][i] = { ...newBoard[row][i], isChecked: true };
         }
     }
-    // same row
     for (let i = 0; i < N; i++) {
         if (newBoard[i][col].isPresent) {
             newBoard[i][col] = { ...newBoard[i][col], isAttacked: true };
@@ -178,11 +159,10 @@ const getChecked = (board, row, col, N) => {
             newBoard[i][j] = { ...newBoard[i][j], isChecked: true };
         }
     }
-
     newBoard[row][col] = { ...newBoard[row][col], isPresent: true, isCurrent: true };
-
     return [newBoard, pos];
-}
+};
+
 const getBoard = (N) => {
     const rows = [];
     for (let i = 0; i < N; i++) {
@@ -193,15 +173,13 @@ const getBoard = (N) => {
         rows.push(cols);
     }
     return rows;
-}
+};
 
-const getCell = (row, col) => {
-    return {
-        row,
-        col,
-        isPresent: false,
-        isChecked: false,
-        isAttacked: false,
-        isCurrent: false
-    }
-}
+const getCell = (row, col) => ({
+    row,
+    col,
+    isPresent: false,
+    isChecked: false,
+    isAttacked: false,
+    isCurrent: false,
+});
