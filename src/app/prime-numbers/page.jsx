@@ -1,201 +1,149 @@
 "use client";
 
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/navbar';
 import { seive } from "@/lib/algorithms/prime";
-import { Component } from 'react';
 import Cells from "./cells";
 import Menu from "./menu";
 import Spiral from "./spiral";
 
-class Seive extends Component {
-    state = {
-        number: 100,
-        cells: [],
-        isRunning: false,
-        speed: 500,
-        primes: [],
-        maxPrime: 0,
-        algo: 0
-    }
+export default function Seive() {
+    const [number, setNumber] = useState(100);
+    const [cells, setCells] = useState([]);
+    const [isRunning, setIsRunning] = useState(false);
+    const [speed, setSpeed] = useState(500);
+    const [primes, setPrimes] = useState([]);
+    const [maxPrime, setMaxPrime] = useState(0);
+    const [algo, setAlgo] = useState(0);
 
-    constructor(props) {
-        super(props);
-    }
-    componentDidMount() {
-        const cells = getCells(this.state.number);
-        this.setState({ cells });
-    }
-    setAlgo = (val) => {
-        this.setState({ algo: val });
-    }
+    const speedRef = useRef(speed);
+    const numberRef = useRef(number);
 
-    render() {
-        return (
-            <div className="flex flex-col h-screen">
-                <Navbar title="Sieve" />
-                <div className="flex flex-1 overflow-hidden">
+    useEffect(() => { speedRef.current = speed; }, [speed]);
+    useEffect(() => { numberRef.current = number; }, [number]);
 
-                    <Menu
-                        onChangeSpeed={this.changeSpeed}
-                        onChangeValues={this.handleValueIncease}
-                        onVisualize={this.startAlgo}
-                        onRefresh={this.handleRefresh}
-                        isDisabled={this.state.isRunning}
-                        setAlgo={this.setAlgo}
-                    />
-                    <div className="flex flex-1 flex-col overflow-auto">
+    useEffect(() => {
+        setCells(getCells(100));
+    }, []);
 
-                        {this.state.algo === 0 &&
-                            <Cells
-                                num={this.state.number}
-                                cells={this.state.cells}
-                            />
-                        }
-                        {this.state.algo === 1 &&
-                            <div className="h-full w-full justify-center bg-gray-700">
-                                <Spiral
-                                num={this.state.number}
-                                primes={this.state.primes}
-                                maxPrime={this.state.maxPrime}
-                            />
-                            </div>
-                        }
-                    </div>
-                </div>
+    const changeSpeed = (val) => {
+        setSpeed(600 - val * 10);
+    };
 
-            </div>
-        );
-    }
-
-    changeSpeed = (speed) => {
-        //console.log(typeof speed);
-        this.setState({ speed: 600 - speed * 10 });
-    }
-    handleValueIncease = (value) => {
-        this.setState({ number: value });
-        if (this.state.algo === 0) {
-            this.setState({ cells: getCells(value), isRunning: false });
-
+    const handleValueIncrease = (value) => {
+        setNumber(value);
+        if (algo === 0) {
+            setCells(getCells(value));
+            setIsRunning(false);
         }
-        // console.log(value);
-    }
-    handleRefresh = () => {
-        this.setState({ cells: getCells(this.state.number), isRunning: false });
-    }
+    };
 
-    startAlgo = () => {
-        if (this.state.algo === 0) {
-            this.startSeive();
-        } else if (this.state.algo === 1) {
-            this.startSpiral();
-        }
-    }
-    startSpiral = async () => {
-        let pprimes = seive(this.state.number * 100);
-        let primes = [];
-        this.setState({ primes: [], maxPrime: pprimes[pprimes.length - 1] });
-        let mod = Math.ceil(this.state.number / 10);
+    const handleRefresh = () => {
+        setCells(getCells(numberRef.current));
+        setIsRunning(false);
+    };
+
+    const startAlgo = () => {
+        if (algo === 0) startSeive();
+        else if (algo === 1) startSpiral();
+    };
+
+    const startSpiral = async () => {
+        let pprimes = seive(numberRef.current * 100);
+        let newPrimes = [];
+        setPrimes([]);
+        setMaxPrime(pprimes[pprimes.length - 1]);
+        let mod = Math.ceil(numberRef.current / 10);
         for (let i = 0; i < pprimes.length; i++) {
-            primes.push(pprimes[i]);
-
+            newPrimes.push(pprimes[i]);
             if (i % mod === 0) {
-                this.setState({ primes });
+                setPrimes([...newPrimes]);
                 await sleep(10);
             }
         }
-        console.log('done');
-    }
-    startSeive = async () => {
-        const speed = this.state.speed;
-        this.setState({ isRunning: true });
+    };
+
+    const startSeive = async () => {
+        setIsRunning(true);
         const prime = [];
-        for (let i = 0; i <= this.state.number; i++) {
-            prime.push(1);
-        }
+        for (let i = 0; i <= numberRef.current; i++) prime.push(1);
         prime[0] = prime[1] = 0;
-        let changedCells = this.state.cells;
+        let changedCells = cells;
         let prevCheck = -1;
-        let counter = 0;
-        for (let i = 2; i <= this.state.number; i++) {
+        for (let i = 2; i <= numberRef.current; i++) {
             if (prime[i] === 1) {
-                //   setTimeout(()=>{
                 changedCells = getNewCellPrimeToggled(changedCells, i - 1);
-                this.setState({ cells: changedCells });
-                //},counter*speed);
-                await sleep(this.state.speed);
-                counter++;
-                for (let j = i * i; j <= this.state.number; j += i) {
-                    //setTimeout(()=>{
-                    if (prevCheck != -1) {
+                setCells([...changedCells]);
+                await sleep(speedRef.current);
+                for (let j = i * i; j <= numberRef.current; j += i) {
+                    if (prevCheck !== -1) {
                         changedCells = getNewCellVisitingToggled(changedCells, prevCheck);
                     }
                     prevCheck = j - 1;
                     changedCells = getNewCellCheckToggled(changedCells, j - 1);
                     changedCells = getNewCellVisitingToggled(changedCells, prevCheck);
-                    this.setState({ cells: changedCells });
-                    //  },counter*speed);
-                    await sleep(this.state.speed);
-                    counter++;
+                    setCells([...changedCells]);
+                    await sleep(speedRef.current);
                     prime[j] = 0;
                 }
             }
         }
-        //  setTimeout(()=>{
         changedCells = getNewCellVisitingToggled(changedCells, prevCheck);
-        this.setState({ cells: changedCells, isRunning: false });
-        // },counter*speed);
-    }
+        setCells([...changedCells]);
+        setIsRunning(false);
+    };
+
+    return (
+        <div className="flex flex-col h-screen">
+            <Navbar />
+            <div className="flex flex-1 overflow-hidden">
+                <Menu
+                    onChangeSpeed={changeSpeed}
+                    onChangeValues={handleValueIncrease}
+                    onVisualize={startAlgo}
+                    onRefresh={handleRefresh}
+                    disabled={isRunning}
+                    setAlgo={setAlgo}
+                />
+                <div className="flex flex-1 flex-col overflow-auto">
+                    {algo === 0 && <Cells cells={cells} />}
+                    {algo === 1 && (
+                        <div className="h-full w-full justify-center bg-gray-700">
+                            <Spiral num={number} primes={primes} maxPrime={maxPrime} />
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 const getNewCellPrimeToggled = (cells, pos) => {
     const newCells = cells.slice();
-    const cell = newCells[pos];
-    const newCell = {
-        ...cell,
-        isPrime: true
-    }
-    newCells[pos] = newCell;
+    newCells[pos] = { ...newCells[pos], isPrime: true };
     return newCells;
-}
+};
 
 const getNewCellVisitingToggled = (cells, pos) => {
     const newCells = cells.slice();
-    const cell = newCells[pos];
-    const newCell = {
-        ...cell,
-        isVisiting: !cell.isVisiting
-    }
-    newCells[pos] = newCell;
+    newCells[pos] = { ...newCells[pos], isVisiting: !newCells[pos].isVisiting };
     return newCells;
-}
+};
 
 const getNewCellCheckToggled = (cells, pos) => {
     const newCells = cells.slice();
-    const cell = newCells[pos];
-    const newCell = {
-        ...cell,
-        isChecking: true
-    }
-    newCells[pos] = newCell;
+    newCells[pos] = { ...newCells[pos], isChecking: true };
     return newCells;
-}
+};
 
 const getCells = (rows) => {
     const cells = [];
     for (let cell = 1; cell <= rows; cell++) {
-        cells.push(createCell(cell))
+        cells.push({ val: cell, isChecking: false, isVisiting: false, isPrime: false });
     }
     return cells;
-}
-const createCell = (val) => {
-    return {
-        val,
-        isChecking: false,
-        isVisiting: false,
-        isPrime: false
-    };
-}
+};
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-export default Seive;
