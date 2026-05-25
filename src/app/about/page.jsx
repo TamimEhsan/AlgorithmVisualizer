@@ -121,8 +121,8 @@ export default function AboutPage() {
                                 <h3 className="font-medium mb-2">{group.category}</h3>
                                 <ul className="text-sm text-muted-foreground space-y-1">
                                     {group.items.map((item) => (
-                                        <li key={item} className="flex items-start gap-2">
-                                            <span className="text-primary mt-1.5 text-[8px]">●</span>
+                                        <li key={item} className="flex items-center gap-2">
+                                            <span className="text-primary text-[6px]">●</span>
                                             {item}
                                         </li>
                                     ))}
