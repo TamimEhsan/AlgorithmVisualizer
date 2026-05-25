@@ -4,141 +4,21 @@ A prioritized list of refactoring tasks for the Algorithm Visualizer project. Ea
 
 ---
 
-## 1. Convert Class Components to Functional Components with Hooks
+## 1. ~~Convert Class Components to Functional Components with Hooks~~ ✅
 
-**Priority:** High  
-**Effort:** Large (9 page components + ~30 child components)  
-**Impact:** Eliminates stale state bugs, simplifies code, enables better React patterns
+**Status:** Done  
 
-### Problem
+All visualizer pages and child components converted to functional components with hooks. Uses `useRef` for values read inside async animation loops (speed, isRunning, etc.) to avoid stale closures. The only remaining class component is `src/app/15-puzzle/page.jsx` (skipped intentionally).
 
-All visualizer pages except Game of Life use class components. This causes subtle bugs — for example, calling `this.setState({ number })` and immediately reading `this.state.number` gives the old value because `setState` is async in class components.
-
-### Files to convert (pages first, then children)
-
-**Page components (10):**
-- `src/app/pathfinder/page.jsx` — `Pathfinder`
-- `src/app/sorting/page.jsx` — `Sort`
-- `src/app/recursive-sorting/page.jsx` — `RecursiveSort`
-- `src/app/n-queen/page.jsx` — `Queen`
-- `src/app/convex-hull/page.jsx` — `ConvexHull`
-- `src/app/prime-numbers/page.jsx` — `Seive`
-- `src/app/recursion-tree/page.jsx` — `Graph`
-- `src/app/turing-machine/page.jsx` — `TuringMachine`
-- `src/app/15-puzzle/page.jsx` — `Puzzle`
-- `src/app/binary-search/page.jsx` — `BinarySearch`
-
-**Menu components (8):**
-- `src/app/convex-hull/menu.jsx`
-- `src/app/n-queen/menu.jsx`
-- `src/app/prime-numbers/menu.jsx`
-- `src/app/recursion-tree/menu.jsx`
-- `src/app/recursive-sorting/menu.jsx`
-- `src/app/sorting/menu.jsx`
-- `src/app/turing-machine/menu.jsx`
-- `src/app/pathfinder/menu.jsx`
-
-**Child components (~20):**
-- `src/app/pathfinder/node.jsx`, `grid.jsx`
-- `src/app/n-queen/cell.jsx`, `cells.jsx`
-- `src/app/prime-numbers/cell.jsx`, `cells.jsx`, `spiral.jsx`
-- `src/app/convex-hull/canvas.jsx`, `timer.jsx`
-- `src/app/turing-machine/table.jsx`
-- `src/app/recursion-tree/canvasSVG.jsx`, `vertex.jsx`, `vertexOriginal.jsx`, `edge.jsx`, `details.jsx`
-- `src/app/recursive-sorting/rect.jsx`
-- `src/app/binary-search/entryPoint.jsx`, `guess.jsx`, `result.jsx`, `search.jsx`
-- `src/app/sorting/rects.jsx`
-
-### How to convert
-
-```jsx
-// BEFORE — class component
-class Queen extends Component {
-    state = { board: [], number: 4, speed: 490, isRunning: false }
-
-    handleQueenChange = (number) => {
-        this.setState({ number });
-        const board = getBoard(this.state.number); // BUG: reads stale state
-        this.setState({ board });
-    }
-
-    startAlgo = async () => {
-        this.setState({ isRunning: true });
-        // animation loop reads this.state.speed
-        await sleep(this.state.speed);
-    }
-}
-
-// AFTER — functional component
-function Queen() {
-    const [board, setBoard] = useState([]);
-    const [number, setNumber] = useState(4);
-    const [speed, setSpeed] = useState(490);
-    const [isRunning, setIsRunning] = useState(false);
-    const speedRef = useRef(speed); // for reading inside async loops
-
-    useEffect(() => { speedRef.current = speed; }, [speed]);
-
-    const handleQueenChange = (num) => {
-        setNumber(num);
-        setBoard(getBoard(num)); // no stale state — uses the param directly
-    }
-
-    const startAlgo = async () => {
-        setIsRunning(true);
-        // use ref inside async loops so speed changes take effect mid-animation
-        await sleep(speedRef.current);
-    }
-}
-```
-
-### Key patterns for async animations
-
-- Use `useRef` for values read inside `async` loops (`speed`, `isRunning`) — state closures will be stale
-- Game of Life (`src/app/game-of-life/page.jsx`) is already converted and serves as a reference
-- Convert `componentDidMount` to `useEffect(() => { ... }, [])`
-- Convert `componentDidUpdate` to `useEffect` with dependency arrays
-
-### Recommended order
-
-Convert menu components first (they're simpler — mostly render-only), then child components, then page components last since they have the most logic.
+Unused files removed during conversion: `convex-hull/cnvas2.jsx`, `convex-hull/timer.jsx`, `recursion-tree/details.jsx`, `recursion-tree/vertexOriginal.jsx`.
 
 ---
 
-## 2. Standardize Disabled Prop Naming
+## 2. ~~Standardize Disabled Prop Naming~~ ✅
 
-**Priority:** High  
-**Effort:** Small  
-**Impact:** Removes confusion, prevents bugs from mismatched prop names
+**Status:** Done  
 
-### Problem
-
-Three different prop names are used for the same concept:
-- `disable` — used in pathfinder, sorting, recursive-sorting, n-queen, recursion-tree, turing-machine
-- `isDisabled` — used in convex-hull, prime-numbers
-- `disabled` — standard HTML attribute name
-
-The `CustomSlider` component even accepts **both** `disable` and `isDisabled` and reconciles them.
-
-### Fix
-
-Standardize everything to `disabled` (the HTML standard). Update:
-
-**Shared components:**
-- `src/components/custom-slider.jsx` — change `{ ..., disable, isDisabled }` to `{ ..., disabled }`
-
-**Page → Menu prop passing (change `disable=` and `isDisabled=` to `disabled=`):**
-- `src/app/pathfinder/page.jsx`
-- `src/app/sorting/page.jsx`
-- `src/app/recursive-sorting/page.jsx`
-- `src/app/n-queen/page.jsx`
-- `src/app/convex-hull/page.jsx`
-- `src/app/prime-numbers/page.jsx`
-- `src/app/recursion-tree/page.jsx`
-- `src/app/turing-machine/page.jsx`
-
-**Menu components (change `this.props.disable` / `this.props.isDisabled` to `this.props.disabled`):**
-- All 8 menu files listed above
+All components now use `disabled` (the HTML standard). Removed `disable` and `isDisabled` variants from all pages, menus, and shared components. Added visual disabled state (opacity + pointer-events) to the Slider UI component.
 
 ---
 
@@ -148,19 +28,7 @@ Standardize everything to `disabled` (the HTML standard). Update:
 **Effort:** Small  
 **Impact:** Clean production output
 
-### 18 active `console.log` statements to remove
-
-- `src/app/convex-hull/page.jsx:27`
-- `src/app/convex-hull/cnvas2.jsx:16, 58, 60, 75`
-- `src/app/prime-numbers/page.jsx:106`
-- `src/app/sorting/page.jsx:112`
-- `src/app/recursion-tree/canvasSVG.jsx:24`
-- `src/app/game-of-life/page.jsx:55`
-- `src/app/recursive-sorting/page.jsx:27`
-- `src/app/recursion-tree/Tree.js:226, 241`
-- `src/app/binary-search/entryPoint.jsx:42`
-- `src/app/binary-search/custom-dual-slider.jsx:13`
-- `src/lib/algorithms/15puzzle.js:92`
+ESLint `no-console` rule is now configured as a warning. Most console.log statements were removed during the hooks migration. Remaining ones are flagged by the linter.
 
 ---
 
@@ -330,65 +198,11 @@ Per-page metadata can also be added using Next.js `generateMetadata` or `metadat
 
 ---
 
-## 10. Add ESLint
+## 10. ~~Add ESLint~~ ✅
 
-**Priority:** High  
-**Effort:** Small  
-**Impact:** Catches bugs automatically, enforces consistency, runs during `next build`
+**Status:** Done  
 
-### Current state
-
-The `package.json` has a stale `eslintConfig` block from Create React App, but ESLint is not installed. The `next build` output even warns: *"ESLint must be installed in order to run during builds"*.
-
-### Setup
-
-```bash
-npm install -D eslint eslint-config-next
-```
-
-Then replace the CRA `eslintConfig` block in `package.json` with an `.eslintrc.json`:
-
-```json
-{
-  "extends": "next/core-web-vitals",
-  "rules": {
-    "no-console": "warn",
-    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-    "react/no-unescaped-entities": "off"
-  }
-}
-```
-
-Also add a lint script to `package.json`:
-
-```json
-"scripts": {
-  "lint": "next lint"
-}
-```
-
-### What this catches
-
-- `no-console` — flags the 18 console.log statements as warnings
-- `no-unused-vars` — catches dead variables (several exist, e.g. destructured `row, col` in pathfinder node.jsx)
-- `next/core-web-vitals` includes:
-  - `react-hooks/rules-of-hooks` — prevents hook misuse
-  - `react-hooks/exhaustive-deps` — catches missing useEffect dependencies
-  - `@next/next/no-img-element` — flags `<img>` tags that should use `next/image`
-  - `@next/next/no-html-link-for-pages` — flags `<a>` tags that should use `next/link`
-
-### Clean up the stale CRA config
-
-Remove this block from `package.json`:
-
-```json
-"eslintConfig": {
-  "extends": [
-    "react-app",
-    "react-app/jest"
-  ]
-}
-```
+ESLint configured in `eslint.config.mjs` using eslint-config-next v16 native flat config. Rules: `no-console` (warn), `no-unused-vars` (warn, `_` prefix ignored), `react/no-unescaped-entities` (off). All lint errors resolved. Stale CRA `eslintConfig` removed from `package.json`. Run with `npm run lint`.
 
 ---
 
@@ -420,12 +234,14 @@ Rename and type one visualizer at a time, starting with the simplest (Game of Li
 
 ## Quick Wins Checklist
 
-- [ ] Install ESLint with `next/core-web-vitals` config
-- [ ] Remove stale CRA `eslintConfig` from `package.json`
-- [ ] Remove 18 `console.log` statements
-- [ ] Standardize `disabled` prop naming
+- [x] Install ESLint with `next/core-web-vitals` config
+- [x] Remove stale CRA `eslintConfig` from `package.json`
+- [x] Remove unused variables and dead code
+- [x] Standardize `disabled` prop naming
+- [x] Add `alt="Queen"` to queen cell image
+- [x] Convert class components to functional components with hooks
+- [ ] Remove remaining `console.log` statements (flagged by linter)
 - [ ] Remove commented-out code blocks
 - [ ] Fix hardcoded `/AlgorithmVisualizer/` image paths
 - [ ] Remove unused dependencies (`react-router`, `react-router-dom`, `fontsource-roboto`)
-- [ ] Add `alt="Queen"` to queen cell image
 - [ ] Add Open Graph metadata to `layout.js`

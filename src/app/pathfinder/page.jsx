@@ -134,11 +134,10 @@ export default function Pathfinder() {
             await sleep(10);
         }
         await sleep(100);
-        await animateShortestPath(nodesInShortestPathOrder);
+        await animateShortestPath(nodesInShortestPathOrder, currentGrid);
     };
 
-    const animateShortestPath = async (nodesInShortestPathOrder) => {
-        let currentGrid = grid.map(row => [...row]);
+    const animateShortestPath = async (nodesInShortestPathOrder, currentGrid) => {
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
             const node = nodesInShortestPathOrder[i];
             currentGrid[node.row][node.col] = { ...currentGrid[node.row][node.col], ispathNode: true };

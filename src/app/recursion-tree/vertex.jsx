@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function Vertex({ id, pos, current, label, ret }) {
+export default function Vertex({ id, pos, current, completed, label, ret }) {
     useEffect(() => {
         if (id === 0) return;
         document.getElementById('cxanim' + id)?.beginElement();
@@ -8,15 +8,20 @@ export default function Vertex({ id, pos, current, label, ret }) {
         document.getElementById('tanim' + id)?.beginElement();
     }, []);
 
+    const fillColor = current ? '#f59e0b' : completed ? '#334155' : '#0d9488';
+    const strokeColor = current ? '#d97706' : completed ? '#475569' : '#0f766e';
+    const textColor = '#f8fafc';
+
     return (
         <g>
             <circle
                 cx={pos.x}
                 cy={pos.y}
                 r={6}
-                stroke="black"
-                strokeWidth="0.5"
-                fill={current ? 'cyan' : 'white'}
+                stroke={strokeColor}
+                strokeWidth="0.4"
+                fill={fillColor}
+                filter="url(#nodeShadow)"
             >
                 <animate
                     id={'cxanim' + id}
@@ -34,10 +39,11 @@ export default function Vertex({ id, pos, current, label, ret }) {
                 />
             </circle>
             <text
-                style={{ font: '3px sans-serif' }}
+                style={{ font: '2.8px sans-serif', fontWeight: 500 }}
                 x={pos.x}
-                y={pos.y - 4}
+                y={pos.y - 3.5}
                 textAnchor="middle"
+                fill={textColor}
             >
                 <animate
                     id={'tanim' + id}
