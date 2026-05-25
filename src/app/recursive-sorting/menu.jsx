@@ -26,12 +26,12 @@ class Menu extends Component {
                     max={100}
                     step={1}
                     onChange={this.props.onSpeedChange}
-                    disable={false}
                 />
                 <CustomSelect
                     title="Select Algorithm"
                     options={["Merge Sort", "Heap Sort", "Quick Sort"]}
                     onChange={this.props.onAlgoChanged}
+                    disabled={this.props.disable}
                 />
                 <Button
                     className="w-full"

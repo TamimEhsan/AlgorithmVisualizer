@@ -22,7 +22,8 @@ class TuringMachine extends Component {
             inputString2: "",
             table: [],
             algo: 0,
-            state: -1
+            state: -1,
+            isRunning: false
         }
     }
 
@@ -76,6 +77,8 @@ class TuringMachine extends Component {
     }
 
     handleStart = () => {
+        if (this.state.isRunning) return;
+        this.setState({ isRunning: true });
         this.handleSet();
         this.handleAlgo();
     }
@@ -105,6 +108,7 @@ class TuringMachine extends Component {
 
             state = nextState;
         }
+        this.setState({ isRunning: false });
     }
 
     setInput1 = (event) => {
@@ -133,6 +137,7 @@ class TuringMachine extends Component {
                     onReset={this.handleReset}
                     setInput1={this.setInput1}
                     setInput2={this.setInput2}
+                    disable={this.state.isRunning}
                 />
 
                 <center>

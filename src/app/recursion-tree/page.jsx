@@ -17,7 +17,8 @@ class Graph extends Component {
             n: 0,
             r: 2,
             algo: 0,
-            offset: 0
+            offset: 0,
+            isRunning: false
         }
     }
     // setNumber = (event)=>{
@@ -36,14 +37,15 @@ class Graph extends Component {
     setR = (val) => {
         this.setState({ r: val });
     }
-    addNumber = () => {
+    addNumber = async () => {
+        if (this.state.isRunning) return;
+        this.setState({ isRunning: true });
 
         let tree = getTree(this.state.n, this.state.algo, this.state.r);
         this.setState({ edges: [], vertices: [], offset: tree.x });
         this.state.vertices = [];
-        // this.setState({});
-        this.recur(tree, undefined);
-
+        await this.recur(tree, undefined);
+        this.setState({ isRunning: false });
     }
     recur = async (node, parent) => {
 
@@ -101,6 +103,7 @@ class Graph extends Component {
                         setR={this.setR}
                         setAlgo={this.setAlgo}
                         onStart={this.addNumber}
+                        disable={this.state.isRunning}
                     />
 
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto">

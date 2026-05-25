@@ -17,17 +17,20 @@ class Puzzle extends Component {
             squares: times(16, i => ({
                 value: i
             })),
+            isRunning: false,
         };
     }
 
     balsal = async () => {
+        if (this.state.isRunning) return;
+        this.setState({ isRunning: true });
         for (let i = 0; i < 15; i++) {
             this.setState({
                 squares: this.state.squares.slice().swap(i, i + 1)
             });
             await sleep(500);
         }
-
+        this.setState({ isRunning: false });
     }
 
     render() {
@@ -57,6 +60,7 @@ class Puzzle extends Component {
                         </FlipMove>
                         <Button
                             onClick={this.balsal}
+                            disabled={this.state.isRunning}
                         >
                             Animate
                         </Button>

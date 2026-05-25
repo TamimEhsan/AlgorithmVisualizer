@@ -36,6 +36,7 @@ class ConvexHull extends Component {
                         onVisualize={this.handleVisualize}
                         onChangeSpeed={this.changeSpeed}
                         onChangeValues={this.handleValueIncease}
+                        isDisabled={this.state.isRunning}
                     />
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
                         <div className="w-full h-full flex items-center justify-center" ref={this.containerRef}>
@@ -68,7 +69,7 @@ class ConvexHull extends Component {
         this.setState({ isRunning: true });
     }
     handleTurnOff = () => {
-        this.setState({ onGoing: false });
+        this.setState({ isRunning: false });
     }
     handleRefreshDots = () => {
         this.setState({ isRunning: false });

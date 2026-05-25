@@ -13,6 +13,7 @@ class Menu extends Component {
                     title="Select Algorithm"
                     options={["Bitwise NOT", "Add one", "2's Complement"]}
                     onChange={this.props.onAlgoChanged}
+                    disabled={this.props.disable}
                 />
 
 
@@ -21,6 +22,7 @@ class Menu extends Component {
                         aria-label="Username"
                         aria-describedby="basic-addon1"
                         onChange={this.props.setInput1}
+                        disabled={this.props.disable}
                     />
                 </div>
                 <div className="input-group mt-2 col-3">
@@ -28,6 +30,7 @@ class Menu extends Component {
                         aria-label="Username"
                         aria-describedby="basic-addon1"
                         onChange={this.props.setInput2}
+                        disabled={this.props.disable}
                     />
                 </div>
 
