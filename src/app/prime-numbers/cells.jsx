@@ -1,22 +1,12 @@
-import React, {Component} from 'react';
 import Cell from "./cell";
-import './cells.css'
-class Cells extends Component {
+import './cells.css';
 
-    render() {
-        return (
-            <div className="Cells">
-                {this.props.cells.map( (cell,cellidx)=>{
-                    return (
-                        <Cell
-                            key={cellidx}
-                            cell={cell}
-                        />
-                    );
-                } )}
-            </div>
-        );
-    }
+export default function Cells({ cells }) {
+    return (
+        <div className="Cells">
+            {cells.map((cell, cellidx) => (
+                <Cell key={cellidx} cell={cell} />
+            ))}
+        </div>
+    );
 }
-
-export default Cells;
