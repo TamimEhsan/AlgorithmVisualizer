@@ -1,262 +1,225 @@
 "use client";
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/navbar';
 import { aStar } from '@/lib/algorithms/Astar';
 import { bfsdfs } from "@/lib/algorithms/bfs";
 import { dijkstra, getNodesInShortestPathOrder } from "@/lib/algorithms/dijkstra";
 import { randomMaze } from "@/lib/algorithms/randomMaze";
 import { getMaze } from "@/lib/algorithms/recursiveMaze";
-import { Component, createRef } from 'react';
 import Grid from "./grid";
 import Menu from "./menu";
 
-class Pathfinder extends Component {
-    constructor() {
-        super();
-        this.state = {
-            grid: [],
-            mouseIsPressed: false,
-            algorithms: [
-                "Dijsktra", "A star", "BFS", "DFS"
-            ],
-            algo: 0,
-            mazes: [
-                "Recursive division", "Random", "Recursive Horizontal bias(NA)", "Recursive Vertical bias(NA)"
-            ],
-            maze: 0,
-            isRunning: false
-        }
-        this.gridRef = createRef();
-    }
-    componentDidMount() {
-        const width = this.gridRef.current.offsetWidth;
-        const height = this.gridRef.current.offsetHeight;
+const algorithms = ["Dijsktra", "A star", "BFS", "DFS"];
+const mazes = ["Recursive division", "Random", "Recursive Horizontal bias(NA)", "Recursive Vertical bias(NA)"];
+
+export default function Pathfinder() {
+    const [grid, setGrid] = useState([]);
+    const [mouseIsPressed, setMouseIsPressed] = useState(false);
+    const [algo, setAlgo] = useState(0);
+    const [maze, setMaze] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+    const [dimensions, setDimensions] = useState({ row: 0, col: 0 });
+    const [startNode, setStartNode] = useState({ row: 4, col: 4 });
+    const [endNode, setEndNode] = useState({ row: 0, col: 0 });
+
+    const gridRef = useRef(null);
+    const isRunningRef = useRef(false);
+
+    useEffect(() => { isRunningRef.current = isRunning; }, [isRunning]);
+
+    useEffect(() => {
+        const width = gridRef.current.offsetWidth;
+        const height = gridRef.current.offsetHeight;
         const row = Math.max(Math.floor(height / 25) - 2, 10);
         const col = Math.floor(width / 25);
-        const startNode = {
-            row: 4,
-            col: 4
-        };
-        const endNode = {
-            row: row - 5,
-            col: col - 5
+        const start = { row: 4, col: 4 };
+        const end = { row: row - 5, col: col - 5 };
+        const initialGrid = getInitialGrid(row, col);
+        initialGrid[start.row][start.col].isStartNode = true;
+        initialGrid[end.row][end.col].isEndNode = true;
+        setGrid(initialGrid);
+        setDimensions({ row, col });
+        setStartNode(start);
+        setEndNode(end);
+    }, []);
+
+    const handleMouseDown = (row, col) => {
+        if ((startNode.row !== row || startNode.col !== col) && (endNode.row !== row || endNode.col !== col)) {
+            setGrid(getNewGridWithWallToggled(grid, row, col));
         }
-        // console.log( endNode.row );
-        const grid = getInitialGrid(row, col);
-        grid[startNode.row][startNode.col].isStartNode = true;
-        grid[row - 5][col - 5].isEndNode = true;
-        this.setState({ grid, row, col, startNode, endNode });
-    }
+        setMouseIsPressed(true);
+    };
 
-    render() {
-        return (
-            <div className="flex flex-col h-screen">
-
-                <Navbar title="Pathfinder" />
-
-                <div className="flex flex-1 overflow-hidden">
-                    <Menu
-                        onAlgoChanged={this.handleAlgoChanged}
-                        onVisualize={this.handleClick}
-                        algorithms={this.state.algorithms}
-                        mazes={this.state.mazes}
-                        onMazeChanged={this.handleMazeChanged}
-                        onCreateMaze={this.handleCreateMaze}
-                        onClearBoard={this.handleClearBoard}
-                        onClearPath={this.handleClearPath}
-                        disable={this.state.isRunning}
-                    />
-                    <span style={{ margin: 2 }} />
-                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
-                        <div className="w-full h-full flex items-center justify-center" ref={this.gridRef}>
-                            <Grid
-                                grid={this.state.grid}
-                                onMouseDown={this.handleMouseDown}
-                                onMouseEnter={this.handleMouseEnter}
-                                onMouseUp={this.handleMouseUp}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    handleMouseDown = (row, col) => {
-        if ((this.state.startNode.row !== row || this.state.startNode.col !== col) && (this.state.endNode.row !== row || this.state.endNode.col !== col)) {
-            const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
-            this.setState({ grid: newGrid });
+    const handleMouseEnter = (row, col) => {
+        if (!mouseIsPressed) return;
+        if ((startNode.row !== row || startNode.col !== col) && (endNode.row !== row || endNode.col !== col)) {
+            setGrid(getNewGridWithWallToggled(grid, row, col));
         }
-        this.setState({ mouseIsPressed: true });
-    }
+    };
 
-    handleMouseEnter = (row, col) => {
-        if (this.state.mouseIsPressed === false) return;
-        if ((this.state.startNode.row !== row || this.state.startNode.col !== col) && (this.state.endNode.row !== row || this.state.endNode.col !== col)) {
-            const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
-            this.setState({ grid: newGrid });
-        }
-    }
+    const handleMouseUp = () => {
+        setMouseIsPressed(false);
+    };
 
-    handleMouseUp = (row, col) => {
-        this.setState({ mouseIsPressed: false });
-    }
-
-    handleAlgoChanged = (val) => {
-        this.setState({ algo: val });
-    }
-
-    handleMazeChanged = (val) => {
-        this.setState({ maze: val });
-    }
-
-    handleCreateMaze = async () => {
-        if (this.state.isRunning) return;
-        this.setState({ isRunning: true });
-        const { row, col, startNode, endNode } = this.state;
+    const handleCreateMaze = async () => {
+        if (isRunningRef.current) return;
+        setIsRunning(true);
+        const { row, col } = dimensions;
         const gridCopy = getInitialGrid(row, col);
         let pairs;
-        switch (this.state.maze) {
+        switch (maze) {
             case 1:
                 pairs = randomMaze(gridCopy, row, col);
                 break;
             default:
                 pairs = getMaze(gridCopy, row, col);
         }
-        const grid = this.state.grid;
+        const currentGrid = grid;
         for (let i = 0; i < pairs.length; i++) {
             const { xx, yy } = pairs[i];
             if ((xx !== startNode.row || yy !== startNode.col) && (xx !== endNode.row || yy !== endNode.col)) {
-                grid[xx][yy] = { ...grid[xx][yy], isWall: true };
-                this.setState({ grid: [...grid] });
+                currentGrid[xx][yy] = { ...currentGrid[xx][yy], isWall: true };
+                setGrid([...currentGrid]);
             }
             await sleep(20);
         }
-        grid[startNode.row][startNode.col] = { ...grid[startNode.row][startNode.col], isWall: false };
-        grid[endNode.row][endNode.col] = { ...grid[endNode.row][endNode.col], isWall: false };
-        this.setState({ grid: [...grid], isRunning: false });
-    }
-    handleClearBoard = () => {
-        const { grid, row, col } = this.state;
-        this.setState({ grid: clearBoard(grid, row, col) });
-    }
-    handleClearPath = () => {
-        const { grid, row, col } = this.state;
-        this.setState({ grid: clearPath(grid, row, col) });
-    }
-    handleClick = () => {
-        if (this.state.isRunning) return;
-        this.setState({ isRunning: true });
-        this.visualizeDijkstra();
-        /*for(let i = 0;i<this.state.row;i++){
-            for(let j = 0; j<this.state.col;j++){
-                setTimeout(()=>{
-                    const newGrid = toggleVisit(this.state.grid,i,j);
-                    this.setState({grid:newGrid});
-                    //document.getElementById(`node-${i}-${j}`).className = "node node-visited";
-                },100*(i+j)+j);
-            }
-        }*/
-    }
+        currentGrid[startNode.row][startNode.col] = { ...currentGrid[startNode.row][startNode.col], isWall: false };
+        currentGrid[endNode.row][endNode.col] = { ...currentGrid[endNode.row][endNode.col], isWall: false };
+        setGrid([...currentGrid]);
+        setIsRunning(false);
+    };
 
-    visualizeDijkstra() {
-        const { grid } = this.state;
+    const handleClearBoard = () => {
+        setGrid(clearBoard(grid, dimensions.row, dimensions.col));
+    };
+
+    const handleClearPath = () => {
+        setGrid(clearPath(grid, dimensions.row, dimensions.col));
+    };
+
+    const handleClick = () => {
+        if (isRunningRef.current) return;
+        setIsRunning(true);
+        visualizeDijkstra();
+    };
+
+    const visualizeDijkstra = () => {
         const gridCopy = grid.map(row => row.map(node => ({ ...node })));
-        const startNode = gridCopy[this.state.startNode.row][this.state.startNode.col];
-        const finishNode = gridCopy[this.state.endNode.row][this.state.endNode.col];
+        const start = gridCopy[startNode.row][startNode.col];
+        const finish = gridCopy[endNode.row][endNode.col];
         let visitedNodesInOrder;
-        switch (this.state.algo) {
+        switch (algo) {
             case 0:
-                visitedNodesInOrder = dijkstra(gridCopy, startNode, finishNode);
+                visitedNodesInOrder = dijkstra(gridCopy, start, finish);
                 break;
             case 1:
-                visitedNodesInOrder = aStar(gridCopy, startNode, finishNode);
+                visitedNodesInOrder = aStar(gridCopy, start, finish);
                 break;
             case 2:
-                visitedNodesInOrder = bfsdfs(gridCopy, startNode, finishNode, "bfs");
+                visitedNodesInOrder = bfsdfs(gridCopy, start, finish, "bfs");
                 break;
             default:
-                visitedNodesInOrder = bfsdfs(gridCopy, startNode, finishNode, "dfs");
+                visitedNodesInOrder = bfsdfs(gridCopy, start, finish, "dfs");
         }
-        const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-        this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
-    }
-    async animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
+        const nodesInShortestPathOrder = getNodesInShortestPathOrder(finish);
+        animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    };
+
+    const animateDijkstra = async (visitedNodesInOrder, nodesInShortestPathOrder) => {
         for (let i = 0; i < visitedNodesInOrder.length; i++) {
             const node = visitedNodesInOrder[i];
-            const grid = this.state.grid;
-            const newNode = { ...grid[node.row][node.col], isVisited: true };
-            grid[node.row][node.col] = newNode;
-            this.setState({ grid: [...grid] });
+            const currentGrid = grid;
+            currentGrid[node.row][node.col] = { ...currentGrid[node.row][node.col], isVisited: true };
+            setGrid([...currentGrid]);
             await sleep(10);
         }
         await sleep(100);
-        await this.animateShortestPath(nodesInShortestPathOrder);
-    }
+        await animateShortestPath(nodesInShortestPathOrder);
+    };
 
-    async animateShortestPath(nodesInShortestPathOrder) {
+    const animateShortestPath = async (nodesInShortestPathOrder) => {
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
             const node = nodesInShortestPathOrder[i];
-            const grid = this.state.grid;
-            const newNode = { ...grid[node.row][node.col], ispathNode: true };
-            grid[node.row][node.col] = newNode;
-            this.setState({ grid: [...grid] });
+            const currentGrid = grid;
+            currentGrid[node.row][node.col] = { ...currentGrid[node.row][node.col], ispathNode: true };
+            setGrid([...currentGrid]);
             await sleep(50);
         }
-        this.setState({ isRunning: false });
-    }
+        setIsRunning(false);
+    };
 
+    return (
+        <div className="flex flex-col h-screen">
+            <Navbar />
+            <div className="flex flex-1 overflow-hidden">
+                <Menu
+                    onAlgoChanged={setAlgo}
+                    onVisualize={handleClick}
+                    algorithms={algorithms}
+                    mazes={mazes}
+                    onMazeChanged={setMaze}
+                    onCreateMaze={handleCreateMaze}
+                    onClearBoard={handleClearBoard}
+                    onClearPath={handleClearPath}
+                    disabled={isRunning}
+                />
+                <span style={{ margin: 2 }} />
+                <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
+                    <div className="w-full h-full flex items-center justify-center" ref={gridRef}>
+                        <Grid
+                            grid={grid}
+                            onMouseDown={handleMouseDown}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseUp={handleMouseUp}
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 const clearPath = (grid, row, col) => {
     const newGrid = grid.slice();
     for (let i = 0; i < row; i++) {
         for (let j = 0; j < col; j++) {
-            const node = newGrid[i][j];
-            const newNode = {
-                ...node,
+            newGrid[i][j] = {
+                ...newGrid[i][j],
                 distance: Infinity,
                 visitedNode: false,
                 isVisited: false,
                 ispathNode: false,
-                previousNode: null
-
+                previousNode: null,
             };
-            newGrid[i][j] = newNode;
         }
     }
     return newGrid;
-}
+};
+
 const clearBoard = (grid, row, col) => {
     const newGrid = grid.slice();
     for (let i = 0; i < row; i++) {
         for (let j = 0; j < col; j++) {
-            const node = newGrid[i][j];
-            const newNode = {
-                ...node,
+            newGrid[i][j] = {
+                ...newGrid[i][j],
                 isWall: false,
                 distance: Infinity,
                 visitedNode: false,
                 isVisited: false,
                 ispathNode: false,
-                previousNode: null
-
+                previousNode: null,
             };
-            newGrid[i][j] = newNode;
         }
     }
     return newGrid;
-}
+};
 
 const getNewGridWithWallToggled = (grid, row, col) => {
     const newGrid = grid.slice();
-    const node = newGrid[row][col];
-    const newNode = {
-        ...node,
-        isWall: true//!node.isWall,
-    };
-    newGrid[row][col] = newNode;
+    newGrid[row][col] = { ...newGrid[row][col], isWall: true };
     return newGrid;
 };
+
 const getInitialGrid = (totRow, totCol) => {
     const grid = [];
     for (let row = 0; row < totRow; row++) {
@@ -267,24 +230,21 @@ const getInitialGrid = (totRow, totCol) => {
         grid.push(currentRow);
     }
     return grid;
-}
+};
 
-const createNode = (row, col) => {
-    return {
-        row,
-        col,
-        isWall: false,
-        isStartNode: false,
-        isEndNode: false,
-        distance: Infinity,
-        visitedNode: false,
-        isVisited: false,
-        ispathNode: false,
-        previousNode: null
-    };
-}
+const createNode = (row, col) => ({
+    row,
+    col,
+    isWall: false,
+    isStartNode: false,
+    isEndNode: false,
+    distance: Infinity,
+    visitedNode: false,
+    isVisited: false,
+    ispathNode: false,
+    previousNode: null,
+});
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-export default Pathfinder;
