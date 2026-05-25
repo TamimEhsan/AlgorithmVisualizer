@@ -1,43 +1,28 @@
-import React, {Component} from 'react';
 import './style.css';
-class Rect extends Component {
 
-    render() {
-        return (
-            <div
-                className='rect'
-                style={{height:this.props.rect.width,
-                    border: this.checkBorder(),
-                    background:this.checkColor(),
-                    margin:this.props.marg
+export default function Rect({ marg, rect }) {
+    const checkColor = () => {
+        if (rect.isSorted) return "green";
+        if (rect.isSorting) return "orange";
+        if (rect.isLeft) return "red";
+        if (rect.isRight) return "purple";
+        return "#ADD8E6";
+    };
 
+    const checkBorder = () => {
+        if (rect.isRange) return "0px solid black";
+        return "0px";
+    };
 
-                }}
-            >
-                
-            </div>
-        );
-    }
-    checkColor = () => {
-        if( this.props.rect.isSorted ){
-            return "green";
-        } else if( this.props.rect.isSorting ){
-            return "orange";
-        } else if( this.props.rect.isLeft ){
-            return "red";
-        } else if(this.props.rect.isRight){
-            return "purple";
-        }else{
-            return "#ADD8E6";
-        }
-    }
-    checkBorder = () =>{
-        if( this.props.rect.isRange ){
-            return "0px solid black";
-        } else{
-            return "0px"
-        }
-    }
+    return (
+        <div
+            className="rect"
+            style={{
+                height: rect.width,
+                border: checkBorder(),
+                background: checkColor(),
+                margin: marg,
+            }}
+        />
+    );
 }
-
-export default Rect;

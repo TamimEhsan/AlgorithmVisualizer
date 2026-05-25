@@ -1,154 +1,88 @@
 "use client";
-import React, { Component } from 'react';
-
+import { useState, useEffect, useRef } from 'react';
 import { quickSort } from "@/lib/algorithms/quickSort";
 import { bubbleSort, insertionSort, selectionSort } from "@/lib/algorithms/sortingAlgorithms";
 import Rects from "./rects";
-
 import Navbar from '@/components/navbar';
 import Menu from "./menu";
 
-class Sort extends Component {
-    state = {
-        count: 20,
-        rects: [],
-        rects2: [],
-        doubles: false,
-        speed: 50,
-        isRunning: false,
-        isRunning1: false,
-        isRunning2: false,
-        algo1: 0,
-        algo2: 0
-    }
+export default function Sort() {
+    const [count, setCount] = useState(20);
+    const [rects, setRects] = useState([]);
+    const [rects2, setRects2] = useState([]);
+    const [doubles, setDoubles] = useState(false);
+    const [speed, setSpeed] = useState(50);
+    const [isRunning, setIsRunning] = useState(false);
+    const [algo1, setAlgo1] = useState(0);
+    const [algo2, setAlgo2] = useState(0);
 
-    componentDidMount() {
-        const rect = getInitialRects(this.state.count);
-        const rect2 = rect.slice();
-        this.setState({ rects: rect, rects2: rect2 });
-    }
+    const speedRef = useRef(speed);
+    const isRunning1Ref = useRef(false);
+    const isRunning2Ref = useRef(false);
 
-    render() {
-        return (
-            <div className="flex flex-col h-screen">
-                <Navbar title="Sorting Visualizer" />
+    useEffect(() => { speedRef.current = speed; }, [speed]);
 
-                <div className="flex flex-1 overflow-hidden">
-                    <Menu
-                        disable={this.state.isRunning}
-                        onDoubleChange={this.handleDouble}
-                        onViusalize={this.handleSort}
-                        onRandomize={this.handleRandomize}
-                        onRefresh={this.handleRefresh}
-                        onCountChange={this.handleCountChange}
-                        onAlgoChanged1={this.handleAlgoChanged1}
-                        onAlgoChanged2={this.handleAlgoChanged2}
-                        onSpeedChange={this.handleSpeedChanged}
-                    />
-                    <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
-                        <Rects
-                            speed={this.state.speed}
-                            rects={this.state.rects}
-                        />
-                        {this.state.doubles && <hr style={{ width: "90%" }} />}
-                        {this.state.doubles &&
-                            <Rects
-                                rects={this.state.rects2}
-                            />}
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    handleRandomize = () => {
-        const rect = getInitialRects(this.state.count);
-        const rect2 = rect.slice();
-        this.setState({ rects: rect, rects2: rect2 });
-    }
-    handleRefresh = () => {
-        const rects = this.state.rects;
-        for (let i = 0; i < rects.length; i++) {
-            const rect = { ...rects[i], isSorted: false, isSorting: false }
-            rects[i] = rect;
-        }
-        const rects2 = rects.slice();
-        this.setState({ rects, rects2 });
-    }
+    useEffect(() => {
+        const rect = getInitialRects(20);
+        setRects(rect);
+        setRects2(rect.slice());
+    }, []);
 
-    handleDouble = (val) => {
-        this.setState({ doubles: val });
-    }
-    handleCountChange = (val) => {
+    const handleRandomize = () => {
+        const rect = getInitialRects(count);
+        setRects(rect);
+        setRects2(rect.slice());
+    };
+
+    const handleRefresh = () => {
+        const newRects = rects.map(r => ({ ...r, isSorted: false, isSorting: false }));
+        setRects(newRects);
+        setRects2(newRects.slice());
+    };
+
+    const handleDouble = (val) => {
+        setDoubles(val);
+    };
+
+    const handleCountChange = (val) => {
         const rect = getInitialRects(val);
-        const rect2 = rect.slice();
-        this.setState({ count: val, rects: rect, rects2: rect2 });
-    }
-    handleAlgoChanged1 = (val) => {
-        this.setState({ algo1: val });
-    }
-    handleAlgoChanged2 = (val) => {
-        this.setState({ algo2: val });
-    }
-    handleSpeedChanged = (val) => {
-        const speed = (760 - val * 7.5);
-        this.setState({ speed });
-    }
-    handleSort = () => {
+        setCount(val);
+        setRects(rect);
+        setRects2(rect.slice());
+    };
 
-        this.setState({ isRunning: true });
+    const handleSpeedChanged = (val) => {
+        setSpeed(760 - val * 7.5);
+    };
+
+    const handleSort = () => {
+        setIsRunning(true);
         let steps1;
-        switch (this.state.algo1) {
-            case 0:
-                steps1 = bubbleSort(this.state.rects);
-                break;
-            case 1:
-                steps1 = selectionSort(this.state.rects);
-                break;
-            case 2:
-                steps1 = insertionSort(this.state.rects);
-                break;
-            case 3:
-                steps1 = quickSort(this.state.rects2);
-                console.log(steps1)
-                break;
-            default:
-                steps1 = bubbleSort(this.state.rects);
-                break;
+        switch (algo1) {
+            case 0: steps1 = bubbleSort(rects); break;
+            case 1: steps1 = selectionSort(rects); break;
+            case 2: steps1 = insertionSort(rects); break;
+            case 3: steps1 = quickSort(rects2); break;
+            default: steps1 = bubbleSort(rects); break;
         }
         let steps2;
-        if (this.state.doubles) {
-
-            switch (this.state.algo2) {
-                case 0:
-                    steps2 = bubbleSort(this.state.rects2);
-                    break;
-                case 1:
-                    steps2 = selectionSort(this.state.rects2);
-                    break;
-                case 2:
-                    steps2 = insertionSort(this.state.rects2);
-                    break;
-                case 3:
-                    steps2 = quickSort(this.state.rects2);
-                    break;
-                default:
-                    steps2 = bubbleSort(this.state.rects2);
-                    break;
+        if (doubles) {
+            switch (algo2) {
+                case 0: steps2 = bubbleSort(rects2); break;
+                case 1: steps2 = selectionSort(rects2); break;
+                case 2: steps2 = insertionSort(rects2); break;
+                case 3: steps2 = quickSort(rects2); break;
+                default: steps2 = bubbleSort(rects2); break;
             }
-
         }
-        this.handleFirst(steps1);
-        if (this.state.doubles) this.handleSecond(steps2);
-    }
-    handleFirst = async (steps) => {
-        // console.log("fsdfsdfsdfasdf");
-        this.setState({ isRunning1: true });
+        handleFirst(steps1);
+        if (doubles) handleSecond(steps2);
+    };
 
-        // const steps = bubbleSort(this.state.rects);
-        //  console.log(steps.length);
-        const prevRect = this.state.rects;
+    const handleFirst = async (steps) => {
+        isRunning1Ref.current = true;
+        const prevRect = rects;
         for (let i = 0; i < steps.length; i++) {
-            //   setTimeout(()=>{
             if (i !== 0) {
                 prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
                 prevRect[steps[i - 1].yy] = { ...prevRect[steps[i - 1].yy], isSorting: false };
@@ -165,29 +99,20 @@ class Sort extends Component {
                 prevRect[steps[i].yy] = { ...prevRect[steps[i].yy], isSorting: true };
             }
             if (i === steps.length - 1) {
-                this.setState({ isRunning1: false });
-                if (this.state.isRunning2 === false) {
-                    this.setState({ isRunning: false });
+                isRunning1Ref.current = false;
+                if (!isRunning2Ref.current) {
+                    setIsRunning(false);
                 }
             }
-            /* if( i === (steps.length)-2 ){
-                 this.setState({isRunning1:false});
-                 if( this.state.isRunning2 === false ){
-                     this.setState({isRunning:false});
-                 }
-                 prevRect[steps[i].xx] = {...prevRect[steps[i].xx],isSorting:false,isSorted:true};
-                 prevRect[steps[i].yy] = {...prevRect[steps[i].yy],isSorting:false,isSorted:true};
-             }*/
-            this.setState({ rects: prevRect });
-            await sleep(this.state.speed);
-            // },i*speed);
+            setRects([...prevRect]);
+            await sleep(speedRef.current);
         }
-    }
-    handleSecond = async (steps) => {
-        this.setState({ isRunning2: true });
-        const prevRect = this.state.rects2;
+    };
+
+    const handleSecond = async (steps) => {
+        isRunning2Ref.current = true;
+        const prevRect = rects2;
         for (let i = 0; i < steps.length; i++) {
-            //   setTimeout(()=>{
             if (i !== 0) {
                 prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
                 prevRect[steps[i - 1].yy] = { ...prevRect[steps[i - 1].yy], isSorting: false };
@@ -204,43 +129,53 @@ class Sort extends Component {
                 prevRect[steps[i].yy] = { ...prevRect[steps[i].yy], isSorting: true };
             }
             if (i === steps.length - 1) {
-                this.setState({ isRunning2: false });
-                if (this.state.isRunning1 === false) {
-                    this.setState({ isRunning: false });
+                isRunning2Ref.current = false;
+                if (!isRunning1Ref.current) {
+                    setIsRunning(false);
                 }
             }
-            /* if( i === (steps.length)-2 ){
-                 prevRect[steps[i].xx] = {...prevRect[steps[i].xx],isSorting:false,isSorted:true};
-                 prevRect[steps[i].yy] = {...prevRect[steps[i].yy],isSorting:false,isSorted:true};
-                 this.setState({isRunning2:false});
-                 if( this.state.isRunning1 === false ){
-                     this.setState({isRunning:false});
-                 }
-             }*/
-            this.setState({ rects2: prevRect });
-            await sleep(this.state.speed);
-            // },i*speed);
+            setRects2([...prevRect]);
+            await sleep(speedRef.current);
         }
-    }
+    };
 
-
+    return (
+        <div className="flex flex-col h-screen">
+            <Navbar />
+            <div className="flex flex-1 overflow-hidden">
+                <Menu
+                    disabled={isRunning}
+                    onDoubleChange={handleDouble}
+                    onViusalize={handleSort}
+                    onRandomize={handleRandomize}
+                    onCountChange={handleCountChange}
+                    onAlgoChanged1={setAlgo1}
+                    onAlgoChanged2={setAlgo2}
+                    onSpeedChange={handleSpeedChanged}
+                />
+                <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
+                    <Rects speed={speed} rects={rects} />
+                    {doubles && <hr style={{ width: "90%" }} />}
+                    {doubles && <Rects rects={rects2} />}
+                </div>
+            </div>
+        </div>
+    );
 }
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 const getInitialRects = (tot) => {
     const rects = [];
     for (let i = 0; i < tot; i++) {
-        rects.push(getRect(i));
+        rects.push({
+            width: Math.floor(Math.random() * 200) + 50,
+            isSorted: false,
+            isSorting: false,
+            kk: i,
+        });
     }
     return rects;
-}
-const getRect = (kk) => {
-    return {
-        width: Math.floor(Math.random() * 200) + 50,
-        isSorted: false,
-        isSorting: false,
-        kk: kk
-    }
-}
-export default Sort;
+};

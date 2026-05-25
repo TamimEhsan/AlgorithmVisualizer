@@ -2,8 +2,8 @@ import * as React from "react"
 import { Slider } from "@/components/ui/slider"
 
 
-export function CustomSlider({ title, onChange, min, max, step, defaultValue, disable, isDisabled }) {
-    const disabled = disable || isDisabled || false;
+export function CustomSlider({ title, onChange, min, max, step, defaultValue, disable, isDisabled, disabled: disabledProp }) {
+    const disabled = disable || isDisabled || disabledProp || false;
     const [value, setValue] = React.useState(defaultValue)
     const onChangeCover = (values) => {
         const val = values[0]
