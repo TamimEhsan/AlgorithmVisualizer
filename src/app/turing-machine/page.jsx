@@ -35,12 +35,14 @@ export default function TuringMachine() {
         setCellStart(s => s + 1);
         setCellEnd(e => e + 1);
         setMidCell(m => m + 1);
+        midCellRef.current += 1;
     };
 
     const handleRightShift = () => {
         setCellStart(s => s - 1);
         setCellEnd(e => e - 1);
         setMidCell(m => m - 1);
+        midCellRef.current -= 1;
     };
 
     const handleSet = () => {

@@ -1,20 +1,16 @@
-import * as React from "react"
+import { useState } from "react"
 import { Slider } from "@/components/ui/slider"
 
-
-export function CustomSlider({ title, onChange, min, max, step, defaultValue, disable, isDisabled, disabled: disabledProp }) {
-    const disabled = disable || isDisabled || disabledProp || false;
-    const [value, setValue] = React.useState(defaultValue)
+export function CustomSlider({ title, onChange, min, max, step, defaultValue, disabled }) {
+    const [value, setValue] = useState(defaultValue)
     const onChangeCover = (values) => {
         const val = values[0]
         setValue(val)
         onChange(val)
     }
 
-
     return (
       <div className="space-y-2">
-     {/* <div className="flex items-center space-x-2"> */}
       <label className="text-sm font-medium whitespace-nowrap">{title}</label>
       <Slider
         value={[value]}
@@ -29,4 +25,3 @@ export function CustomSlider({ title, onChange, min, max, step, defaultValue, di
     </div>
   )
 }
-
