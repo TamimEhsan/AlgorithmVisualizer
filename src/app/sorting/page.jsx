@@ -8,8 +8,8 @@ import Menu from "./menu";
 
 export default function Sort() {
     const [count, setCount] = useState(20);
-    const [rects, setRects] = useState([]);
-    const [rects2, setRects2] = useState([]);
+    const [rects, setRects] = useState(() => getInitialRects(20));
+    const [rects2, setRects2] = useState(() => getInitialRects(20));
     const [doubles, setDoubles] = useState(false);
     const [speed, setSpeed] = useState(50);
     const [isRunning, setIsRunning] = useState(false);
@@ -22,22 +22,10 @@ export default function Sort() {
 
     useEffect(() => { speedRef.current = speed; }, [speed]);
 
-    useEffect(() => {
-        const rect = getInitialRects(20);
-        setRects(rect);
-        setRects2(rect.slice());
-    }, []);
-
     const handleRandomize = () => {
         const rect = getInitialRects(count);
         setRects(rect);
         setRects2(rect.slice());
-    };
-
-    const handleRefresh = () => {
-        const newRects = rects.map(r => ({ ...r, isSorted: false, isSorting: false }));
-        setRects(newRects);
-        setRects2(newRects.slice());
     };
 
     const handleDouble = (val) => {
@@ -81,7 +69,7 @@ export default function Sort() {
 
     const handleFirst = async (steps) => {
         isRunning1Ref.current = true;
-        const prevRect = rects;
+        const prevRect = [...rects];
         for (let i = 0; i < steps.length; i++) {
             if (i !== 0) {
                 prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };
@@ -111,7 +99,7 @@ export default function Sort() {
 
     const handleSecond = async (steps) => {
         isRunning2Ref.current = true;
-        const prevRect = rects2;
+        const prevRect = [...rects2];
         for (let i = 0; i < steps.length; i++) {
             if (i !== 0) {
                 prevRect[steps[i - 1].xx] = { ...prevRect[steps[i - 1].xx], isSorting: false };

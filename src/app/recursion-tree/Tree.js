@@ -113,8 +113,6 @@ function firstwalk(v, distance = 1) {
 
         let midpoint = (v.children[0].x + v.children[v.children.length-1].x) / 2;
 
-        let ell = v.children[0];
-        let arr = v.children[-1];
         let w = v.lbrother();
         if (w) {
             v.x = w.x + distance;
@@ -221,12 +219,6 @@ function second_walk(v, m = 0, depth = 0, min = undefined) {
     return min;
 }
 
-function dfs(tree){
-    if( tree.tree.node === 'B' ) return;
-    console.log( tree.tree.node, tree.x,tree.y );
-    for(let i=0;i<tree.children.length;i++)
-        dfs(tree.children[i]);
-}
 /*
 let blank = new Tree('B',[]);
 let ll = new Tree("ll",[]);

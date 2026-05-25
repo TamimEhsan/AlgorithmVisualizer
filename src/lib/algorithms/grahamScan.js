@@ -57,7 +57,6 @@ export function convex_hull(points){
 }
 
 function cw(a, b, c) {
-    const f = a.xx*(b.yy-c.yy)+b.xx*(c.yy-a.yy)+c.xx*(a.yy-b.yy);
     if( a.xx*(b.yy-c.yy)+b.xx*(c.yy-a.yy)+c.xx*(a.yy-b.yy) < 0 ){
         return true;
     } else{

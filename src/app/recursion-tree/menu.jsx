@@ -1,6 +1,6 @@
 import { CustomSelect } from '@/components/custom-select';
 import { Button } from '@/components/ui/button';
-import { Play, RotateCcw } from 'lucide-react';
+import { Play } from 'lucide-react';
 
 export default function Menu({ setN, setR, setAlgo, onStart, disabled }) {
     return (

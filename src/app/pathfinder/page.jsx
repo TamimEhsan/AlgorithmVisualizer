@@ -74,18 +74,18 @@ export default function Pathfinder() {
             default:
                 pairs = getMaze(gridCopy, row, col);
         }
-        const currentGrid = grid;
+        let currentGrid = grid.map(row => [...row]);
         for (let i = 0; i < pairs.length; i++) {
             const { xx, yy } = pairs[i];
             if ((xx !== startNode.row || yy !== startNode.col) && (xx !== endNode.row || yy !== endNode.col)) {
                 currentGrid[xx][yy] = { ...currentGrid[xx][yy], isWall: true };
-                setGrid([...currentGrid]);
+                setGrid(currentGrid.map(row => [...row]));
             }
             await sleep(20);
         }
         currentGrid[startNode.row][startNode.col] = { ...currentGrid[startNode.row][startNode.col], isWall: false };
         currentGrid[endNode.row][endNode.col] = { ...currentGrid[endNode.row][endNode.col], isWall: false };
-        setGrid([...currentGrid]);
+        setGrid(currentGrid.map(row => [...row]));
         setIsRunning(false);
     };
 
@@ -126,11 +126,11 @@ export default function Pathfinder() {
     };
 
     const animateDijkstra = async (visitedNodesInOrder, nodesInShortestPathOrder) => {
+        let currentGrid = grid.map(row => [...row]);
         for (let i = 0; i < visitedNodesInOrder.length; i++) {
             const node = visitedNodesInOrder[i];
-            const currentGrid = grid;
             currentGrid[node.row][node.col] = { ...currentGrid[node.row][node.col], isVisited: true };
-            setGrid([...currentGrid]);
+            setGrid(currentGrid.map(row => [...row]));
             await sleep(10);
         }
         await sleep(100);
@@ -138,11 +138,11 @@ export default function Pathfinder() {
     };
 
     const animateShortestPath = async (nodesInShortestPathOrder) => {
+        let currentGrid = grid.map(row => [...row]);
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
             const node = nodesInShortestPathOrder[i];
-            const currentGrid = grid;
             currentGrid[node.row][node.col] = { ...currentGrid[node.row][node.col], ispathNode: true };
-            setGrid([...currentGrid]);
+            setGrid(currentGrid.map(row => [...row]));
             await sleep(50);
         }
         setIsRunning(false);

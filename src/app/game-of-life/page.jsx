@@ -30,7 +30,7 @@ export default function GameOfLifePage() {
         // this.setState({ mouseIsPressed: true });
     }
 
-    const handleMouseEnter = (row, col) => {
+    const handleMouseEnter = (_row, _col) => {
         // if (this.state.mouseIsPressed === false) return;
         // if ((this.state.startNode.row !== row || this.state.startNode.col !== col) && (this.state.endNode.row !== row || this.state.endNode.col !== col)) {
         //     const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
@@ -38,7 +38,7 @@ export default function GameOfLifePage() {
         // }
     }
 
-    const handleMouseUp = (row, col) => {
+    const handleMouseUp = (_row, _col) => {
         // this.setState({ mouseIsPressed: false });
     }
 
@@ -52,7 +52,6 @@ export default function GameOfLifePage() {
     const handleStop = () => {
         setRunning(false);
         runningRef.current = false;
-        console.log("Simulation stopped");
     }
 
     const handleClearBoard = () => {

@@ -26,6 +26,25 @@ export default function TuringMachine() {
     useEffect(() => { midCellRef.current = midCell; }, [midCell]);
     useEffect(() => { algoRef.current = algo; }, [algo]);
 
+    const handleReset = () => {
+        const width = window.innerWidth;
+        let cellCount = Math.floor(width / 50);
+        if (cellCount % 2 === 0) cellCount--;
+        let newStrip = [...stripRef.current];
+        if (newStrip.length === 0) newStrip = getInitialGrid();
+        for (let i = 0; i < newStrip.length; i++) newStrip[i] = { ...newStrip[i], val: 'B' };
+
+        setStrip(newStrip);
+        stripRef.current = newStrip;
+        setMidCell(50);
+        midCellRef.current = 50;
+        const start = 50 + (1 - cellCount) / 2;
+        const end = 50 + (cellCount - 1) / 2;
+        setCellStart(start);
+        setCellEnd(end);
+        setCurrentState(-1);
+    };
+
     useEffect(() => {
         getNextStep('100');
         handleReset();
@@ -54,25 +73,6 @@ export default function TuringMachine() {
         }
         setStrip(newStrip);
         stripRef.current = newStrip;
-    };
-
-    const handleReset = () => {
-        const width = window.innerWidth;
-        let cellCount = Math.floor(width / 50);
-        if (cellCount % 2 === 0) cellCount--;
-        let newStrip = [...stripRef.current];
-        if (newStrip.length === 0) newStrip = getInitialGrid();
-        for (let i = 0; i < newStrip.length; i++) newStrip[i] = { ...newStrip[i], val: 'B' };
-
-        setStrip(newStrip);
-        stripRef.current = newStrip;
-        setMidCell(50);
-        midCellRef.current = 50;
-        const start = 50 + (1 - cellCount) / 2;
-        const end = 50 + (cellCount - 1) / 2;
-        setCellStart(start);
-        setCellEnd(end);
-        setCurrentState(-1);
     };
 
     const handleStart = () => {
@@ -115,7 +115,7 @@ export default function TuringMachine() {
         setInputString1(filtered);
     };
 
-    const handleSetInput2 = (event) => {
+    const handleSetInput2 = (_event) => {
         // placeholder for second input
     };
 

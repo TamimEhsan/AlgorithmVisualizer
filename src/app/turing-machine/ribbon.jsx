@@ -1,7 +1,7 @@
 import Cell from "./cell";
 import FlipMove from 'react-flip-move';
 
-const Ribbon = ({ strip, midCell, cellCount, cellStart, cellEnd }) => {
+const Ribbon = ({ strip, cellStart, cellEnd }) => {
     return (
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -16,7 +16,7 @@ const Ribbon = ({ strip, midCell, cellCount, cellStart, cellEnd }) => {
             >
                 {strip
                     .filter(cell => cell.id >= cellStart && cell.id <= cellEnd)
-                    .map((cell, cellidx) => {
+                    .map((cell) => {
                         return (
                             <div key={cell.id}>
                             <Cell
