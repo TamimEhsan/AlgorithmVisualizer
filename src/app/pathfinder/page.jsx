@@ -22,7 +22,8 @@ class Pathfinder extends Component {
             mazes: [
                 "Recursive division", "Random", "Recursive Horizontal bias(NA)", "Recursive Vertical bias(NA)"
             ],
-            maze: 0
+            maze: 0,
+            isRunning: false
         }
         this.gridRef = createRef();
     }
@@ -62,6 +63,7 @@ class Pathfinder extends Component {
                         onCreateMaze={this.handleCreateMaze}
                         onClearBoard={this.handleClearBoard}
                         onClearPath={this.handleClearPath}
+                        disable={this.state.isRunning}
                     />
                     <span style={{ margin: 2 }} />
                     <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
@@ -107,30 +109,31 @@ class Pathfinder extends Component {
         this.setState({ maze: val });
     }
 
-    handleCreateMaze = () => {
+    handleCreateMaze = async () => {
+        if (this.state.isRunning) return;
+        this.setState({ isRunning: true });
+        const { row, col, startNode, endNode } = this.state;
+        const gridCopy = getInitialGrid(row, col);
         let pairs;
         switch (this.state.maze) {
             case 1:
-                pairs = randomMaze(this.state.grid, this.state.row, this.state.col);
+                pairs = randomMaze(gridCopy, row, col);
                 break;
             default:
-                pairs = getMaze(this.state.grid, this.state.row, this.state.col);
+                pairs = getMaze(gridCopy, row, col);
         }
-        const { startNode, endNode } = this.state;
+        const grid = this.state.grid;
         for (let i = 0; i < pairs.length; i++) {
-            setTimeout(() => {
-                if (i === pairs.length - 1) {
-                    // this.setState({grid:this.state.grid});
-                    const grid = this.state.grid;
-                    grid[startNode.row][startNode.col] = { ...grid[startNode.row][startNode.col], isWall: false };
-                    grid[endNode.row][endNode.col] = { ...grid[endNode.row][endNode.col], isWall: false };
-                    this.setState({ grid });
-                }
-                if ((pairs[i].xx !== startNode.row || pairs[i].yy !== startNode.col) && (pairs[i].xx !== endNode.row || pairs[i].yy !== endNode.col)) {
-                    document.getElementById(`node-${pairs[i].xx}-${pairs[i].yy}`).className = "node node-wall";
-                }
-            }, i * 20);
+            const { xx, yy } = pairs[i];
+            if ((xx !== startNode.row || yy !== startNode.col) && (xx !== endNode.row || yy !== endNode.col)) {
+                grid[xx][yy] = { ...grid[xx][yy], isWall: true };
+                this.setState({ grid: [...grid] });
+            }
+            await sleep(20);
         }
+        grid[startNode.row][startNode.col] = { ...grid[startNode.row][startNode.col], isWall: false };
+        grid[endNode.row][endNode.col] = { ...grid[endNode.row][endNode.col], isWall: false };
+        this.setState({ grid: [...grid], isRunning: false });
     }
     handleClearBoard = () => {
         const { grid, row, col } = this.state;
@@ -141,11 +144,8 @@ class Pathfinder extends Component {
         this.setState({ grid: clearPath(grid, row, col) });
     }
     handleClick = () => {
-        /*  for(let i = 0;i<20;i++){
-              for(let j = 0; j<50;j++){
-                  document.getElementById(`node-${i}-${j}`).className = "node";
-              }
-          }*/
+        if (this.state.isRunning) return;
+        this.setState({ isRunning: true });
         this.visualizeDijkstra();
         /*for(let i = 0;i<this.state.row;i++){
             for(let j = 0; j<this.state.col;j++){
@@ -160,64 +160,49 @@ class Pathfinder extends Component {
 
     visualizeDijkstra() {
         const { grid } = this.state;
-        const startNode = grid[this.state.startNode.row][this.state.startNode.col];
-        const finishNode = grid[this.state.endNode.row][this.state.endNode.col];
+        const gridCopy = grid.map(row => row.map(node => ({ ...node })));
+        const startNode = gridCopy[this.state.startNode.row][this.state.startNode.col];
+        const finishNode = gridCopy[this.state.endNode.row][this.state.endNode.col];
         let visitedNodesInOrder;
         switch (this.state.algo) {
             case 0:
-                visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+                visitedNodesInOrder = dijkstra(gridCopy, startNode, finishNode);
                 break;
             case 1:
-                visitedNodesInOrder = aStar(grid, startNode, finishNode);
+                visitedNodesInOrder = aStar(gridCopy, startNode, finishNode);
                 break;
             case 2:
-                visitedNodesInOrder = bfsdfs(grid, startNode, finishNode, "bfs");
+                visitedNodesInOrder = bfsdfs(gridCopy, startNode, finishNode, "bfs");
                 break;
             default:
-                visitedNodesInOrder = bfsdfs(grid, startNode, finishNode, "dfs");
+                visitedNodesInOrder = bfsdfs(gridCopy, startNode, finishNode, "dfs");
         }
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
         this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
     }
     async animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
-        for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-
-            if (i === visitedNodesInOrder.length) {
-                //  setTimeout(() => {
-                await sleep(100);
-                await this.animateShortestPath(nodesInShortestPathOrder);
-
-                //  }, 10 * (i+10));
-                return;
-            }
-            // setTimeout(() => {
+        for (let i = 0; i < visitedNodesInOrder.length; i++) {
             const node = visitedNodesInOrder[i];
-            const newGrid = toggleVisit(this.state.grid, node.row, node.col);
-            //this.setState({grid:newGrid});
-            document.getElementById(`node-${node.row}-${node.col}`).className =
-                'node node-visited';
+            const grid = this.state.grid;
+            const newNode = { ...grid[node.row][node.col], isVisited: true };
+            grid[node.row][node.col] = newNode;
+            this.setState({ grid: [...grid] });
             await sleep(10);
-            // }, 10 * i);
         }
+        await sleep(100);
+        await this.animateShortestPath(nodesInShortestPathOrder);
     }
 
     async animateShortestPath(nodesInShortestPathOrder) {
-        const grid = this.state.grid;
-        const newGrid = grid.slice();
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
-            //   setTimeout(() => {
-
             const node = nodesInShortestPathOrder[i];
-            const newNode = { ...newGrid[node.row][node.col], ispathNode: true };
-            newGrid[node.row][node.col] = newNode;
-            if (i === nodesInShortestPathOrder.length - 1) {
-                this.setState({ grid: newGrid });
-            }
-            document.getElementById(`node-${node.row}-${node.col}`).className =
-                'node node-shortest-path';
+            const grid = this.state.grid;
+            const newNode = { ...grid[node.row][node.col], ispathNode: true };
+            grid[node.row][node.col] = newNode;
+            this.setState({ grid: [...grid] });
             await sleep(50);
-            //}, 50 * i);
         }
+        this.setState({ isRunning: false });
     }
 
 }
@@ -262,16 +247,6 @@ const clearBoard = (grid, row, col) => {
     return newGrid;
 }
 
-const toggleVisit = (grid, row, col) => {
-    const newGrid = grid.slice();
-    const node = newGrid[row][col];
-    const newNode = {
-        ...node,
-        visitedNode: !node.visitedNode
-    };
-    newGrid[row][col] = newNode;
-    return newGrid;
-}
 const getNewGridWithWallToggled = (grid, row, col) => {
     const newGrid = grid.slice();
     const node = newGrid[row][col];

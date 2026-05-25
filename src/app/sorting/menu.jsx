@@ -33,26 +33,24 @@ class Menu extends Component {
                     min={10}
                     max={100}
                     step={1}
-                    disable={this.props.disable}
                 />
 
                 <CustomSelect
                     title="Select Algorithm 1"
                     options={["Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"]}
                     onChange={this.props.onAlgoChanged1}
+                    disabled={this.props.disable}
                 />
                 <CustomToggle
                     title="Double"
                     onCheckedChange={this.props.onDoubleChange}
+                    disabled={this.props.disable}
                 />
-                {/* <SwitchLabels
-                        disable={this.props.disable}
-                        onDoubleChange={this.props.onDoubleChange}
-                    /> */}
                 <CustomSelect
                     title="Select Algorithm 2"
                     options={["Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"]}
                     onChange={this.props.onAlgoChanged2}
+                    disabled={this.props.disable}
                 />
                 <Button
                     className="w-full"

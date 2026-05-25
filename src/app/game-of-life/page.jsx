@@ -84,6 +84,7 @@ export default function GameOfLifePage() {
                     onStart={handleStart}
                     onStop={handleStop}
                     onClear={handleClearBoard}
+                    isRunning={running}
                 />
 
                 <div className="flex flex-1 flex-col items-center justify-center overflow-auto">

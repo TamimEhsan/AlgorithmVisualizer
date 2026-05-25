@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch"
 //   onCheckedChange: (checked: boolean) => void
 // }
 
-export function CustomToggle({ title, onCheckedChange }) {
+export function CustomToggle({ title, onCheckedChange, disabled }) {
     const [checked, setChecked] = React.useState(false)
     const onCheckedChangeCover = (checked) => {
         setChecked(checked)
@@ -15,7 +15,7 @@ export function CustomToggle({ title, onCheckedChange }) {
     }
     return (
         <div className="flex items-center space-x-2">
-            <Switch id={title} checked={checked} onCheckedChange={onCheckedChangeCover} />
+            <Switch id={title} checked={checked} onCheckedChange={onCheckedChangeCover} disabled={disabled} />
             <label
                 htmlFor={title}
                 className="text-sm font-medium whitespace-nowrap"

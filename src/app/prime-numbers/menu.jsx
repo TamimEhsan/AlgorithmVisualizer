@@ -13,6 +13,7 @@ class Menu extends Component {
                     title="Select Algorithm"
                     options={["Sieve", "Spiral"]}
                     onChange={this.props.setAlgo}
+                    disabled={this.props.isDisabled}
                 />
                 <CustomSlider
                     onChange={this.props.onChangeSpeed}
@@ -22,7 +23,6 @@ class Menu extends Component {
                     step={1}
                     min={10}
                     max={50}
-                    isDisabled={false}
                 />
                 <CustomSlider
                     onChange={this.props.onChangeValues}

@@ -2,7 +2,8 @@ import * as React from "react"
 import { Slider } from "@/components/ui/slider"
 
 
-export function CustomSlider({ title, onChange, min, max, step, defaultValue }) {
+export function CustomSlider({ title, onChange, min, max, step, defaultValue, disable, isDisabled }) {
+    const disabled = disable || isDisabled || false;
     const [value, setValue] = React.useState(defaultValue)
     const onChangeCover = (value) => {
         setValue(value)
@@ -20,8 +21,8 @@ export function CustomSlider({ title, onChange, min, max, step, defaultValue }) 
         min={min}
         max={max}
         step={step}
+        disabled={disabled}
         className="w-full"
-        // className="w-[180px]"
       />
       <span className="text-sm text-gray-500 w-8">{value}</span>
     </div>

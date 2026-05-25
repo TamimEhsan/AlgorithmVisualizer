@@ -12,16 +12,19 @@ class Menu extends Component {
                     title="Select Task"
                     options={['Fibonacci', 'Binomial Coefficient', "Derangement", "Bigmod", "Stirling2"]}
                     onChange={this.props.setAlgo}
+                    disabled={this.props.disable}
                 />
                 <CustomSelect
                     title={'N'}
                     options={["0", "1", "2", "3", "4", "5", "6"]}
                     onChange={this.props.setN}
+                    disabled={this.props.disable}
                 />
                 <CustomSelect
                     title={'R'}
                     options={["0", "1", "2", "3", "4", "5", "6"]}
                     onChange={this.props.setR}
+                    disabled={this.props.disable}
                 />
                 <Button
                     className="w-full"

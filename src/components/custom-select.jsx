@@ -9,7 +9,7 @@ import {
 
 
 
-export function CustomSelect({ title, options, onChange }) {
+export function CustomSelect({ title, options, onChange, disabled }) {
   const [value, setValue] = React.useState(0)
   const onChangeCover = (value) => {
     setValue(value)
@@ -19,7 +19,7 @@ export function CustomSelect({ title, options, onChange }) {
     <div className="space-y-2">
       {/* <div className="flex items-center space-x-2">  */}
       <label className="text-sm font-medium whitespace-nowrap">{title}</label>
-      <Select value={value} onValueChange={onChangeCover}>
+      <Select value={value} onValueChange={onChangeCover} disabled={disabled}>
         <SelectTrigger className="w-full">
         {/* <SelectTrigger className="w-[180px]"> */}
           <SelectValue />
