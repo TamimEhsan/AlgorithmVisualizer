@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Github, Home } from 'lucide-react'
+import { Github, Home, Info } from 'lucide-react'
 
 export default function Navbar() {
   return (
@@ -13,8 +13,14 @@ export default function Navbar() {
             Home
           </Link>
         </Button>
-<Button size="icon" variant="ghost">
-          <Link href="https://github.com/TamimEhsan/AlgorithmVisualizer">
+        <Button variant="ghost" size="lg" asChild>
+          <Link href="/about">
+            <Info className="h-4 w-4" />
+            About
+          </Link>
+        </Button>
+        <Button size="icon" variant="ghost" asChild>
+          <Link href="https://github.com/TamimEhsan/AlgorithmVisualizer" target="_blank">
             <Github className="h-5 w-5" />
           </Link>
         </Button>
