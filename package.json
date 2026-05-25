@@ -37,16 +37,9 @@
     "dev": "next dev",
     "start": "npx serve@latest ./build",
     "build": "next build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "lint": "next lint",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -61,6 +54,8 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.6",
     "gh-pages": "^6.2.0"
   }
 }
