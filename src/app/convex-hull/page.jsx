@@ -55,8 +55,7 @@ class ConvexHull extends Component {
         );
     }
     handleValueIncease = (value) => {
-        this.setState({ number: value });
-        this.handleRefreshDots();
+        this.setState({ number: value, isRunning: false, dots: getNewDots(value, this.state.width, this.state.height) });
     }
     changeSpeed = (speed) => {
         //console.log(typeof speed);

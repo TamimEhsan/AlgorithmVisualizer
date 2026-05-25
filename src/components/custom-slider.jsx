@@ -5,9 +5,10 @@ import { Slider } from "@/components/ui/slider"
 export function CustomSlider({ title, onChange, min, max, step, defaultValue, disable, isDisabled }) {
     const disabled = disable || isDisabled || false;
     const [value, setValue] = React.useState(defaultValue)
-    const onChangeCover = (value) => {
-        setValue(value)
-        onChange(value)
+    const onChangeCover = (values) => {
+        const val = values[0]
+        setValue(val)
+        onChange(val)
     }
 
 

@@ -79,8 +79,9 @@ class Sort extends Component {
         this.setState({ doubles: val });
     }
     handleCountChange = (val) => {
-        this.setState({ count: val });
-        this.handleRandomize();
+        const rect = getInitialRects(val);
+        const rect2 = rect.slice();
+        this.setState({ count: val, rects: rect, rects2: rect2 });
     }
     handleAlgoChanged1 = (val) => {
         this.setState({ algo1: val });

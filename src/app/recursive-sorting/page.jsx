@@ -68,8 +68,8 @@ class RecursiveSort extends Component {
         this.setState({ rects });
     }
     handleCountChange = (val) => {
-        this.setState({ count: val });
-        this.handleRandomize();
+        const rect = getInitialRects(val);
+        this.setState({ count: val, rects: rect });
     }
     handleAlgoChanged = (val) => {
         this.setState({ algo: val });

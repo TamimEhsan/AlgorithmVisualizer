@@ -55,9 +55,8 @@ class Queen extends Component {
         this.setState({ speed });
     }
     handleQueenChange = (number) => {
-        this.setState({ number });
-        const board = getBoard(this.state.number);
-        this.setState({ board });
+        const board = getBoard(number);
+        this.setState({ number, board });
     }
     handleClear = () => {
         const board = getBoard(this.state.number);
