@@ -11,16 +11,6 @@ export default function Canvas({ width, height, dots, onTurnOff, onGoing, speed 
     useEffect(() => { onGoingRef.current = onGoing; }, [onGoing]);
     useEffect(() => { speedRef.current = speed; }, [speed]);
 
-    useEffect(() => {
-        redrawDots();
-    }, [dots]);
-
-    useEffect(() => {
-        if (onGoing) {
-            animateLine();
-        }
-    }, [onGoing]);
-
     const redrawDots = () => {
         const canvas = dotsCanvasRef.current;
         if (!canvas) return;
@@ -110,6 +100,16 @@ export default function Canvas({ width, height, dots, onTurnOff, onGoing, speed 
             await sleep(speedRef.current);
         }
     };
+
+    useEffect(() => {
+        redrawDots();
+    }, [dots]);
+
+    useEffect(() => {
+        if (onGoing) {
+            animateLine();
+        }
+    }, [onGoing]);
 
     return (
         <>

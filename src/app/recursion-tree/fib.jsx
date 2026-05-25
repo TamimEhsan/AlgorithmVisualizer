@@ -21,15 +21,6 @@ function fib(n){
     return tree;
 }
 
-function sib(n){
-    let tree = new Tree(n,[]);
-    if( n <3 ) return tree;
-    tree.children.push( sib(n-2) );
-    tree.children.push( sib(n-3) );
-    tree.node = tree.children[0].node+tree.children[1].node;
-    return tree;
-}
-
 function NcR(n,r){
     if (r > n)
         return new Tree(-1,[],"("+n+","+r+")");

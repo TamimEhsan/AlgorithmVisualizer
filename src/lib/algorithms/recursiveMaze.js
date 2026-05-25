@@ -33,11 +33,7 @@ export function getMaze(board,row,col){
     //console.log("here");
     return pairs;
 }
-let val = 0;
-
 function decideMaze(pairs,board,startRow,endRow,startCol,endCol) {
-    //console.log("count");
-    val++;
 
     if( ((endRow-startRow) <=1) && ((endCol - startCol) <=1) ){
         return;

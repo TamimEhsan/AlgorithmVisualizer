@@ -9,7 +9,7 @@ import Rects from "./rects";
 
 export default function RecursiveSort() {
     const [count, setCount] = useState(20);
-    const [rects, setRects] = useState([]);
+    const [rects, setRects] = useState(() => getInitialRects(20));
     const [speed, setSpeed] = useState(50);
     const [isRunning, setIsRunning] = useState(false);
     const [algo, setAlgo] = useState(0);
@@ -20,16 +20,8 @@ export default function RecursiveSort() {
     useEffect(() => { speedRef.current = speed; }, [speed]);
     useEffect(() => { countRef.current = count; }, [count]);
 
-    useEffect(() => {
-        setRects(getInitialRects(20));
-    }, []);
-
     const handleRandomize = () => {
         setRects(getInitialRects(count));
-    };
-
-    const handleRefresh = () => {
-        setRects(rects.map(r => ({ ...r, isSorted: false, isSorting: false })));
     };
 
     const handleCountChange = (val) => {
@@ -65,7 +57,7 @@ export default function RecursiveSort() {
     };
 
     const handleQuick = async (steps) => {
-        let prevRect = rects;
+        let prevRect = [...rects];
         for (let j = 0; j < countRef.current; j++) {
             prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }
@@ -121,7 +113,7 @@ export default function RecursiveSort() {
     };
 
     const handleHeap = async (steps) => {
-        let prevRect = rects;
+        let prevRect = [...rects];
         for (let j = 0; j < countRef.current; j++) {
             prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }
@@ -155,7 +147,7 @@ export default function RecursiveSort() {
     };
 
     const handleMerge = async (steps) => {
-        let prevRect = rects;
+        let prevRect = [...rects];
         for (let j = 0; j < countRef.current; j++) {
             prevRect[j] = { ...prevRect[j], isLeft: false, isSorting: false, isRight: false, isRange: false, isSorted: false };
         }

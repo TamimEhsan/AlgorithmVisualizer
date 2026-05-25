@@ -6,7 +6,7 @@ import Navbar from '@/components/navbar';
 import Menu from "./menu";
 
 export default function Queen() {
-    const [board, setBoard] = useState([]);
+    const [board, setBoard] = useState(() => getBoard(4));
     const [number, setNumber] = useState(4);
     const [speed, setSpeed] = useState(490);
     const [isRunning, setIsRunning] = useState(false);
@@ -16,10 +16,6 @@ export default function Queen() {
 
     useEffect(() => { numberRef.current = number; }, [number]);
     useEffect(() => { speedRef.current = speed; }, [speed]);
-
-    useEffect(() => {
-        setBoard(getBoard(4));
-    }, []);
 
     const handleSpeedChange = (val) => {
         setSpeed((100 - val) * 10);

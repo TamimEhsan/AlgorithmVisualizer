@@ -1,6 +1,6 @@
 import Rect from "./rect";
 
-const Rects = ({ rects, speed }) => {
+const Rects = ({ rects }) => {
 
     let margin = 5;
     if (rects.length > 50) {

@@ -56,5 +56,5 @@ Array.range = n => Array.from(new Array(n), (x,i) => i);
 Array.matrix = (x, y) => {
     const rows = Array.range(y);
     const columns = Array.range(x);
-    return rows.map( (row, i) => columns.slice() );
+    return rows.map( () => columns.slice() );
 }

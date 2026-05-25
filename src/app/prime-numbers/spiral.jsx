@@ -1,4 +1,4 @@
-export default function Spiral({ num, primes, maxPrime }) {
+export default function Spiral({ primes, maxPrime }) {
     let Maxwidth = window.innerWidth;
     let MaxHeight = window.innerHeight;
 

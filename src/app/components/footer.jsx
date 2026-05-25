@@ -1,16 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react';
 import GitHubButton from 'react-github-btn';
 
 export default function Footer() {
-  const [visitors, setVisitors] = useState(0)
-
-  useEffect(() => {
-    // Simulate fetching visitor count
-    // In a real application, you would fetch this from an API
-    setVisitors(Math.floor(Math.random() * 10000))
-  }, [])
 
   return (
     <footer className="bg-background py-6 px-6 mt-12 border-t">

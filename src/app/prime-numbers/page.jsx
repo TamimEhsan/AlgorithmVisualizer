@@ -9,7 +9,7 @@ import Spiral from "./spiral";
 
 export default function Seive() {
     const [number, setNumber] = useState(100);
-    const [cells, setCells] = useState([]);
+    const [cells, setCells] = useState(() => getCells(100));
     const [isRunning, setIsRunning] = useState(false);
     const [speed, setSpeed] = useState(500);
     const [primes, setPrimes] = useState([]);
@@ -21,10 +21,6 @@ export default function Seive() {
 
     useEffect(() => { speedRef.current = speed; }, [speed]);
     useEffect(() => { numberRef.current = number; }, [number]);
-
-    useEffect(() => {
-        setCells(getCells(100));
-    }, []);
 
     const changeSpeed = (val) => {
         setSpeed(600 - val * 10);
@@ -109,7 +105,7 @@ export default function Seive() {
                     {algo === 0 && <Cells cells={cells} />}
                     {algo === 1 && (
                         <div className="h-full w-full justify-center bg-gray-700">
-                            <Spiral num={number} primes={primes} maxPrime={maxPrime} />
+                            <Spiral primes={primes} maxPrime={maxPrime} />
                         </div>
                     )}
                 </div>
