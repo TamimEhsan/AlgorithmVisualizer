@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import Rect from "./rect";
 
 const Rects = ({ rects, speed }) => {
