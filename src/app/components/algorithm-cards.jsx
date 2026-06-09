@@ -63,6 +63,11 @@ const algorithms = [
     title: 'Game of Life',
     description: "Visualize the Game of Life cellular automaton",
     image: '/AlgorithmVisualizer/images/game-of-life.png?height=200&width=300'
+  },{
+    id: 'linked-list',
+    title: 'Linked List',
+    description: "Visualize insertion, deletion, search, and reversal on singly and doubly linked lists",
+    image: '/AlgorithmVisualizer/images/linked-list.png?height=200&width=300'
   },
   // {
   //   id: '15-puzzle',
