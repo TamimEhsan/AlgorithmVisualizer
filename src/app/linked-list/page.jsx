@@ -2,7 +2,17 @@
 
 import { useState, useRef } from 'react';
 import Navbar from '@/components/navbar';
-import { buildList, linkify, makeNode, randomValues } from '@/lib/algorithms/linkedList';
+import {
+    buildList,
+    linkify,
+    randomValues,
+    reduceStructure,
+    insertActions,
+    deleteByValueActions,
+    deleteByIndexActions,
+    searchActions,
+    reverseActions,
+} from '@/lib/algorithms/linkedList';
 import Canvas from './canvas';
 import Menu from './menu';
 
@@ -20,6 +30,7 @@ export default function LinkedList() {
     const [listType, setListType] = useState(0);
     const [nodeState, setNodeState] = useState({});
     const [pointers, setPointers] = useState([]);
+    const [liftedId, setLiftedId] = useState(null);
     const [isRunning, setIsRunning] = useState(false);
 
     const nodesRef = useRef(initial.nodes);
@@ -33,160 +44,91 @@ export default function LinkedList() {
     const indexRef = useRef('1');
 
     // --- state appliers (keep refs and React state in sync) ---
-    const applyNodes = (arr) => { nodesRef.current = arr; setNodes(arr); };
-    const applyLinks = (nx, pv) => {
+    const applyStructure = ({ nodes: n, nextOf: nx, prevOf: pv }) => {
+        nodesRef.current = n; setNodes(n);
         nextOfRef.current = nx; setNextOf(nx);
         prevOfRef.current = pv; setPrevOf(pv);
     };
-    const relink = (arr) => {
-        const { nextOf: nx, prevOf: pv } = linkify(arr);
-        applyNodes(arr);
-        applyLinks(nx, pv);
-    };
-    const mark = (id, kind) => setNodeState((s) => ({ ...s, [id]: kind }));
-    const clearMarks = () => { setNodeState({}); setPointers([]); };
+    const relink = (arr) => applyStructure({ nodes: arr, ...linkify(arr) });
 
-    const begin = () => {
-        if (isRunningRef.current) return false;
+    // Apply one action: visual actions touch marks/pointers; everything else is
+    // a structural change handled by the lib reducer.
+    const applyAction = (action) => {
+        switch (action.type) {
+            case 'mark':
+                setNodeState((s) => ({ ...s, [action.id]: action.state }));
+                break;
+            case 'pointers':
+                setPointers(action.items);
+                break;
+            case 'lift':
+                setLiftedId(action.id);
+                break;
+            case 'drop':
+                setLiftedId(null);
+                break;
+            case 'clear':
+                setNodeState({});
+                setPointers([]);
+                setLiftedId(null);
+                break;
+            default:
+                if (action.type === 'stageNode') setLiftedId(action.id);
+                applyStructure(reduceStructure(
+                    { nodes: nodesRef.current, nextOf: nextOfRef.current, prevOf: prevOfRef.current },
+                    action,
+                ));
+        }
+    };
+
+    const runActions = async (actions) => {
+        if (!actions.length || isRunningRef.current) return;
         isRunningRef.current = true;
         setIsRunning(true);
-        clearMarks();
-        return true;
-    };
-    const finish = () => { isRunningRef.current = false; setIsRunning(false); };
-
-    // --- operations ---
-    const runInsert = async (pos) => {
-        if (!begin()) return;
-        const arr = [...nodesRef.current];
-        const idx = pos === 'head' ? 0
-            : pos === 'tail' ? arr.length
-                : Math.max(0, Math.min(Number(pos) || 0, arr.length));
-        const value = Number(valueRef.current);
-
-        for (let i = 0; i < idx; i++) {
-            mark(arr[i].id, 'active');
-            await sleep(speedRef.current);
-            mark(arr[i].id, 'done');
-        }
-        const node = makeNode(Number.isFinite(value) ? value : 0);
-        arr.splice(idx, 0, node);
-        relink(arr);
-        mark(node.id, 'found');
-        await sleep(speedRef.current);
-        clearMarks();
-        finish();
-    };
-
-    const runDeleteValue = async (value) => {
-        if (!begin()) return;
-        const arr = [...nodesRef.current];
-        let idx = -1;
-        for (let i = 0; i < arr.length; i++) {
-            mark(arr[i].id, 'active');
-            await sleep(speedRef.current);
-            if (arr[i].value === value) { idx = i; break; }
-            mark(arr[i].id, 'done');
-        }
-        if (idx >= 0) {
-            mark(arr[idx].id, 'remove');
-            await sleep(speedRef.current);
-            arr.splice(idx, 1);
-            relink(arr);
-            await sleep(speedRef.current);
-        }
-        clearMarks();
-        finish();
-    };
-
-    const runDeleteIndex = async (index) => {
-        if (!begin()) return;
-        const arr = [...nodesRef.current];
-        const idx = Number(index);
-        if (idx >= 0 && idx < arr.length) {
-            for (let i = 0; i < idx; i++) {
-                mark(arr[i].id, 'active');
-                await sleep(speedRef.current);
-                mark(arr[i].id, 'done');
-            }
-            mark(arr[idx].id, 'remove');
-            await sleep(speedRef.current);
-            arr.splice(idx, 1);
-            relink(arr);
-            await sleep(speedRef.current);
-        }
-        clearMarks();
-        finish();
-    };
-
-    const runSearch = async (value) => {
-        if (!begin()) return;
-        const arr = [...nodesRef.current];
-        let found = false;
-        for (let i = 0; i < arr.length; i++) {
-            mark(arr[i].id, 'active');
-            await sleep(speedRef.current);
-            if (arr[i].value === value) { mark(arr[i].id, 'found'); found = true; break; }
-            mark(arr[i].id, 'done');
-        }
-        await sleep(speedRef.current);
-        if (found) await sleep(speedRef.current);
-        clearMarks();
-        finish();
-    };
-
-    const runReverse = async () => {
-        if (!begin()) return;
-        const arr = [...nodesRef.current];
-        if (arr.length < 2) { finish(); return; }
-
-        const temp = { ...linkify(arr).nextOf };
-        let prev = null;
-        for (let i = 0; i < arr.length; i++) {
-            const curr = arr[i].id;
-            const next = i + 1 < arr.length ? arr[i + 1].id : null;
-            setPointers([
-                ...(prev != null ? [{ label: 'prev', nodeId: prev }] : []),
-                { label: 'curr', nodeId: curr },
-                ...(next != null ? [{ label: 'next', nodeId: next }] : []),
-            ]);
-            mark(curr, 'active');
-            await sleep(speedRef.current);
-            temp[curr] = prev;
-            applyLinks({ ...temp }, prevOfRef.current);
-            await sleep(speedRef.current);
-            mark(curr, 'done');
-            prev = curr;
-        }
-        // settle: physical order mirrors logical, forward links restored
-        const reversed = [...arr].reverse();
-        relink(reversed);
+        setNodeState({});
         setPointers([]);
-        await sleep(speedRef.current);
-        clearMarks();
-        finish();
+        setLiftedId(null);
+        for (const action of actions) {
+            applyAction(action);
+            await sleep(speedRef.current);
+        }
+        isRunningRef.current = false;
+        setIsRunning(false);
     };
 
     const handleVisualize = () => {
         const op = operationRef.current;
-        if (op === 0) runInsert('head');
-        else if (op === 1) runInsert('tail');
-        else if (op === 2) runInsert(indexRef.current);
-        else if (op === 3) runDeleteValue(Number(valueRef.current));
-        else if (op === 4) runDeleteIndex(indexRef.current);
-        else if (op === 5) runSearch(Number(valueRef.current));
-        else if (op === 6) runReverse();
+        const list = {
+            nodes: nodesRef.current,
+            nextOf: nextOfRef.current,
+            prevOf: prevOfRef.current,
+            listType: listTypeRef.current,
+        };
+        const value = Number(valueRef.current);
+        let actions = [];
+        if (op === 0) actions = insertActions(list, 'head', value);
+        else if (op === 1) actions = insertActions(list, 'tail', value);
+        else if (op === 2) actions = insertActions(list, indexRef.current, value);
+        else if (op === 3) actions = deleteByValueActions(list, value);
+        else if (op === 4) actions = deleteByIndexActions(list, indexRef.current);
+        else if (op === 5) actions = searchActions(list, value);
+        else if (op === 6) actions = reverseActions(list);
+        runActions(actions);
     };
 
     const handleRandomize = () => {
         if (isRunningRef.current) return;
-        clearMarks();
+        setNodeState({});
+        setPointers([]);
+        setLiftedId(null);
         relink(buildList(randomValues(5)).nodes);
     };
 
     const handleReset = () => {
         if (isRunningRef.current) return;
-        clearMarks();
+        setNodeState({});
+        setPointers([]);
+        setLiftedId(null);
         relink(nodesRef.current.map((n) => ({ ...n })));
     };
 
@@ -214,6 +156,7 @@ export default function LinkedList() {
                             listType={listType}
                             nodeState={nodeState}
                             pointers={pointers}
+                            liftedId={liftedId}
                         />
                     </div>
                 </div>
