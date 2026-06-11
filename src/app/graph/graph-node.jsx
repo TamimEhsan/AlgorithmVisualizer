@@ -11,6 +11,7 @@ const FILL = {
     frontier: ['#4f46e5', '#4338ca'],
     visited: ['#334155', '#475569'],
     path: ['#10b981', '#059669'],
+    negcycle: ['#f43f5e', '#be123c'],
 };
 
 function GraphNode({ data }) {
@@ -41,6 +42,23 @@ function GraphNode({ data }) {
             {ring && (
                 <span style={{ position: 'absolute', top: -15, fontSize: 9, fontWeight: 700, color: ring }}>
                     {data.role}
+                </span>
+            )}
+            {data.dist !== undefined && (
+                <span
+                    style={{
+                        position: 'absolute',
+                        bottom: -16,
+                        fontSize: 10,
+                        fontWeight: 700,
+                        color: '#0f172a',
+                        background: '#fff',
+                        borderRadius: 4,
+                        padding: '0 4px',
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.25)',
+                    }}
+                >
+                    {data.dist === Infinity || data.dist == null ? '∞' : data.dist}
                 </span>
             )}
         </div>
