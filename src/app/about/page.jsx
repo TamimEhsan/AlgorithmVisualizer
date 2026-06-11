@@ -13,7 +13,14 @@ const algorithms = [
         category: "Data Structures",
         items: [
             "Linked List — insert, delete, search, reverse (singly & doubly)",
-            "Graph — interactive BFS / DFS traversal",
+        ],
+    },
+    {
+        category: "Interactive Graphs",
+        items: [
+            "Graph Traversal — BFS / DFS",
+            "Shortest Path — Dijkstra & Bellman-Ford (with negative-cycle detection)",
+            "Minimum Spanning Tree — Kruskal & Prim",
         ],
     },
     {
