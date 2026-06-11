@@ -6,7 +6,9 @@
 //   { type: 'status', text }       -> overlay status text
 // plus edge states 'relax' | 'tree' | 'path' | 'negcycle'.
 
-import { edgeId } from './graph';
+import { toFlow } from './graph';
+
+export { toFlow };
 
 export const SP_PRESETS = [
     {
@@ -47,23 +49,6 @@ export const SP_PRESETS = [
         edges: [['n1', 'n2', 4], ['n1', 'n3', 5], ['n2', 'n3', -3], ['n3', 'n4', 2], ['n2', 'n4', 6]],
     },
 ];
-
-export function toFlow(preset) {
-    const nodes = preset.nodes.map((n) => ({
-        id: n.id,
-        type: 'graphNode',
-        position: { x: n.x, y: n.y },
-        data: { label: n.label, state: 'normal' },
-    }));
-    const edges = preset.edges.map(([source, target, weight]) => ({
-        id: edgeId(source, target),
-        source,
-        target,
-        type: 'floating',
-        data: { state: 'normal', weight },
-    }));
-    return { nodes, edges };
-}
 
 // id -> [{ node, edge, weight }]
 export function weightedAdjacency(edges, directed) {

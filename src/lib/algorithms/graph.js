@@ -56,7 +56,9 @@ export const PRESETS = [
     },
 ];
 
-// Convert a preset to React Flow nodes/edges.
+// Convert a preset to React Flow nodes/edges. Edge entries are [source, target]
+// or [source, target, weight]; the weight (when present) is carried in data so
+// the same helper serves both unweighted and weighted visualizers.
 export function toFlow(preset) {
     const nodes = preset.nodes.map((n) => ({
         id: n.id,
@@ -64,13 +66,11 @@ export function toFlow(preset) {
         position: { x: n.x, y: n.y },
         data: { label: n.label, state: 'normal' },
     }));
-    const edges = preset.edges.map(([source, target]) => ({
-        id: edgeId(source, target),
-        source,
-        target,
-        type: 'floating',
-        data: { state: 'normal' },
-    }));
+    const edges = preset.edges.map(([source, target, weight]) => {
+        const data = { state: 'normal' };
+        if (weight !== undefined) data.weight = weight;
+        return { id: edgeId(source, target), source, target, type: 'floating', data };
+    });
     return { nodes, edges };
 }
 
