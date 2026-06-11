@@ -27,7 +27,7 @@ function center(node) {
     return { x: x + w / 2, y: y + h / 2 };
 }
 
-export default function FloatingEdge({ id, source, target, markerEnd, data }) {
+export default function FloatingEdge({ id, source, target, markerEnd, data, selected }) {
     const setWeight = useContext(EdgeWeightContext);
     const [editing, setEditing] = useState(false);
     const [draft, setDraft] = useState('');
@@ -60,10 +60,11 @@ export default function FloatingEdge({ id, source, target, markerEnd, data }) {
     const ey = to.y - uy * R;
     const [path, labelX, labelY] = getStraightPath({ sourceX: sx, sourceY: sy, targetX: ex, targetY: ey });
 
-    const stroke = STROKE[state] || STROKE.normal;
-    // Constant width so the directed arrowhead (sized in stroke-width units)
-    // doesn't grow during traversal; state is conveyed by color + the mid arrow.
-    const strokeWidth = 2;
+    // Selection highlights the edge (sky blue, thicker) for editing; otherwise
+    // the stroke encodes state at a constant width so the directed arrowhead
+    // (sized in stroke-width units) doesn't grow during traversal.
+    const stroke = selected ? '#0ea5e9' : (STROKE[state] || STROKE.normal);
+    const strokeWidth = selected ? 3.5 : 2;
 
     // only show the direction arrow when a travel direction was set (BFS/DFS/SSSP);
     // undirected uses like MST leave travelTo null -> no arrow

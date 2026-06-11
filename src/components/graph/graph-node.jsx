@@ -14,9 +14,15 @@ const FILL = {
     negcycle: ['#f43f5e', '#be123c'],
 };
 
-function GraphNode({ data }) {
+function GraphNode({ data, selected }) {
     const [bg, border] = FILL[data.state] || FILL.normal;
     const ring = data.role === 'start' ? '#10b981' : data.role === 'finish' ? '#f43f5e' : null;
+
+    // stack rings: role ring (inner) + selection ring (outer)
+    const layers = [];
+    if (ring) layers.push(`0 0 0 3px ${ring}`);
+    if (selected) layers.push(`0 0 0 ${ring ? 5 : 3}px #0ea5e9`);
+    const boxShadow = layers.length ? layers.join(', ') : '0 1px 3px rgba(0,0,0,0.3)';
 
     return (
         <div
@@ -33,7 +39,7 @@ function GraphNode({ data }) {
                 justifyContent: 'center',
                 fontWeight: 600,
                 fontSize: 15,
-                boxShadow: ring ? `0 0 0 3px ${ring}` : '0 1px 3px rgba(0,0,0,0.3)',
+                boxShadow,
             }}
         >
             <Handle type="target" position={Position.Top} style={{ opacity: 0 }} isConnectable={false} />
