@@ -90,6 +90,32 @@ export function adjacency(edges, directed) {
     return adj;
 }
 
+// Weighted adjacency: id -> [{ node, edge, weight }] (used by shortest-path / MST).
+export function weightedAdjacency(edges, directed) {
+    const adj = {};
+    const add = (a, b, id, w) => { (adj[a] = adj[a] || []).push({ node: b, edge: id, weight: w }); };
+    for (const e of edges) {
+        const w = e.data?.weight ?? 1;
+        add(e.source, e.target, e.id, w);
+        if (!directed) add(e.target, e.source, e.id, w);
+    }
+    for (const k of Object.keys(adj)) {
+        adj[k].sort((x, y) => (x.node < y.node ? -1 : x.node > y.node ? 1 : 0));
+    }
+    return adj;
+}
+
+// Flat weighted edge list: [{ u, v, w, id }] — both directions when undirected.
+export function edgeList(edges, directed) {
+    const list = [];
+    for (const e of edges) {
+        const w = e.data?.weight ?? 1;
+        list.push({ u: e.source, v: e.target, w, id: e.id });
+        if (!directed) list.push({ u: e.target, v: e.source, w, id: e.id });
+    }
+    return list;
+}
+
 // Reconstruct start->finish path actions from parent maps.
 function pathActions(parent, parentEdge, startId, endId) {
     const nodes = [];

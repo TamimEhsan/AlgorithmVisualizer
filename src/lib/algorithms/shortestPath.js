@@ -6,9 +6,10 @@
 //   { type: 'status', text }       -> overlay status text
 // plus edge states 'relax' | 'tree' | 'path' | 'negcycle'.
 
-import { toFlow } from './graph';
+import { toFlow, weightedAdjacency, edgeList } from './graph';
 
-export { toFlow };
+// re-exported for back-compat with existing imports from this module
+export { toFlow, weightedAdjacency, edgeList };
 
 export const SP_PRESETS = [
     {
@@ -49,32 +50,6 @@ export const SP_PRESETS = [
         edges: [['n1', 'n2', 4], ['n1', 'n3', 5], ['n2', 'n3', -3], ['n3', 'n4', 2], ['n2', 'n4', 6]],
     },
 ];
-
-// id -> [{ node, edge, weight }]
-export function weightedAdjacency(edges, directed) {
-    const adj = {};
-    const add = (a, b, id, w) => { (adj[a] = adj[a] || []).push({ node: b, edge: id, weight: w }); };
-    for (const e of edges) {
-        const w = e.data?.weight ?? 1;
-        add(e.source, e.target, e.id, w);
-        if (!directed) add(e.target, e.source, e.id, w);
-    }
-    for (const k of Object.keys(adj)) {
-        adj[k].sort((x, y) => (x.node < y.node ? -1 : x.node > y.node ? 1 : 0));
-    }
-    return adj;
-}
-
-// [{ u, v, w, id }] — both directions when undirected (for Bellman-Ford)
-export function edgeList(edges, directed) {
-    const list = [];
-    for (const e of edges) {
-        const w = e.data?.weight ?? 1;
-        list.push({ u: e.source, v: e.target, w, id: e.id });
-        if (!directed) list.push({ u: e.target, v: e.source, w, id: e.id });
-    }
-    return list;
-}
 
 function pathActions(parent, parentEdge, startId, endId) {
     const nodes = [];
