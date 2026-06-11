@@ -10,6 +10,11 @@ const algorithms = [
     title: "Pathfinder",
     description: "Visualize graph algorithms like dijkstra, BFS, DFS",
     image: '/AlgorithmVisualizer/images/graph.png?height=200&width=300'
+  },{
+    id: 'graph',
+    title: 'Graph Traversal',
+    description: "Build a graph and watch BFS and DFS explore it node by node",
+    image: '/AlgorithmVisualizer/images/graph-traversal.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
