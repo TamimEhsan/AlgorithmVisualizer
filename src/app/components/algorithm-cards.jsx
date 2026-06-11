@@ -20,6 +20,11 @@ const algorithms = [
     title: 'Shortest Path',
     description: "Weighted graphs with Dijkstra and Bellman-Ford, including negative-cycle detection",
     image: '/AlgorithmVisualizer/images/shortest-path.png?height=200&width=300'
+  },{
+    id: 'mst',
+    title: 'Minimum Spanning Tree',
+    description: "Build a weighted graph and watch Kruskal and Prim grow the minimum spanning tree",
+    image: '/AlgorithmVisualizer/images/mst.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
