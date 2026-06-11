@@ -132,33 +132,54 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         );
     };
 
+    const deleteNode = (id) => {
+        setNodes((ns) => ns.filter((n) => n.id !== id));
+        setEdges((es) => es.filter((e) => e.source !== id && e.target !== id));
+        if (startIdRef.current === id) startIdRef.current = null;
+        if (finishIdRef.current === id) finishIdRef.current = null;
+        if (pendingEdgeRef.current === id) pendingEdgeRef.current = null;
+    };
+
+    const deleteEdge = (id) => setEdges((es) => es.filter((e) => e.id !== id));
+
+    // directed only: swap endpoints so the arrow flips (id/key kept stable)
+    const reverseEdge = (id) => {
+        if (!directedRef.current) return;
+        setEdges((es) => es.map((e) => (e.id === id ? { ...e, source: e.target, target: e.source } : e)));
+    };
+
+    // Persistent modes: add-node drops a node on every pane click; add-edge
+    // chains edges through consecutively clicked nodes; delete removes the
+    // clicked node/edge. Esc returns to select.
     const onPaneClick = (event) => {
         if (isRunningRef.current) return;
         if (modeRef.current === 'add-node') {
             addNodeAt(screenToFlowPosition({ x: event.clientX, y: event.clientY }));
-            setModeBoth('idle');
+        } else {
+            pendingEdgeRef.current = null; // clicking empty lifts the edge anchor
         }
-        pendingEdgeRef.current = null;
     };
 
     const onNodeClick = (_event, node) => {
         if (isRunningRef.current) return;
-        if (modeRef.current === 'add-edge') {
+        const m = modeRef.current;
+        if (m === 'add-edge') {
             if (pendingEdgeRef.current == null) {
                 pendingEdgeRef.current = node.id;
             } else {
                 addEdge(pendingEdgeRef.current, node.id);
-                pendingEdgeRef.current = null;
-                setModeBoth('idle');
+                pendingEdgeRef.current = node.id; // chain: anchor moves to this node
             }
+        } else if (m === 'delete') {
+            deleteNode(node.id);
         }
+        // idle: React Flow handles selection
     };
 
-    const onNodesDelete = (deleted) => {
-        for (const n of deleted) {
-            if (n.id === startIdRef.current) startIdRef.current = null;
-            if (n.id === finishIdRef.current) finishIdRef.current = null;
-        }
+    const onEdgeClick = (_event, edge) => {
+        if (isRunningRef.current) return;
+        if (modeRef.current === 'delete') deleteEdge(edge.id);
+        // idle: React Flow handles selection
     };
 
     useEffect(() => {
@@ -167,13 +188,23 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
             const el = e.target;
             if (el && el.closest && el.closest('input,select,textarea,[role="combobox"],button')) return;
 
-            const selected = nodesRef.current.find((n) => n.selected);
+            const selNode = () => nodesRef.current.find((n) => n.selected);
+            const selEdge = () => edgesRef.current.find((n) => n.selected);
             const k = e.key.toLowerCase();
+
             if (k === 'n') { setModeBoth('add-node'); pendingEdgeRef.current = null; }
             else if (k === 'e') { setModeBoth('add-edge'); pendingEdgeRef.current = null; }
-            else if (k === 's' && selected) setRole(selected.id, 'start');
-            else if (k === 'f' && selected) setRole(selected.id, 'finish');
+            else if (k === 'd') { setModeBoth('delete'); pendingEdgeRef.current = null; }
             else if (e.key === 'Escape') { setModeBoth('idle'); pendingEdgeRef.current = null; }
+            else if (k === 's') { const n = selNode(); if (n) setRole(n.id, 'start'); }
+            else if (k === 'f') { const n = selNode(); if (n) setRole(n.id, 'finish'); }
+            else if (k === 'x') { const ed = selEdge(); if (ed) reverseEdge(ed.id); }
+            else if (e.key === 'Delete' || e.key === 'Backspace') {
+                const n = selNode();
+                const ed = selEdge();
+                if (n) deleteNode(n.id);
+                else if (ed) deleteEdge(ed.id);
+            }
         };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
@@ -210,7 +241,7 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         // reactive
         nodes, edges, directed, mode, status, isRunning, weighted,
         // react flow wiring
-        onNodesChange, onEdgesChange, onNodesDelete, onPaneClick, onNodeClick,
+        onNodesChange, onEdgesChange, onPaneClick, onNodeClick, onEdgeClick,
         // methods
         run, getContext, setWeight, setDirected, loadPreset, clear, setSpeed,
     };
