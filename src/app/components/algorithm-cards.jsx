@@ -15,6 +15,11 @@ const algorithms = [
     title: 'Graph Traversal',
     description: "Build a graph and watch BFS and DFS explore it node by node",
     image: '/AlgorithmVisualizer/images/graph-traversal.png?height=200&width=300'
+  },{
+    id: 'shortest-path',
+    title: 'Shortest Path',
+    description: "Weighted graphs with Dijkstra and Bellman-Ford, including negative-cycle detection",
+    image: '/AlgorithmVisualizer/images/shortest-path.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
