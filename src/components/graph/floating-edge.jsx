@@ -16,6 +16,7 @@ const STROKE = {
     tree: '#f59e0b',
     path: '#10b981',
     negcycle: '#f43f5e',
+    reject: '#cbd5e1',
     normal: '#64748b',
 };
 
@@ -64,7 +65,9 @@ export default function FloatingEdge({ id, source, target, markerEnd, data }) {
     // doesn't grow during traversal; state is conveyed by color + the mid arrow.
     const strokeWidth = 2;
 
-    const showTravelArrow = state === 'tree' || state === 'path';
+    // only show the direction arrow when a travel direction was set (BFS/DFS/SSSP);
+    // undirected uses like MST leave travelTo null -> no arrow
+    const showTravelArrow = (state === 'tree' || state === 'path') && travelTo != null;
     const mx = (sx + ex) / 2;
     const my = (sy + ey) / 2;
     const deg = (Math.atan2(uy, ux) * 180) / Math.PI;

@@ -22,6 +22,7 @@ export default function GraphMenu({
     algorithms,
     presets,
     weighted = false,
+    hideDirected = false,
     disabled,
     onDirectedChange,
     onAlgorithmChange,
@@ -44,7 +45,9 @@ export default function GraphMenu({
                     <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Config</span>
                     <div className="h-px flex-1 bg-gray-300" />
                 </div>
-                <CustomToggle title="Directed" onCheckedChange={onDirectedChange} disabled={disabled} />
+                {!hideDirected && (
+                    <CustomToggle title="Directed" onCheckedChange={onDirectedChange} disabled={disabled} />
+                )}
                 <CustomSelect
                     title="Algorithm"
                     options={algorithms}
