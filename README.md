@@ -10,8 +10,9 @@ Visit : https://tamimehsan.github.io/AlgorithmVisualizer/
 
 Explore more than 24 algorithms with step by step visualization simplifying the learning process and making it more engaging for a better understanding. 
 
-So far there are 6 segments  
+So far there are these segments  
 - Pathfinder
+- Graph Traversal (BFS / DFS)
 - Prime Numbers
 - Sorting Algorithms
 - N Queen
@@ -19,8 +20,10 @@ So far there are 6 segments
 - Binary Search Game
 - Recursion Tree
 - Turing Machine
+- Game of Life
+- Linked List
 
-I have implemented a total of `24 algorithms` so far. And will try to add more later.  
+I have implemented a total of `24+ algorithms` so far. And will try to add more later.  
 
 ## Algorithms implemented 
 
@@ -30,6 +33,11 @@ I have implemented a total of `24 algorithms` so far. And will try to add more l
   - Dijkstra
   - A star
   - Recursive Maze Creation
+- Data Structures
+  - Linked List (insert, delete, search, reverse — singly & doubly)
+- Graph Traversal
+  - BFS
+  - DFS
 - Sorting
   - Bubble sort
   - Selection sort
@@ -48,7 +56,6 @@ I have implemented a total of `24 algorithms` so far. And will try to add more l
   - Derangement
   - Fast Exponentiation
   - Stirling Number of Second Kind
-
 - Turing Machine
   - Bitwise NOT
   - Increment one
@@ -64,6 +71,8 @@ I am not sure if anyone would like to contribute to this project or not. But any
 - Commit 16: Added Flip Move animation to inplace sorting components
 - Commit 20: Added Tree Structure
 - 13 Dec 2024: Release v2.0.0: Migrate the project from legacy project to next js with shadcn ui [#3](https://github.com/TamimEhsan/AlgorithmVisualizer/pull/3)
+- Jun 2026: Added Linked List visualizer (singly & doubly) with staged insert/delete animations
+- Jun 2026: Added interactive Graph Traversal (BFS / DFS) built on React Flow
 
 ### Acknowledgement
 

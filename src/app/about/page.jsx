@@ -10,6 +10,13 @@ const algorithms = [
         items: ["DFS", "BFS", "Dijkstra", "A*", "Recursive Maze Generation"],
     },
     {
+        category: "Data Structures",
+        items: [
+            "Linked List — insert, delete, search, reverse (singly & doubly)",
+            "Graph — interactive BFS / DFS traversal",
+        ],
+    },
+    {
         category: "Sorting",
         items: [
             "Bubble Sort",
