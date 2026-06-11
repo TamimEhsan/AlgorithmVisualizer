@@ -8,11 +8,13 @@ Visit : https://tamimehsan.github.io/AlgorithmVisualizer/
 
 ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=TamimEhsan.AlgorithmVisualizer)
 
-Explore more than 24 algorithms with step by step visualization simplifying the learning process and making it more engaging for a better understanding. 
+Explore more than 30 algorithms with step by step visualization simplifying the learning process and making it more engaging for a better understanding. 
 
 So far there are these segments  
 - Pathfinder
 - Graph Traversal (BFS / DFS)
+- Shortest Path
+- Minimum Spanning Tree
 - Prime Numbers
 - Sorting Algorithms
 - N Queen
@@ -23,7 +25,7 @@ So far there are these segments
 - Game of Life
 - Linked List
 
-I have implemented a total of `24+ algorithms` so far. And will try to add more later.  
+I have implemented a total of `30+ algorithms` so far. And will try to add more later.  
 
 ## Algorithms implemented 
 
@@ -38,6 +40,12 @@ I have implemented a total of `24+ algorithms` so far. And will try to add more 
 - Graph Traversal
   - BFS
   - DFS
+- Single Source Shortest Path
+  - Dijkstra
+  - Bellman-Ford
+- Minimum Spanning Tree 
+  - Kruskal
+  - Prim
 - Sorting
   - Bubble sort
   - Selection sort
@@ -45,8 +53,9 @@ I have implemented a total of `24+ algorithms` so far. And will try to add more 
   - Heap sort
   - Merge sort
   - Quick sort
-- Sieve of Eratosthenes
-- Archimedes Spiral
+- Prime Numbers
+  - Sieve or Eratosthenes
+  - Archimedes Spiral
 - N Queen Backtracking
 - Graham Scan for Convex Hull
 - Binary Search
@@ -73,6 +82,7 @@ I am not sure if anyone would like to contribute to this project or not. But any
 - 13 Dec 2024: Release v2.0.0: Migrate the project from legacy project to next js with shadcn ui [#3](https://github.com/TamimEhsan/AlgorithmVisualizer/pull/3)
 - Jun 2026: Added Linked List visualizer (singly & doubly) with staged insert/delete animations
 - Jun 2026: Added interactive Graph Traversal (BFS / DFS) built on React Flow
+- Jun 2026: Added Shortest Path (Dijkstra / Bellman-Ford) and Minimum Spanning Tree (Kruskal / Prim) on a shared, reusable graph workspace
 
 ### Acknowledgement
 
