@@ -30,6 +30,11 @@ const algorithms = [
     title: 'Connectivity',
     description: "Build a graph and color its connected components and strongly connected components",
     image: '/AlgorithmVisualizer/images/connectivity.png?height=200&width=300'
+  },{
+    id: 'network-flow',
+    title: 'Network Flow',
+    description: "Compute max flow / min cut with Edmonds-Karp and Ford-Fulkerson on a capacity network",
+    image: '/AlgorithmVisualizer/images/network-flow.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',

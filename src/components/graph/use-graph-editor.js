@@ -12,18 +12,29 @@ import { newNodeId, edgeId, toFlow } from '@/lib/algorithms/graph';
 const ARROW = { type: MarkerType.ArrowClosed, color: '#64748b', width: 16, height: 16 };
 const toDelay = (s) => 1100 - s * 10;
 
-// preset -> { nodes, edges, startId } with the first node marked as start
+// preset -> { nodes, edges, startId, finishId }. The start/finish roles come
+// from preset.source / preset.sink when given, else start = first node.
 function seed(preset) {
     const { nodes, edges } = toFlow(preset);
-    if (nodes[0]) nodes[0] = { ...nodes[0], data: { ...nodes[0].data, role: 'start' } };
-    return { nodes, edges, startId: nodes[0]?.id ?? null };
+    const startId = preset.source ?? nodes[0]?.id ?? null;
+    const finishId = preset.sink ?? null;
+    const withRoles = nodes.map((n) => {
+        if (n.id === startId) return { ...n, data: { ...n.data, role: 'start' } };
+        if (n.id === finishId) return { ...n, data: { ...n.data, role: 'finish' } };
+        return n;
+    });
+    return { nodes: withRoles, edges, startId, finishId };
 }
 
-export function useGraphEditor({ weighted = false, initialPreset }) {
-    const [initial] = useState(() => seed(initialPreset));
+export function useGraphEditor({ weighted = false, initialDirected = false, initialPreset }) {
+    const [initial] = useState(() => {
+        const s = seed(initialPreset);
+        if (initialDirected) s.edges = s.edges.map((e) => ({ ...e, markerEnd: ARROW }));
+        return s;
+    });
     const [nodes, setNodes, onNodesChange] = useNodesState(initial.nodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initial.edges);
-    const [directed, setDirectedState] = useState(false);
+    const [directed, setDirectedState] = useState(initialDirected);
     const [mode, setMode] = useState('idle');
     const [status, setStatus] = useState('');
     const [isRunning, setIsRunning] = useState(false);
@@ -36,9 +47,9 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
     const speedRef = useRef(toDelay(50));
     const modeRef = useRef('idle');
     const pendingEdgeRef = useRef(null);
-    const directedRef = useRef(false);
+    const directedRef = useRef(initialDirected);
     const startIdRef = useRef(initial.startId);
-    const finishIdRef = useRef(null);
+    const finishIdRef = useRef(initial.finishId);
     const labelRef = useRef(0);
 
     useEffect(() => { nodesRef.current = nodes; }, [nodes]);
@@ -54,9 +65,11 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         setNodes((ns) => ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, dist } } : n)));
     const colorNode = (id, color) =>
         setNodes((ns) => ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, color } } : n)));
+    const setFlow = (id, flow) =>
+        setEdges((es) => es.map((e) => (e.id === id ? { ...e, data: { ...e.data, flow } } : e)));
     const clearMarks = () => {
         setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, state: 'normal', dist: undefined, color: undefined } })));
-        setEdges((es) => es.map((e) => ({ ...e, data: { ...e.data, state: 'normal', travelTo: null } })));
+        setEdges((es) => es.map((e) => ({ ...e, data: { ...e.data, state: 'normal', travelTo: null, flow: undefined } })));
         setStatus('');
     };
 
@@ -65,6 +78,7 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         else if (action.type === 'markEdge') markEdge(action.id, action.state, action.to);
         else if (action.type === 'setDist') setDist(action.id, action.dist);
         else if (action.type === 'colorNode') colorNode(action.id, action.color);
+        else if (action.type === 'setFlow') setFlow(action.id, action.flow);
         else if (action.type === 'status') setStatus(action.text);
         else if (action.type === 'clear') clearMarks();
     };
@@ -239,7 +253,7 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         const g = seed(preset);
         const e = directedRef.current ? g.edges.map((x) => ({ ...x, markerEnd: ARROW })) : g.edges;
         nodesRef.current = g.nodes; edgesRef.current = e;
-        startIdRef.current = g.startId; finishIdRef.current = null;
+        startIdRef.current = g.startId; finishIdRef.current = g.finishId;
         labelRef.current = 0;
         setNodes(g.nodes); setEdges(e);
         setModeBoth('idle'); setStatus(''); pendingEdgeRef.current = null;
