@@ -21,6 +21,8 @@ const algorithms = [
             "Graph Traversal — BFS / DFS",
             "Shortest Path — Dijkstra & Bellman-Ford (with negative-cycle detection)",
             "Minimum Spanning Tree — Kruskal & Prim",
+            "Connectivity — Connected Components, Strongly & Weakly Connected",
+            "Network Flow — max flow / min cut (Edmonds-Karp & Ford-Fulkerson)",
         ],
     },
     {
