@@ -35,6 +35,11 @@ const algorithms = [
     title: 'Network Flow',
     description: "Compute max flow / min cut with Edmonds-Karp and Ford-Fulkerson on a capacity network",
     image: '/AlgorithmVisualizer/images/network-flow.png?height=200&width=300'
+  },{
+    id: 'bst',
+    title: 'Binary Search Tree',
+    description: "Insert, delete, and search on a BST with animated tree restructuring",
+    image: '/AlgorithmVisualizer/images/bst.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
