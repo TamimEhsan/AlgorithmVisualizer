@@ -22,6 +22,7 @@ So far there are these segments
 - N Queen
 - Convex Hull
 - Binary Search Game
+- Binary Search Tree
 - Recursion Tree
 - Turing Machine
 - Game of Life
@@ -39,6 +40,8 @@ I have implemented a total of `30+ algorithms` so far. And will try to add more 
   - Recursive Maze Creation
 - Data Structures
   - Linked List (insert, delete, search, reverse — singly & doubly)
+- Trees
+  - Binary Search Tree (insert, delete, search with animated re-layout)
 - Graph Traversal
   - BFS
   - DFS
@@ -94,6 +97,7 @@ I am not sure if anyone would like to contribute to this project or not. But any
 - Jun 2026: Added interactive Graph Traversal (BFS / DFS) built on React Flow
 - Jun 2026: Added Shortest Path (Dijkstra / Bellman-Ford) and Minimum Spanning Tree (Kruskal / Prim) on a shared, reusable graph workspace
 - Jun 2026: Added Connectivity (components / SCC / WCC) and Network Flow (Edmonds-Karp / Ford-Fulkerson, max flow / min cut)
+- Jun 2026: Added a reusable SVG tree component with a Binary Search Tree visualizer, and migrated the Recursion Tree onto it
 
 ### Acknowledgement
 

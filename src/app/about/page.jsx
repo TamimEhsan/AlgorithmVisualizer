@@ -16,6 +16,12 @@ const algorithms = [
         ],
     },
     {
+        category: "Trees",
+        items: [
+            "Binary Search Tree — insert, delete, search with animated re-layout",
+        ],
+    },
+    {
         category: "Interactive Graphs",
         items: [
             "Graph Traversal — BFS / DFS",
