@@ -49,6 +49,9 @@ export default function GraphMenu({
                     <CustomToggle title="Directed" onCheckedChange={onDirectedChange} disabled={disabled} />
                 )}
                 <CustomSelect
+                    // remount (reset to first option) when the algorithm set changes,
+                    // e.g. when toggling Directed swaps the available algorithms
+                    key={algorithms.join('|')}
                     title="Algorithm"
                     options={algorithms}
                     onChange={onAlgorithmChange}

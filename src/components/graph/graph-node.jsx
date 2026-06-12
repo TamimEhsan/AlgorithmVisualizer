@@ -15,7 +15,9 @@ const FILL = {
 };
 
 function GraphNode({ data, selected }) {
-    const [bg, border] = FILL[data.state] || FILL.normal;
+    // An explicit data.color (e.g. a connected-component / SCC color) overrides
+    // the traversal-state fill.
+    const [bg, border] = data.color ? [data.color, data.color] : (FILL[data.state] || FILL.normal);
     const ring = data.role === 'start' ? '#10b981' : data.role === 'finish' ? '#f43f5e' : null;
 
     // stack rings: role ring (inner) + selection ring (outer)

@@ -52,8 +52,10 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         setEdges((es) => es.map((e) => (e.id === id ? { ...e, data: { ...e.data, state, travelTo: to ?? null } } : e)));
     const setDist = (id, dist) =>
         setNodes((ns) => ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, dist } } : n)));
+    const colorNode = (id, color) =>
+        setNodes((ns) => ns.map((n) => (n.id === id ? { ...n, data: { ...n.data, color } } : n)));
     const clearMarks = () => {
-        setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, state: 'normal', dist: undefined } })));
+        setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, state: 'normal', dist: undefined, color: undefined } })));
         setEdges((es) => es.map((e) => ({ ...e, data: { ...e.data, state: 'normal', travelTo: null } })));
         setStatus('');
     };
@@ -62,6 +64,7 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
         if (action.type === 'markNode') markNode(action.id, action.state);
         else if (action.type === 'markEdge') markEdge(action.id, action.state, action.to);
         else if (action.type === 'setDist') setDist(action.id, action.dist);
+        else if (action.type === 'colorNode') colorNode(action.id, action.color);
         else if (action.type === 'status') setStatus(action.text);
         else if (action.type === 'clear') clearMarks();
     };
