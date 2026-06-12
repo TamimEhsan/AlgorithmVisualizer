@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { flattenTree } from './layout';
 
 // Reusable tree editor + action-log executor (SVG tree counterpart of
 // useGraphEditor). Holds the logical tree + visual marks and plays an action
@@ -22,8 +23,16 @@ export function useTreeEditor({ initialTree = null } = {}) {
     const clearMarks = () => { setNodeState({}); setEdgeState({}); setLabels({}); setStatus(''); };
 
     const applyAction = (a) => {
-        if (a.type === 'setTree') applyTree(a.tree);
-        else if (a.type === 'markNode') setNodeState((s) => ({ ...s, [a.id]: a.state }));
+        if (a.type === 'setTree') {
+            applyTree(a.tree);
+            // recursion reveals a fixed tree: lay it out once, hidden, then
+            // un-hide nodes via markNode as the walk visits them
+            if (a.hidden && a.tree) {
+                const hidden = {};
+                for (const n of flattenTree(a.tree).nodes) hidden[n.id] = 'hidden';
+                setNodeState(hidden);
+            }
+        } else if (a.type === 'markNode') setNodeState((s) => ({ ...s, [a.id]: a.state }));
         else if (a.type === 'markEdge') setEdgeState((s) => ({ ...s, [a.childId]: a.state }));
         else if (a.type === 'setLabel') setLabels((s) => ({ ...s, [a.id]: a.secondary }));
         else if (a.type === 'status') setStatus(a.text);
