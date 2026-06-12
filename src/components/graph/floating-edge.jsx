@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { BaseEdge, EdgeLabelRenderer, getStraightPath, useInternalNode } from '@xyflow/react';
+import { BaseEdge, EdgeLabelRenderer, getStraightPath, useInternalNode, useStore } from '@xyflow/react';
 
 // Edge that connects node centers (no handles), trimmed to each node's border.
 // Stroke color encodes the edge state; during traversal a big arrow is drawn at
@@ -31,13 +31,28 @@ export default function FloatingEdge({ id, source, target, markerEnd, data, sele
     const setWeight = useContext(EdgeWeightContext);
     const [editing, setEditing] = useState(false);
     const [draft, setDraft] = useState('');
+    // true when an opposite edge (target -> source) also exists
+    const hasOpposite = useStore((s) => s.edges.some((e) => e.source === target && e.target === source));
 
     const sourceNode = useInternalNode(source);
     const targetNode = useInternalNode(target);
     if (!sourceNode || !targetNode) return null;
 
-    const sc = center(sourceNode);
-    const tc = center(targetNode);
+    let sc = center(sourceNode);
+    let tc = center(targetNode);
+
+    // For a bidirectional pair, shift each edge to its own side (parallel) so the
+    // two arrows + labels don't overlap. Each edge's stable perpendicular points
+    // opposite to its twin's, so they separate cleanly.
+    if (hasOpposite) {
+        const dxx = tc.x - sc.x;
+        const dyy = tc.y - sc.y;
+        const dl = Math.hypot(dxx, dyy) || 1;
+        const ox = (-dyy / dl) * 6;
+        const oy = (dxx / dl) * 6;
+        sc = { x: sc.x + ox, y: sc.y + oy };
+        tc = { x: tc.x + ox, y: tc.y + oy };
+    }
 
     const state = data?.state || 'normal';
     const travelTo = data?.travelTo;
