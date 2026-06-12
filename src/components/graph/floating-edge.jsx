@@ -153,7 +153,8 @@ export default function FloatingEdge({ id, source, target, markerEnd, data, sele
                                 style={{ width: 36, border: 'none', outline: 'none', font: 'inherit', textAlign: 'center' }}
                             />
                         ) : (
-                            data.weight
+                            // show "flow / capacity" during a flow run, else just the capacity
+                            data.flow != null ? `${data.flow} / ${data.weight}` : data.weight
                         )}
                     </div>
                 </EdgeLabelRenderer>
