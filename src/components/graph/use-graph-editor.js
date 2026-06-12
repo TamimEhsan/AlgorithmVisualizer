@@ -218,7 +218,21 @@ export function useGraphEditor({ weighted = false, initialPreset }) {
     const setDirected = (val) => {
         directedRef.current = val;
         setDirectedState(val);
-        setEdges((es) => es.map((e) => ({ ...e, markerEnd: val ? ARROW : undefined })));
+        setEdges((es) => {
+            let next = es;
+            // an undirected graph shouldn't keep both A->B and B->A: collapse
+            // reverse-duplicate pairs (keep the first of each unordered pair)
+            if (!val) {
+                const seen = new Set();
+                next = es.filter((e) => {
+                    const key = e.source < e.target ? `${e.source}~${e.target}` : `${e.target}~${e.source}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
+            }
+            return next.map((e) => ({ ...e, markerEnd: val ? ARROW : undefined }));
+        });
     };
     const loadPreset = (preset) => {
         if (isRunningRef.current) return;
