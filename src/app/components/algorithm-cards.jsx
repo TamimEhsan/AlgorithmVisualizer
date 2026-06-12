@@ -25,6 +25,11 @@ const algorithms = [
     title: 'Minimum Spanning Tree',
     description: "Build a weighted graph and watch Kruskal and Prim grow the minimum spanning tree",
     image: '/AlgorithmVisualizer/images/mst.png?height=200&width=300'
+  },{
+    id: 'connectivity',
+    title: 'Connectivity',
+    description: "Build a graph and color its connected components and strongly connected components",
+    image: '/AlgorithmVisualizer/images/connectivity.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
