@@ -15,6 +15,8 @@ So far there are these segments
 - Graph Traversal (BFS / DFS)
 - Shortest Path
 - Minimum Spanning Tree
+- Connectivity
+- Network Flow
 - Prime Numbers
 - Sorting Algorithms
 - N Queen
@@ -46,6 +48,14 @@ I have implemented a total of `30+ algorithms` so far. And will try to add more 
 - Minimum Spanning Tree 
   - Kruskal
   - Prim
+- Connectivity
+  - Connected Components
+  - Strongly Connected Components (Tarjan)
+  - Weakly Connected Components
+- Network Flow
+  - Edmonds-Karp
+  - Ford-Fulkerson
+  - Min Cut
 - Sorting
   - Bubble sort
   - Selection sort
@@ -83,6 +93,7 @@ I am not sure if anyone would like to contribute to this project or not. But any
 - Jun 2026: Added Linked List visualizer (singly & doubly) with staged insert/delete animations
 - Jun 2026: Added interactive Graph Traversal (BFS / DFS) built on React Flow
 - Jun 2026: Added Shortest Path (Dijkstra / Bellman-Ford) and Minimum Spanning Tree (Kruskal / Prim) on a shared, reusable graph workspace
+- Jun 2026: Added Connectivity (components / SCC / WCC) and Network Flow (Edmonds-Karp / Ford-Fulkerson, max flow / min cut)
 
 ### Acknowledgement
 
