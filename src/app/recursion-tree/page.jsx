@@ -1,82 +1,20 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/navbar';
-import CanvasSvg from "./canvasSVG";
-import { getTree } from "./fib";
-import Menu from "./menu";
+import { getTree, recursionActions } from './fib';
+import { buchheimLayout } from '@/components/tree/layout';
+import { useTreeEditor } from '@/components/tree/use-tree-editor';
+import TreeCanvas from '@/components/tree/tree-canvas';
+import Menu from './menu';
 
-export default function Graph() {
-    const [vertices, setVertices] = useState([]);
-    const [edges, setEdges] = useState([]);
-    const [current, setCurrent] = useState(-1);
+export default function RecursionTree() {
     const [n, setN] = useState(0);
     const [r, setR] = useState(2);
     const [algo, setAlgo] = useState(0);
-    const [offset, setOffset] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
+    const g = useTreeEditor();
 
-    const verticesRef = useRef([]);
-    const edgesRef = useRef([]);
-    const isRunningRef = useRef(false);
-
-    const addNumber = async () => {
-        if (isRunningRef.current) return;
-        setIsRunning(true);
-        isRunningRef.current = true;
-
-        let tree = getTree(n, algo, r);
-        setEdges([]);
-        setVertices([]);
-        setOffset(tree.x);
-        verticesRef.current = [];
-        edgesRef.current = [];
-        await recur(tree, undefined);
-        setIsRunning(false);
-        isRunningRef.current = false;
-    };
-
-    const recur = async (node, parent) => {
-        let verts = verticesRef.current;
-        let currentIdx = verts.length;
-
-        let newVertex;
-        if (parent !== undefined) {
-            newVertex = node.children.length
-                ? { label: node.tree.label, val: 0, x: node.x, y: node.y, px: parent.x, py: parent.y, completed: false }
-                : { label: node.tree.label, val: node.tree.node, x: node.x, y: node.y, px: parent.x, py: parent.y, completed: false };
-
-            verts = [...verts, newVertex];
-            verticesRef.current = verts;
-            setVertices([...verts]);
-            setCurrent(currentIdx);
-
-            let newEdge = { x1: parent.x, y1: parent.y, x2: node.x, y2: node.y };
-            edgesRef.current = [...edgesRef.current, newEdge];
-            setEdges([...edgesRef.current]);
-        } else {
-            newVertex = node.children.length
-                ? { label: node.tree.label, val: 0, x: node.x, y: node.y, px: node.x, py: node.y, completed: false }
-                : { label: node.tree.label, val: node.tree.node, x: node.x, y: node.y, px: node.x, py: node.y, completed: false };
-
-            verts = [...verts, newVertex];
-            verticesRef.current = verts;
-            setVertices([...verts]);
-            setCurrent(currentIdx);
-        }
-        await sleep(500);
-
-        for (let i = 0; i < node.children.length; i++) {
-            await recur(node.children[i], node);
-            setCurrent(currentIdx);
-            await sleep(500);
-        }
-
-        let updatedVerts = [...verticesRef.current];
-        updatedVerts[currentIdx] = { ...updatedVerts[currentIdx], val: node.tree.node, completed: true };
-        verticesRef.current = updatedVerts;
-        setVertices([...updatedVerts]);
-    };
+    const onStart = () => g.run(recursionActions(getTree(n, algo, r)));
 
     return (
         <div className="flex flex-col h-screen">
@@ -86,24 +24,24 @@ export default function Graph() {
                     setN={setN}
                     setR={setR}
                     setAlgo={setAlgo}
-                    onStart={addNumber}
-                    disabled={isRunning}
+                    onStart={onStart}
+                    disabled={g.isRunning}
                 />
-                <div className="flex flex-1 flex-col items-center justify-center overflow-auto">
-                    <div className="w-full h-full">
-                        <CanvasSvg
-                            vertices={vertices}
-                            edges={edges}
-                            current={current}
-                            offset={offset}
-                        />
-                    </div>
+                <div className="relative flex-1 p-6">
+                    {g.status && (
+                        <div className="absolute top-3 left-3 z-10 rounded-md bg-slate-800 px-3 py-1.5 text-xs font-semibold text-white shadow">
+                            {g.status}
+                        </div>
+                    )}
+                    <TreeCanvas
+                        tree={g.tree}
+                        layout={buchheimLayout}
+                        nodeState={g.nodeState}
+                        edgeState={g.edgeState}
+                        labels={g.labels}
+                    />
                 </div>
             </div>
         </div>
     );
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }

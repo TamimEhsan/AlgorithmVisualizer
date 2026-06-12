@@ -16,6 +16,10 @@ const R = 16;
 export default function TreeNode({ x, y, value, secondary, state }) {
     if (state === 'hidden') return null;
     const [bg, border] = FILL[state] || FILL.normal;
+    // shrink the primary label so longer values (e.g. recursion call labels
+    // like "(4,3)") still fit inside the circle
+    const len = String(value ?? '').length;
+    const fontSize = len <= 2 ? 13 : len <= 4 ? 10 : 8;
 
     return (
         <g style={{ transform: `translate(${x}px, ${y}px)` }}>
@@ -26,7 +30,7 @@ export default function TreeNode({ x, y, value, secondary, state }) {
                 dominantBaseline="central"
                 y={secondary != null ? -2 : 0}
                 fill="#f8fafc"
-                style={{ font: '600 13px sans-serif' }}
+                style={{ font: `600 ${fontSize}px sans-serif` }}
             >
                 {value}
             </text>
