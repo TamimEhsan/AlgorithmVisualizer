@@ -1,4 +1,10 @@
-export function seive(n){
+/**
+ * Sieve of Eratosthenes — returns all prime numbers up to n.
+ * Note: Previously named `seive` (typo). Alias kept for backward compatibility.
+ * @param {number} n - Upper bound (inclusive)
+ * @returns {number[]} Array of prime numbers
+ */
+export function sieve(n){
     let vis = new Array(n+5).fill(0);
 
     let primes = [];
@@ -11,3 +17,6 @@ export function seive(n){
     }
     return primes;
 }
+
+// Backward-compatible alias (original had typo "seive")
+export { sieve as seive };

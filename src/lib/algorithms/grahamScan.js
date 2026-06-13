@@ -1,4 +1,11 @@
-export function convex_hull(points){
+/**
+ * Graham scan convex hull algorithm.
+ * Returns [hull_points, edge_animation_steps].
+ * Note: Previously named `convex_hull` (snake_case). Alias kept for backward compatibility.
+ * @param {Array} points - Array of {xx, yy} point objects (sorted by xx)
+ * @returns {Array} [hullPoints, animationLines]
+ */
+export function convexHull(points){
     if( points.size === 1 ){
         return;
     }
@@ -56,7 +63,11 @@ export function convex_hull(points){
     return [pairs,lines];
 }
 
-function cw(a, b, c) {
+/**
+ * Check if three points make a clockwise turn.
+ * Uses cross product: (b-a) × (c-a) < 0 means clockwise.
+ */
+function isClockwiseTurn(a, b, c) {
     if( a.xx*(b.yy-c.yy)+b.xx*(c.yy-a.yy)+c.xx*(a.yy-b.yy) < 0 ){
         return true;
     } else{
@@ -65,7 +76,11 @@ function cw(a, b, c) {
 
 }
 
-function ccw(a, b, c){
+/**
+ * Check if three points make a counter-clockwise turn.
+ * Uses cross product: (b-a) × (c-a) > 0 means counter-clockwise.
+ */
+function isCounterClockwiseTurn(a, b, c){
     if( a.xx * (b.yy - c.yy) + b.xx * (c.yy - a.yy) + c.xx * (a.yy - b.yy) > 0 ){
         return true;
     } else {
@@ -73,3 +88,9 @@ function ccw(a, b, c){
     }
 
 }
+
+// Backward-compatible aliases
+const cw = isClockwiseTurn;
+const ccw = isCounterClockwiseTurn;
+// Backward-compatible alias (original snake_case name)
+export { convexHull as convex_hull };
