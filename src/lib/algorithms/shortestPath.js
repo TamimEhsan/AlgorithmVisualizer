@@ -6,7 +6,8 @@
 //   { type: 'status', text }       -> overlay status text
 // plus edge states 'relax' | 'tree' | 'path' | 'negcycle'.
 
-import { toFlow, weightedAdjacency, edgeList } from './graph';
+import { toFlow, weightedAdjacency, edgeList } from './graph.js';
+import { buildPathActions } from './helpers/graph-helpers.js';
 
 // re-exported for back-compat with existing imports from this module
 export { toFlow, weightedAdjacency, edgeList };
@@ -51,23 +52,8 @@ export const SP_PRESETS = [
     },
 ];
 
-function pathActions(parent, parentEdge, startId, endId) {
-    const nodes = [];
-    const edgeSteps = [];
-    let cur = endId;
-    while (cur !== undefined && cur !== null) {
-        nodes.push(cur);
-        if (parentEdge[cur] != null) edgeSteps.push({ id: parentEdge[cur], from: parent[cur], to: cur });
-        if (cur === startId) break;
-        cur = parent[cur];
-    }
-    nodes.reverse();
-    edgeSteps.reverse();
-    return [
-        ...nodes.map((id) => ({ type: 'markNode', id, state: 'path' })),
-        ...edgeSteps.map((e) => ({ type: 'markEdge', id: e.id, state: 'path', from: e.from, to: e.to })),
-    ];
-}
+// pathActions is now imported as buildPathActions from helpers/graph-helpers.js
+export { buildPathActions as pathActions };
 
 export function dijkstraActions(adj, startId, finishId, nodeIds) {
     const actions = [];
@@ -119,7 +105,7 @@ export function dijkstraActions(adj, startId, finishId, nodeIds) {
     }
 
     if (finishId != null && dist[finishId] < Infinity) {
-        actions.push(...pathActions(parent, parentEdge, startId, finishId));
+        actions.push(...buildPathActions(parent, parentEdge, startId, finishId));
     }
     return actions;
 }
@@ -197,7 +183,7 @@ export function bellmanFordActions(edges, startId, finishId, nodeIds) {
     } else {
         actions.push({ type: 'status', text: 'Done' });
         if (finishId != null && dist[finishId] < Infinity) {
-            actions.push(...pathActions(parent, parentEdge, startId, finishId));
+            actions.push(...buildPathActions(parent, parentEdge, startId, finishId));
         }
     }
     return actions;

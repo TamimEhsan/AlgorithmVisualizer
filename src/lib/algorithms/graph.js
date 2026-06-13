@@ -8,6 +8,8 @@
 //   { type: 'markEdge', id, state }  -> 'tree' | 'path' | 'normal'
 //   { type: 'clear' }                -> reset traversal marks (start/finish rings kept)
 
+import { buildPathActions } from './helpers/graph-helpers.js';
+
 let userCounter = 0;
 export const newNodeId = () => `u${++userCounter}`;
 export const edgeId = (source, target) => `e_${source}_${target}`;
@@ -117,23 +119,8 @@ export function edgeList(edges, directed) {
 }
 
 // Reconstruct start->finish path actions from parent maps.
-function pathActions(parent, parentEdge, startId, endId) {
-    const nodes = [];
-    const edgeSteps = [];
-    let cur = endId;
-    while (cur !== undefined && cur !== null) {
-        nodes.push(cur);
-        if (parentEdge[cur] != null) edgeSteps.push({ id: parentEdge[cur], from: parent[cur], to: cur });
-        if (cur === startId) break;
-        cur = parent[cur];
-    }
-    nodes.reverse();
-    edgeSteps.reverse();
-    return [
-        ...nodes.map((id) => ({ type: 'markNode', id, state: 'path' })),
-        ...edgeSteps.map((e) => ({ type: 'markEdge', id: e.id, state: 'path', from: e.from, to: e.to })),
-    ];
-}
+// buildPathActions is now imported from helpers/graph-helpers.js
+export { buildPathActions as pathActions };
 
 export function bfsActions(adj, startId, finishId) {
     const actions = [];
@@ -155,7 +142,7 @@ export function bfsActions(adj, startId, finishId) {
         }
         actions.push({ type: 'markNode', id: u, state: 'current' });
         if (u === finishId) {
-            actions.push(...pathActions(parent, parentEdge, startId, u));
+            actions.push(...buildPathActions(parent, parentEdge, startId, u));
             return actions;
         }
         visited.add(u);
@@ -195,7 +182,7 @@ export function dfsActions(adj, startId, finishId) {
         }
         actions.push({ type: 'markNode', id: u, state: 'current' });
         if (u === finishId) {
-            actions.push(...pathActions(parent, parentEdge, startId, u));
+            actions.push(...buildPathActions(parent, parentEdge, startId, u));
             return actions;
         }
         visited.add(u);
