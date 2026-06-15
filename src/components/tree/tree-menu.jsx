@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { CustomSlider } from '@/components/custom-slider';
+import { CustomSelect } from '@/components/custom-select';
 import { Button } from '@/components/ui/button';
 import { Plus, Minus, Search, RotateCcw } from 'lucide-react';
 
-// Sidebar for tree visualizers: a value field + insert/delete/search actions,
-// clear, and a speed slider. Callers pass the op handlers (they get the number).
+// Sidebar for tree visualizers: an optional tree-type dropdown, a value field +
+// insert/delete/search actions, clear, and a speed slider. Callers pass the op
+// handlers (they get the number).
 
-export default function TreeMenu({ title, disabled, onInsert, onDelete, onSearch, onClear, onSpeedChange }) {
+export default function TreeMenu({ title, disabled, modes, onModeChange, onInsert, onDelete, onSearch, onClear, onSpeedChange }) {
     const [value, setValue] = useState('');
     const num = () => Number(value);
     const valid = value.trim() !== '' && Number.isFinite(num());
@@ -14,6 +16,17 @@ export default function TreeMenu({ title, disabled, onInsert, onDelete, onSearch
     return (
         <div className="w-64 bg-gray-100 p-4 space-y-6 overflow-auto">
             <h2 className="text-lg font-semibold">{title}</h2>
+
+            {modes && (
+                <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                        <div className="h-px flex-1 bg-gray-300" />
+                        <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">Tree type</span>
+                        <div className="h-px flex-1 bg-gray-300" />
+                    </div>
+                    <CustomSelect title="Type" options={modes} onChange={onModeChange} disabled={disabled} />
+                </div>
+            )}
 
             <div className="space-y-3">
                 <div className="flex items-center gap-2">

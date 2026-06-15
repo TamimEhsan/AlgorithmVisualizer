@@ -57,9 +57,10 @@ export function useTreeEditor({ initialTree = null } = {}) {
 
     const getContext = () => ({ tree: treeRef.current });
     const clear = () => { if (isRunningRef.current) return; applyTree(null); clearMarks(); };
+    const reset = (t) => { if (isRunningRef.current) return; applyTree(t); clearMarks(); };
     const setSpeed = (s) => { speedRef.current = toDelay(s); };
 
-    return { tree, nodeState, edgeState, labels, status, isRunning, run, getContext, clear, setSpeed };
+    return { tree, nodeState, edgeState, labels, status, isRunning, run, getContext, clear, reset, setSpeed };
 }
 
 function sleep(ms) {
