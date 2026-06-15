@@ -37,8 +37,8 @@ const algorithms = [
     image: '/AlgorithmVisualizer/images/network-flow.png?height=200&width=300'
   },{
     id: 'bst',
-    title: 'Binary Search Tree',
-    description: "Insert, delete, and search on a BST with animated tree restructuring",
+    title: 'Binary Search Trees',
+    description: "Insert, delete, and search on a plain BST or a Red-Black tree, with animated rotations and recoloring",
     image: '/AlgorithmVisualizer/images/bst.png?height=200&width=300'
   },
   {

@@ -109,6 +109,7 @@ export default function TreeCanvas({ tree, layout, nodeState = {}, edgeState = {
                         value={n.value}
                         secondary={labels[n.id]}
                         state={nodeState[n.id]}
+                        color={n.color}
                     />
                 );
             })}
