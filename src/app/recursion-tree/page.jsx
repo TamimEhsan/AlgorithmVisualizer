@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Navbar from '@/components/navbar';
-import { getTree, recursionActions } from './fib';
+import { getTree, recursionActions } from '@/lib/algorithms/recursion';
 import { buchheimLayout } from '@/components/tree/layout';
 import { useTreeEditor } from '@/components/tree/use-tree-editor';
 import TreeCanvas from '@/components/tree/tree-canvas';
