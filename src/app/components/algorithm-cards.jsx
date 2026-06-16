@@ -40,6 +40,11 @@ const algorithms = [
     title: 'Binary Search Trees',
     description: "Insert, delete, and search on a plain BST or a Red-Black tree, with animated rotations and recoloring",
     image: '/AlgorithmVisualizer/images/bst.png?height=200&width=300'
+  },{
+    id: 'binary-heap',
+    title: 'Binary Heap',
+    description: "Min-heap: insert, extract-min, build-heap from a list, and heapsort with animated sift up and down",
+    image: '/AlgorithmVisualizer/images/binary-heap.png?height=200&width=300'
   },
   {
     id: 'recursion-tree',
